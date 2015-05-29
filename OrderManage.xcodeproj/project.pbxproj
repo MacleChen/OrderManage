@@ -10,10 +10,35 @@
 		04B029B21B171FB000D88D16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B11B171FB000D88D16 /* main.m */; };
 		04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B41B171FB000D88D16 /* AppDelegate.m */; };
 		04B029B81B171FB000D88D16 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B71B171FB000D88D16 /* ViewController.m */; };
-		04B029BB1B171FB000D88D16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B029B91B171FB000D88D16 /* Main.storyboard */; };
 		04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B029BC1B171FB000D88D16 /* Images.xcassets */; };
-		04B029C01B171FB000D88D16 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B029BE1B171FB000D88D16 /* LaunchScreen.xib */; };
 		04B029CC1B171FB000D88D16 /* OrderManageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029CB1B171FB000D88D16 /* OrderManageTests.m */; };
+		04B029D61B171FFC00D88D16 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04B029D51B171FFC00D88D16 /* LaunchScreen.xib */; };
+		04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029D81B17210100D88D16 /* iPhone_iOS_29.png */; };
+		04B029DF1B17210100D88D16 /* iPhone_iOS_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029D91B17210100D88D16 /* iPhone_iOS_29@2x.png */; };
+		04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DA1B17210100D88D16 /* iPhone_iOS_40@2x.png */; };
+		04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DB1B17210100D88D16 /* iPhone_iOS_57.png */; };
+		04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DC1B17210100D88D16 /* iPhone_iOS_57@2x.png */; };
+		04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DD1B17210100D88D16 /* iPhone_iOS_60@2x.png */; };
+		04B029F81B17220600D88D16 /* 产品入库.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E51B17220600D88D16 /* 产品入库.png */; };
+		04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E61B17220600D88D16 /* 登陆按钮A.png */; };
+		04B029FA1B17220600D88D16 /* 会员管理.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E71B17220600D88D16 /* 会员管理.png */; };
+		04B029FB1B17220600D88D16 /* 会员列表.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E81B17220600D88D16 /* 会员列表.png */; };
+		04B029FC1B17220600D88D16 /* 会员注册.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E91B17220600D88D16 /* 会员注册.png */; };
+		04B029FD1B17220600D88D16 /* 积分管理.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EA1B17220600D88D16 /* 积分管理.png */; };
+		04B029FE1B17220600D88D16 /* 计次卡.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EB1B17220600D88D16 /* 计次卡.png */; };
+		04B029FF1B17220600D88D16 /* 结算交班.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EC1B17220600D88D16 /* 结算交班.png */; };
+		04B02A001B17220600D88D16 /* 库存盘点.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029ED1B17220600D88D16 /* 库存盘点.png */; };
+		04B02A011B17220600D88D16 /* 快速消费.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EE1B17220600D88D16 /* 快速消费.png */; };
+		04B02A021B17220600D88D16 /* 密码.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EF1B17220600D88D16 /* 密码.png */; };
+		04B02A031B17220600D88D16 /* 入库历史.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F01B17220600D88D16 /* 入库历史.png */; };
+		04B02A041B17220600D88D16 /* 头像.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F11B17220600D88D16 /* 头像.png */; };
+		04B02A051B17220600D88D16 /* 系统设置.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F21B17220600D88D16 /* 系统设置.png */; };
+		04B02A061B17220600D88D16 /* 消费明细.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F31B17220600D88D16 /* 消费明细.png */; };
+		04B02A071B17220600D88D16 /* 消费收银.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F41B17220600D88D16 /* 消费收银.png */; };
+		04B02A081B17220600D88D16 /* 业务统计.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F51B17220600D88D16 /* 业务统计.png */; };
+		04B02A091B17220600D88D16 /* 原大小.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F61B17220600D88D16 /* 原大小.png */; };
+		04B02A0A1B17220600D88D16 /* 账号.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F71B17220600D88D16 /* 账号.png */; };
+		04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B02A0B1B1722A400D88D16 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,12 +59,37 @@
 		04B029B41B171FB000D88D16 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		04B029B61B171FB000D88D16 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		04B029B71B171FB000D88D16 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		04B029BA1B171FB000D88D16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04B029BC1B171FB000D88D16 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		04B029BF1B171FB000D88D16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		04B029C51B171FB000D88D16 /* OrderManageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderManageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B029CA1B171FB000D88D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B029CB1B171FB000D88D16 /* OrderManageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderManageTests.m; sourceTree = "<group>"; };
+		04B029D51B171FFC00D88D16 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		04B029D81B17210100D88D16 /* iPhone_iOS_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone_iOS_29.png; sourceTree = "<group>"; };
+		04B029D91B17210100D88D16 /* iPhone_iOS_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_29@2x.png"; sourceTree = "<group>"; };
+		04B029DA1B17210100D88D16 /* iPhone_iOS_40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_40@2x.png"; sourceTree = "<group>"; };
+		04B029DB1B17210100D88D16 /* iPhone_iOS_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone_iOS_57.png; sourceTree = "<group>"; };
+		04B029DC1B17210100D88D16 /* iPhone_iOS_57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_57@2x.png"; sourceTree = "<group>"; };
+		04B029DD1B17210100D88D16 /* iPhone_iOS_60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_60@2x.png"; sourceTree = "<group>"; };
+		04B029E51B17220600D88D16 /* 产品入库.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "产品入库.png"; sourceTree = "<group>"; };
+		04B029E61B17220600D88D16 /* 登陆按钮A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登陆按钮A.png"; sourceTree = "<group>"; };
+		04B029E71B17220600D88D16 /* 会员管理.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员管理.png"; sourceTree = "<group>"; };
+		04B029E81B17220600D88D16 /* 会员列表.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员列表.png"; sourceTree = "<group>"; };
+		04B029E91B17220600D88D16 /* 会员注册.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员注册.png"; sourceTree = "<group>"; };
+		04B029EA1B17220600D88D16 /* 积分管理.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "积分管理.png"; sourceTree = "<group>"; };
+		04B029EB1B17220600D88D16 /* 计次卡.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "计次卡.png"; sourceTree = "<group>"; };
+		04B029EC1B17220600D88D16 /* 结算交班.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "结算交班.png"; sourceTree = "<group>"; };
+		04B029ED1B17220600D88D16 /* 库存盘点.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "库存盘点.png"; sourceTree = "<group>"; };
+		04B029EE1B17220600D88D16 /* 快速消费.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "快速消费.png"; sourceTree = "<group>"; };
+		04B029EF1B17220600D88D16 /* 密码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码.png"; sourceTree = "<group>"; };
+		04B029F01B17220600D88D16 /* 入库历史.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "入库历史.png"; sourceTree = "<group>"; };
+		04B029F11B17220600D88D16 /* 头像.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "头像.png"; sourceTree = "<group>"; };
+		04B029F21B17220600D88D16 /* 系统设置.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "系统设置.png"; sourceTree = "<group>"; };
+		04B029F31B17220600D88D16 /* 消费明细.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消费明细.png"; sourceTree = "<group>"; };
+		04B029F41B17220600D88D16 /* 消费收银.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消费收银.png"; sourceTree = "<group>"; };
+		04B029F51B17220600D88D16 /* 业务统计.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "业务统计.png"; sourceTree = "<group>"; };
+		04B029F61B17220600D88D16 /* 原大小.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "原大小.png"; sourceTree = "<group>"; };
+		04B029F71B17220600D88D16 /* 账号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "账号.png"; sourceTree = "<group>"; };
+		04B02A0B1B1722A400D88D16 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,9 +135,9 @@
 				04B029B41B171FB000D88D16 /* AppDelegate.m */,
 				04B029B61B171FB000D88D16 /* ViewController.h */,
 				04B029B71B171FB000D88D16 /* ViewController.m */,
-				04B029B91B171FB000D88D16 /* Main.storyboard */,
+				04B02A0B1B1722A400D88D16 /* Main.storyboard */,
 				04B029BC1B171FB000D88D16 /* Images.xcassets */,
-				04B029BE1B171FB000D88D16 /* LaunchScreen.xib */,
+				04B029D51B171FFC00D88D16 /* LaunchScreen.xib */,
 				04B029AF1B171FB000D88D16 /* Supporting Files */,
 			);
 			path = OrderManage;
@@ -96,6 +146,8 @@
 		04B029AF1B171FB000D88D16 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04B029E41B17211B00D88D16 /* images */,
+				04B029D71B17203700D88D16 /* image_icon */,
 				04B029B01B171FB000D88D16 /* Info.plist */,
 				04B029B11B171FB000D88D16 /* main.m */,
 			);
@@ -117,6 +169,45 @@
 				04B029CA1B171FB000D88D16 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		04B029D71B17203700D88D16 /* image_icon */ = {
+			isa = PBXGroup;
+			children = (
+				04B029D81B17210100D88D16 /* iPhone_iOS_29.png */,
+				04B029D91B17210100D88D16 /* iPhone_iOS_29@2x.png */,
+				04B029DA1B17210100D88D16 /* iPhone_iOS_40@2x.png */,
+				04B029DB1B17210100D88D16 /* iPhone_iOS_57.png */,
+				04B029DC1B17210100D88D16 /* iPhone_iOS_57@2x.png */,
+				04B029DD1B17210100D88D16 /* iPhone_iOS_60@2x.png */,
+			);
+			name = image_icon;
+			sourceTree = "<group>";
+		};
+		04B029E41B17211B00D88D16 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				04B029E51B17220600D88D16 /* 产品入库.png */,
+				04B029E61B17220600D88D16 /* 登陆按钮A.png */,
+				04B029E71B17220600D88D16 /* 会员管理.png */,
+				04B029E81B17220600D88D16 /* 会员列表.png */,
+				04B029E91B17220600D88D16 /* 会员注册.png */,
+				04B029EA1B17220600D88D16 /* 积分管理.png */,
+				04B029EB1B17220600D88D16 /* 计次卡.png */,
+				04B029EC1B17220600D88D16 /* 结算交班.png */,
+				04B029ED1B17220600D88D16 /* 库存盘点.png */,
+				04B029EE1B17220600D88D16 /* 快速消费.png */,
+				04B029EF1B17220600D88D16 /* 密码.png */,
+				04B029F01B17220600D88D16 /* 入库历史.png */,
+				04B029F11B17220600D88D16 /* 头像.png */,
+				04B029F21B17220600D88D16 /* 系统设置.png */,
+				04B029F31B17220600D88D16 /* 消费明细.png */,
+				04B029F41B17220600D88D16 /* 消费收银.png */,
+				04B029F51B17220600D88D16 /* 业务统计.png */,
+				04B029F61B17220600D88D16 /* 原大小.png */,
+				04B029F71B17220600D88D16 /* 账号.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,9 +290,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B029BB1B171FB000D88D16 /* Main.storyboard in Resources */,
-				04B029C01B171FB000D88D16 /* LaunchScreen.xib in Resources */,
+				04B02A051B17220600D88D16 /* 系统设置.png in Resources */,
+				04B02A021B17220600D88D16 /* 密码.png in Resources */,
+				04B02A031B17220600D88D16 /* 入库历史.png in Resources */,
+				04B02A091B17220600D88D16 /* 原大小.png in Resources */,
+				04B029FA1B17220600D88D16 /* 会员管理.png in Resources */,
+				04B029D61B171FFC00D88D16 /* LaunchScreen.xib in Resources */,
+				04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */,
+				04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */,
+				04B02A081B17220600D88D16 /* 业务统计.png in Resources */,
+				04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */,
+				04B02A041B17220600D88D16 /* 头像.png in Resources */,
+				04B02A0A1B17220600D88D16 /* 账号.png in Resources */,
 				04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */,
+				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
+				04B029FB1B17220600D88D16 /* 会员列表.png in Resources */,
+				04B02A071B17220600D88D16 /* 消费收银.png in Resources */,
+				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
+				04B029FC1B17220600D88D16 /* 会员注册.png in Resources */,
+				04B029FD1B17220600D88D16 /* 积分管理.png in Resources */,
+				04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */,
+				04B02A061B17220600D88D16 /* 消费明细.png in Resources */,
+				04B02A011B17220600D88D16 /* 快速消费.png in Resources */,
+				04B029DF1B17210100D88D16 /* iPhone_iOS_29@2x.png in Resources */,
+				04B029FF1B17220600D88D16 /* 结算交班.png in Resources */,
+				04B029FE1B17220600D88D16 /* 计次卡.png in Resources */,
+				04B02A001B17220600D88D16 /* 库存盘点.png in Resources */,
+				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
+				04B029F81B17220600D88D16 /* 产品入库.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,25 +358,6 @@
 			targetProxy = 04B029C61B171FB000D88D16 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		04B029B91B171FB000D88D16 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04B029BA1B171FB000D88D16 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		04B029BE1B171FB000D88D16 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04B029BF1B171FB000D88D16 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		04B029CD1B171FB000D88D16 /* Debug */ = {
@@ -412,6 +509,7 @@
 				04B029D11B171FB000D88D16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		04B029D21B171FB000D88D16 /* Build configuration list for PBXNativeTarget "OrderManageTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +518,7 @@
 				04B029D41B171FB000D88D16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
