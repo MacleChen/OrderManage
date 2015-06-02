@@ -71,6 +71,15 @@
 */
 //emp!login.action?emp.empname=gzcy&emp.emppwd=123456
 
+- (IBAction)btnTest:(UIButton *)sender {
+    // 跳转到主页面
+    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavController"];  // 根据storyboardID获取视图
+    [viewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];   // 立即效果
+    
+    [self presentViewController: viewController animated:YES completion:nil];
+
+}
+
 - (IBAction)btnClick:(UIButton *)sender {
     
     // 网络数据请求 --- 登录数据包
@@ -101,7 +110,9 @@
             //[viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];    // 由下向上
             
             [self presentViewController: viewController animated:YES completion:^{
-                NSLog(@"视图跳转完毕");
+                self.lbInfo.text = @"";
+                // 辞退上一个界面
+                
             }];
 
         } else {

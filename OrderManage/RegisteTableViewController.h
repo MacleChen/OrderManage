@@ -10,5 +10,6 @@
 
 @interface RegisteTableViewController : UITableViewController
 
+- (IBAction)btnReLogin:(UIButton *)sender;
 
 @end

@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#import "viewOtherDeal.h"
+
 @interface MainViewController : UIViewController
 
-- (IBAction)btnRegister:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtnItem;
 
 
+
+
+- (IBAction)BarBtnClick:(UIBarButtonItem *)sender;
 
 @end

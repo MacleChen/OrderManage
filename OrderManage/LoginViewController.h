@@ -22,7 +22,10 @@
 
 @property (strong, nonatomic) IBOutlet UIView *viewLogin;
 
-@property (weak, nonatomic) IBOutlet UINavigationController *navigation;
+
+// 测试按钮
+- (IBAction)btnTest:(UIButton *)sender;
+
 
 
 - (IBAction)btnClick:(UIButton *)sender;

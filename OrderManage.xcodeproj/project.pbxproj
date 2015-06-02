@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
+		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
 		04B029B21B171FB000D88D16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B11B171FB000D88D16 /* main.m */; };
 		04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B41B171FB000D88D16 /* AppDelegate.m */; };
 		04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B029BC1B171FB000D88D16 /* Images.xcassets */; };
@@ -83,6 +84,8 @@
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		047D2F9B1B17FF28003095DB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		048397071B1D5735005D6BB9 /* viewOtherDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewOtherDeal.h; sourceTree = "<group>"; };
+		048397081B1D5735005D6BB9 /* viewOtherDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewOtherDeal.m; sourceTree = "<group>"; };
 		04B029AC1B171FB000D88D16 /* OrderManage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderManage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B029B01B171FB000D88D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B029B11B171FB000D88D16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 		047D2F9F1B18020B003095DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				048397071B1D5735005D6BB9 /* viewOtherDeal.h */,
+				048397081B1D5735005D6BB9 /* viewOtherDeal.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 				04BADA781B1C382900ABB52B /* AFHTTPRequestOperationManager.m in Sources */,
 				04BADA841B1C384D00ABB52B /* AFURLResponseSerialization.m in Sources */,
 				04BADA771B1C382900ABB52B /* AFHTTPRequestOperation.m in Sources */,
+				048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */,
 				04BADA9E1B1C389900ABB52B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				04BADA9D1B1C389900ABB52B /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);

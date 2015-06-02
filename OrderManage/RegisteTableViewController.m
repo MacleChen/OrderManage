@@ -97,4 +97,9 @@
 }
 */
 
+- (IBAction)btnReLogin:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"重新登录");
+    }];
+}
 @end
