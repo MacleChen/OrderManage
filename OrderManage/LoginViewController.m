@@ -10,6 +10,9 @@
 
 #define loginSecUrl @"emp!login.action?"//emp.empname=gzcy&emp.emppwd=123456"
 
+// 登陆成功后获取会员详细信息
+NSDictionary *dictLogin = nil;
+
 @interface LoginViewController () <UITextFieldDelegate> {
     float _viewLoginInitY;
 }
@@ -51,8 +54,8 @@
     
     // 检测键盘的出现与隐藏
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
-    [center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardDidHideNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,6 +74,8 @@
 */
 //emp!login.action?emp.empname=gzcy&emp.emppwd=123456
 
+
+// 测试按钮响应方法
 - (IBAction)btnTest:(UIButton *)sender {
     // 跳转到主页面
     UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavController"];  // 根据storyboardID获取视图
@@ -101,6 +106,10 @@
         NSString *statCode = [dict objectForKey:statusCdoe];
         if ([statCode intValue] == 200) {
             self.lbInfo.text = loginSuccess;
+            
+            // 获取登录数据
+            dictLogin = [dict objectForKey:message];
+            
             // 跳转到主页面
             //    [self performSegueWithIdentifier:@"Main" sender:nil];
             UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavController"];  // 根据storyboardID获取视图
@@ -158,17 +167,17 @@
 
 #pragma mark - 检测键盘的调出，退出
 #pragma mark 检测键盘的调出
-- (void)keyboardDidShow {
+- (void)keyboardDidShow:(NSNotification *)aNotfication {
    
-    NSLog(@"show键盘--- %f", self.viewLogin.frame.origin.y);
-//    CGRect viewFrame = self.viewLogin.frame;
-//    viewFrame.origin.y = -_viewLoginInitY;
-//    [self setAnimatForViewFordur:0.3 position:viewFrame];
-    
+    // 获取键盘的高度
+    NSDictionary *userInfo = [aNotfication userInfo];
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    NSLog(@"%f, %f, %f, %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
 }
 
 #pragma mark 检测键盘的退出
-- (void)keyboardDidHide {
+- (void)keyboardDidHide:(NSNotification *)aNotfication {
     NSLog(@"exit键盘--- %f", self.viewLogin.frame.origin.y);
 //    CGRect viewFrame = self.viewLogin.frame;
 //    viewFrame.origin.y = _viewLoginInitY;
@@ -178,7 +187,7 @@
 
 #pragma mark 点击背景时，退出键盘
 -(void)HandleBackgroundTap:(UITapGestureRecognizer *)sender {
-    [self keyboardDidHide];
+    //[self keyboardDidHide];
     [self.view endEditing:YES];
 }
 

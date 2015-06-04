@@ -12,9 +12,7 @@
 
 }
 
-
 + (NSData *)HttpsyncRequestPostWithURL:(NSString *)stURL {
-    //@"http://180.97.81.151/cshop/emp!login.action?emp.empname=gzcy&emp.emppwd=123456"
     //第一步，创建URL
     NSURL *url = [NSURL URLWithString:stURL];
     
@@ -33,7 +31,7 @@
 
 + (NSData *)HttpAFNetworkingRequestWithURL:(NSString *)stURL {
     NSURL *url = [NSURL URLWithString:[stURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSData *data = [[NSData alloc] init];
+    
     //    从URL获取json数据
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
@@ -41,16 +39,61 @@
         NSString *html = operation.responseString;
         NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
-        NSLog(@"aaaa%@", [NSThread currentThread]);
-        NSLog(@"获取到的数据为：%@",dict);
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"发生错误！%@",error);
+        
     }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [queue addOperation:oper];
     
      return nil;
+}
+
++ (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL {
+    NSData *listData = [[NSData alloc] init];   // block中访问Nsdata变量
+    
+    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    NSMutableURLRequest *request = [requestSerializer requestWithMethod:@"POST" URLString:strURL parameters:nil error:nil];
+    
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    AFHTTPResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [requestOperation setResponseSerializer:responseSerializer];
+    [requestOperation start];
+    [requestOperation waitUntilFinished];
+    
+    NSString *html = requestOperation.responseString;
+    listData = [html dataUsingEncoding:NSUTF8StringEncoding];
+    id dict = [NSJSONSerialization JSONObjectWithData:listData options:0 error:nil];
+    
+    return dict;
+    
+    
+//    NSURL *url = [NSURL URLWithString:[strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    __block NSData *listData = [[NSData alloc] init];
+//    
+//    //    从URL获取json数据
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
+//    [oper setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSString *html = operation.responseString;
+//        listData = [html dataUsingEncoding:NSUTF8StringEncoding];
+//        //id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
+//        NSLog(@"NSThread --- %@", [NSThread currentThread]);
+//        //NSString *statCode = [dict objectForKey:statusCdoe];
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"发生错误！%@",error);
+//    }];
+//    
+//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//    [queue addOperation:oper];
+//    [queue waitUntilAllOperationsAreFinished];  // 等待所有的operation 执行完毕
+//    
+//    
+//    
+//    return listData;
 }
 
 

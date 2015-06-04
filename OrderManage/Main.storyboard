@@ -7,7 +7,7 @@
         <!--选桌号-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="Main" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -30,11 +30,7 @@
                                 <action selector="BarBtnClick:" destination="vXZ-lx-hvc" id="nb3-SY-o8S"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="设置" id="t6D-t5-Npp">
-                            <connections>
-                                <segue destination="Pva-27-XHG" kind="push" id="e1m-73-xDN"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="设置" id="t6D-t5-Npp"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -45,7 +41,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="235" y="25"/>
+            <point key="canvasLocation" x="-505" y="649"/>
         </scene>
         <!--会员列表-->
         <scene sceneID="iUg-gf-ANc">
@@ -183,38 +179,6 @@
             </objects>
             <point key="canvasLocation" x="262" y="-654"/>
         </scene>
-        <!--会员设置-->
-        <scene sceneID="Qzz-7h-CK9">
-            <objects>
-                <tableViewController id="Pva-27-XHG" customClass="RegisteTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="iMp-2j-TM2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="N4f-BI-qBw">
-                            <rect key="frame" x="-23" y="-15" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="退出登录">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="btnReLogin:" destination="Pva-27-XHG" eventType="touchUpInside" id="2pg-Qa-eAs"/>
-                            </connections>
-                        </button>
-                        <connections>
-                            <outlet property="dataSource" destination="Pva-27-XHG" id="79a-Kn-ziQ"/>
-                            <outlet property="delegate" destination="Pva-27-XHG" id="Kqy-H8-7Yp"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="会员设置" id="xb2-tQ-fEI"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2lB-vn-1Xg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-126" y="-654"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="UrD-mm-pJT">
             <objects>
@@ -279,16 +243,6 @@
                                         <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXx-Eh-hJs">
-                                        <rect key="frame" x="217" y="79" width="72" height="34"/>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="测试进入">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnTest:" destination="hxN-sH-TDE" eventType="touchUpInside" id="Iuw-wU-aAc"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -310,26 +264,6 @@
             <point key="canvasLocation" x="-505" y="25"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Cdb-wt-k4E">
-            <objects>
-                <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Eit-Jv-igL" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="AVA-zW-aCx"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MzB-GH-IP5">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="scr-hU-Ddt"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2rS-6z-25g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-139" y="25"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="bnx-3U-GSW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KWa-7O-dCU" sceneMemberID="viewController">
@@ -342,18 +276,208 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Pva-27-XHG" kind="relationship" relationship="rootViewController" id="LIf-O2-zSw"/>
+                        <segue destination="XW4-o7-7Xy" kind="relationship" relationship="rootViewController" id="0Hu-vI-UpY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VCv-kC-tIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-532" y="-654"/>
         </scene>
+        <!--会员注册-->
+        <scene sceneID="ofr-A6-j0L">
+            <objects>
+                <viewController id="XW4-o7-7Xy" customClass="RegisteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QWQ-g8-lkV"/>
+                        <viewControllerLayoutGuide type="bottom" id="hqc-v6-naJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fQI-CE-Jd8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JmO-md-rGS">
+                                <rect key="frame" x="0.0" y="-20" width="320" height="539"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSm-hQ-Axh">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="注册" image="registeButton2.png">
+                                    <color key="titleColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnregisteClick:" destination="XW4-o7-7Xy" eventType="touchUpInside" id="btD-hu-ivV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="会员注册" id="ftx-UH-4Ns"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="btnRegister" destination="YSm-hQ-Axh" id="EGB-gn-9X0"/>
+                        <outlet property="scrollView" destination="JmO-md-rGS" id="ugb-Gp-G6U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QcL-B0-oA2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="-652"/>
+        </scene>
+        <!--知云会员-->
+        <scene sceneID="IAm-i3-oHQ">
+            <objects>
+                <viewController storyboardIdentifier="MainController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KQ6-8y-ySS" customClass="MainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vSr-SG-ciY"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lqw-BA-sNz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a5p-fe-IrX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w4d-KX-rzt">
+                                <rect key="frame" x="16" y="83" width="288" height="98"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy2-mT-t1p">
+                                        <rect key="frame" x="0.0" y="3" width="85" height="85"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Button" image="会员注册.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="XW4-o7-7Xy" kind="push" id="Np4-2d-8mw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chB-7L-QIe">
+                                        <rect key="frame" x="102" y="3" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="会员管理.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="N5h-un-n3Z" kind="push" id="ibo-Yk-6sO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTn-Zn-AQ7">
+                                        <rect key="frame" x="203" y="3" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="会员列表.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="SRW-ft-5Xp" kind="push" id="dBy-0Q-S6E"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uQj-SO-OSs">
+                                <rect key="frame" x="16" y="181" width="288" height="98"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpH-Hk-mz9">
+                                        <rect key="frame" x="0.0" y="6" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="结算交班.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRQ-0h-Zcf">
+                                        <rect key="frame" x="102" y="6" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="快速消费.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dhk-qQ-kqt">
+                                        <rect key="frame" x="204" y="7" width="84" height="84"/>
+                                        <state key="normal" title="Button" image="消费明细.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQ5-y4-M5K">
+                                <rect key="frame" x="16" y="282" width="288" height="98"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH3-GM-Bar">
+                                        <rect key="frame" x="0.0" y="6" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="系统设置.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAG-wn-yrT">
+                                        <rect key="frame" x="203" y="6" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="计次卡.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51p-Mp-6R9">
+                                        <rect key="frame" x="102" y="6" width="85" height="86"/>
+                                        <state key="normal" title="Button" image="积分管理.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eKq-nC-ix7">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="M6n-Rv-b6T"/>
+                                    <barButtonItem tag="10" title="退出" id="kpV-Ac-HmN">
+                                        <color key="tintColor" red="0.0" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="barBtnClick:" destination="KQ6-8y-ySS" id="YAk-nU-Nr9"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cds-XV-6As"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="知云会员" id="yL6-KA-SS4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="barBtnItem" destination="kpV-Ac-HmN" id="MGW-2Z-PO2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VnP-am-fPS" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="255" y="25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TEH-AE-jBr">
+            <objects>
+                <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OjZ-KF-qCT" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="HdM-Oz-nNs"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RpW-RD-xSJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="KQ6-8y-ySS" kind="relationship" relationship="rootViewController" id="X3Z-Jl-PCd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n8Q-vM-A3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-131" y="25"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="registeButton2.png" width="320" height="50"/>
+        <image name="会员列表.png" width="114" height="114"/>
+        <image name="会员注册.png" width="114" height="114"/>
+        <image name="会员管理.png" width="114" height="114"/>
         <image name="头像.png" width="102" height="102"/>
         <image name="密码.png" width="24" height="32"/>
+        <image name="快速消费.png" width="114" height="114"/>
+        <image name="消费明细.png" width="114" height="114"/>
         <image name="登陆按钮A.png" width="520" height="71"/>
+        <image name="积分管理.png" width="114" height="114"/>
+        <image name="系统设置.png" width="114" height="114"/>
+        <image name="结算交班.png" width="114" height="114"/>
+        <image name="计次卡.png" width="114" height="114"/>
         <image name="账号.png" width="28" height="29"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -362,6 +486,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="e1m-73-xDN"/>
+        <segue reference="Np4-2d-8mw"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.21176470588235294" green="0.47058823529411764" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		041B8FDB1B1D863500971014 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041B8FDA1B1D863500971014 /* MainViewController.m */; };
+		0423C2D11B1EEEF4000DCE8B /* imgaddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2C81B1EEEF4000DCE8B /* imgaddress.png */; };
+		0423C2D21B1EEEF4000DCE8B /* imgbirthday.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2C91B1EEEF4000DCE8B /* imgbirthday.png */; };
+		0423C2D31B1EEEF4000DCE8B /* imgcardID.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CA1B1EEEF4000DCE8B /* imgcardID.png */; };
+		0423C2D41B1EEEF4000DCE8B /* imgcardType.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CB1B1EEEF4000DCE8B /* imgcardType.png */; };
+		0423C2D51B1EEEF4000DCE8B /* imgEmail.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CC1B1EEEF4000DCE8B /* imgEmail.png */; };
+		0423C2D61B1EEEF4000DCE8B /* imgName.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CD1B1EEEF4000DCE8B /* imgName.png */; };
+		0423C2D71B1EEEF4000DCE8B /* imgpassword.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CE1B1EEEF4000DCE8B /* imgpassword.png */; };
+		0423C2D81B1EEEF4000DCE8B /* imgPhoneNUM.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2CF1B1EEEF4000DCE8B /* imgPhoneNUM.png */; };
+		0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2D01B1EEEF4000DCE8B /* imgsurePass.png */; };
+		0423C2DB1B1EFA24000DCE8B /* registeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2DA1B1EFA24000DCE8B /* registeButton.png */; };
+		0423C2DD1B1EFC1A000DCE8B /* registeButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0423C2DC1B1EFC1A000DCE8B /* registeButton2.png */; };
+		044C549C1B1EC5F700B5A5FF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044C549B1B1EC5F700B5A5FF /* Accelerate.framework */; };
+		0450AEAC1B1DB3840003ED6B /* RegisteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */; };
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
 		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
@@ -41,7 +55,6 @@
 		04B02A091B17220600D88D16 /* 原大小.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F61B17220600D88D16 /* 原大小.png */; };
 		04B02A0A1B17220600D88D16 /* 账号.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F71B17220600D88D16 /* 账号.png */; };
 		04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B02A0B1B1722A400D88D16 /* Main.storyboard */; };
-		04BADA641B1C23EF00ABB52B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BADA631B1C23EF00ABB52B /* MainViewController.m */; };
 		04BADA671B1C370100ABB52B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADA661B1C370100ABB52B /* SystemConfiguration.framework */; };
 		04BADA691B1C371000ABB52B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADA681B1C371000ABB52B /* MobileCoreServices.framework */; };
 		04BADA761B1C382900ABB52B /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BADA711B1C382900ABB52B /* AFURLConnectionOperation.m */; };
@@ -66,7 +79,6 @@
 		04BADAAA1B1C38F700ABB52B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAA91B1C38F700ABB52B /* UIKit.framework */; };
 		04BADAAC1B1C390200ABB52B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAAB1B1C390200ABB52B /* Foundation.framework */; };
 		04BADAAE1B1C390D00ABB52B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */; };
-		04C3B4B51B1C5DCE009C71AA /* RegisteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3B4B41B1C5DCE009C71AA /* RegisteTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +92,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		041B8FD91B1D863500971014 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		041B8FDA1B1D863500971014 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		0423C2C81B1EEEF4000DCE8B /* imgaddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgaddress.png; sourceTree = "<group>"; };
+		0423C2C91B1EEEF4000DCE8B /* imgbirthday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgbirthday.png; sourceTree = "<group>"; };
+		0423C2CA1B1EEEF4000DCE8B /* imgcardID.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgcardID.png; sourceTree = "<group>"; };
+		0423C2CB1B1EEEF4000DCE8B /* imgcardType.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgcardType.png; sourceTree = "<group>"; };
+		0423C2CC1B1EEEF4000DCE8B /* imgEmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgEmail.png; sourceTree = "<group>"; };
+		0423C2CD1B1EEEF4000DCE8B /* imgName.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgName.png; sourceTree = "<group>"; };
+		0423C2CE1B1EEEF4000DCE8B /* imgpassword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgpassword.png; sourceTree = "<group>"; };
+		0423C2CF1B1EEEF4000DCE8B /* imgPhoneNUM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgPhoneNUM.png; sourceTree = "<group>"; };
+		0423C2D01B1EEEF4000DCE8B /* imgsurePass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgsurePass.png; sourceTree = "<group>"; };
+		0423C2DA1B1EFA24000DCE8B /* registeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = registeButton.png; sourceTree = "<group>"; };
+		0423C2DC1B1EFC1A000DCE8B /* registeButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = registeButton2.png; sourceTree = "<group>"; };
+		044C549B1B1EC5F700B5A5FF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		0450AEAA1B1DB3840003ED6B /* RegisteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisteViewController.h; sourceTree = "<group>"; };
+		0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteViewController.m; sourceTree = "<group>"; };
 		046E73381B1869CD00C57B2D /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -122,8 +150,6 @@
 		04B029F61B17220600D88D16 /* 原大小.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "原大小.png"; sourceTree = "<group>"; };
 		04B029F71B17220600D88D16 /* 账号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "账号.png"; sourceTree = "<group>"; };
 		04B02A0B1B1722A400D88D16 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		04BADA621B1C23EF00ABB52B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		04BADA631B1C23EF00ABB52B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		04BADA661B1C370100ABB52B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		04BADA681B1C371000ABB52B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		04BADA6A1B1C378900ABB52B /* AFNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -167,8 +193,6 @@
 		04BADAA91B1C38F700ABB52B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		04BADAAB1B1C390200ABB52B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		04C3B4B31B1C5DCE009C71AA /* RegisteTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisteTableViewController.h; sourceTree = "<group>"; };
-		04C3B4B41B1C5DCE009C71AA /* RegisteTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044C549C1B1EC5F700B5A5FF /* Accelerate.framework in Frameworks */,
 				04BADAAE1B1C390D00ABB52B /* CoreGraphics.framework in Frameworks */,
 				04BADAAC1B1C390200ABB52B /* Foundation.framework in Frameworks */,
 				04BADAAA1B1C38F700ABB52B /* UIKit.framework in Frameworks */,
@@ -196,15 +221,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0423C2B51B1EE3AE000DCE8B /* registerImages */ = {
+			isa = PBXGroup;
+			children = (
+				0423C2DC1B1EFC1A000DCE8B /* registeButton2.png */,
+				0423C2DA1B1EFA24000DCE8B /* registeButton.png */,
+				0423C2C81B1EEEF4000DCE8B /* imgaddress.png */,
+				0423C2C91B1EEEF4000DCE8B /* imgbirthday.png */,
+				0423C2CA1B1EEEF4000DCE8B /* imgcardID.png */,
+				0423C2CB1B1EEEF4000DCE8B /* imgcardType.png */,
+				0423C2CC1B1EEEF4000DCE8B /* imgEmail.png */,
+				0423C2CD1B1EEEF4000DCE8B /* imgName.png */,
+				0423C2CE1B1EEEF4000DCE8B /* imgpassword.png */,
+				0423C2CF1B1EEEF4000DCE8B /* imgPhoneNUM.png */,
+				0423C2D01B1EEEF4000DCE8B /* imgsurePass.png */,
+			);
+			name = registerImages;
+			sourceTree = "<group>";
+		};
 		047D2F9D1B1801ED003095DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				047D2F9A1B17FF28003095DB /* LoginViewController.h */,
 				047D2F9B1B17FF28003095DB /* LoginViewController.m */,
-				04BADA621B1C23EF00ABB52B /* MainViewController.h */,
-				04BADA631B1C23EF00ABB52B /* MainViewController.m */,
-				04C3B4B31B1C5DCE009C71AA /* RegisteTableViewController.h */,
-				04C3B4B41B1C5DCE009C71AA /* RegisteTableViewController.m */,
+				041B8FD91B1D863500971014 /* MainViewController.h */,
+				041B8FDA1B1D863500971014 /* MainViewController.m */,
+				0450AEAA1B1DB3840003ED6B /* RegisteViewController.h */,
+				0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -324,6 +367,7 @@
 		04B029E41B17211B00D88D16 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0423C2B51B1EE3AE000DCE8B /* registerImages */,
 				04B029E51B17220600D88D16 /* 产品入库.png */,
 				04B029E61B17220600D88D16 /* 登陆按钮A.png */,
 				04B029E71B17220600D88D16 /* 会员管理.png */,
@@ -440,6 +484,7 @@
 		04BADAAF1B1C396700ABB52B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				044C549B1B1EC5F700B5A5FF /* Accelerate.framework */,
 				04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */,
 				04BADAAB1B1C390200ABB52B /* Foundation.framework */,
 				04BADAA91B1C38F700ABB52B /* UIKit.framework */,
@@ -534,27 +579,38 @@
 				04B02A051B17220600D88D16 /* 系统设置.png in Resources */,
 				04B02A021B17220600D88D16 /* 密码.png in Resources */,
 				04B02A031B17220600D88D16 /* 入库历史.png in Resources */,
+				0423C2D71B1EEEF4000DCE8B /* imgpassword.png in Resources */,
 				04B02A091B17220600D88D16 /* 原大小.png in Resources */,
+				0423C2D61B1EEEF4000DCE8B /* imgName.png in Resources */,
 				04B029FA1B17220600D88D16 /* 会员管理.png in Resources */,
 				04B029D61B171FFC00D88D16 /* LaunchScreen.xib in Resources */,
+				0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */,
+				0423C2DD1B1EFC1A000DCE8B /* registeButton2.png in Resources */,
 				04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */,
+				0423C2D11B1EEEF4000DCE8B /* imgaddress.png in Resources */,
 				04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */,
 				04B02A081B17220600D88D16 /* 业务统计.png in Resources */,
 				04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */,
+				0423C2D81B1EEEF4000DCE8B /* imgPhoneNUM.png in Resources */,
 				04B02A041B17220600D88D16 /* 头像.png in Resources */,
+				0423C2D31B1EEEF4000DCE8B /* imgcardID.png in Resources */,
 				04B02A0A1B17220600D88D16 /* 账号.png in Resources */,
 				04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */,
+				0423C2DB1B1EFA24000DCE8B /* registeButton.png in Resources */,
 				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
 				04B029FB1B17220600D88D16 /* 会员列表.png in Resources */,
 				04B02A071B17220600D88D16 /* 消费收银.png in Resources */,
 				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
+				0423C2D21B1EEEF4000DCE8B /* imgbirthday.png in Resources */,
 				04B029FC1B17220600D88D16 /* 会员注册.png in Resources */,
 				04B029FD1B17220600D88D16 /* 积分管理.png in Resources */,
 				04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */,
+				0423C2D51B1EEEF4000DCE8B /* imgEmail.png in Resources */,
 				04B02A061B17220600D88D16 /* 消费明细.png in Resources */,
 				04B02A011B17220600D88D16 /* 快速消费.png in Resources */,
 				04B029DF1B17210100D88D16 /* iPhone_iOS_29@2x.png in Resources */,
 				04B029FF1B17220600D88D16 /* 结算交班.png in Resources */,
+				0423C2D41B1EEEF4000DCE8B /* imgcardType.png in Resources */,
 				04B029FE1B17220600D88D16 /* 计次卡.png in Resources */,
 				04B02A001B17220600D88D16 /* 库存盘点.png in Resources */,
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
@@ -580,22 +636,22 @@
 				04BADA7D1B1C383A00ABB52B /* AFURLSessionManager.m in Sources */,
 				04BADAA01B1C389900ABB52B /* UIButton+AFNetworking.m in Sources */,
 				04BADA871B1C385A00ABB52B /* AFNetworkReachabilityManager.m in Sources */,
-				04C3B4B51B1C5DCE009C71AA /* RegisteTableViewController.m in Sources */,
 				04BADAA21B1C389900ABB52B /* UIProgressView+AFNetworking.m in Sources */,
 				04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */,
 				046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */,
 				04B029B21B171FB000D88D16 /* main.m in Sources */,
 				04BADAA31B1C389900ABB52B /* UIRefreshControl+AFNetworking.m in Sources */,
-				04BADA641B1C23EF00ABB52B /* MainViewController.m in Sources */,
 				04BADA761B1C382900ABB52B /* AFURLConnectionOperation.m in Sources */,
 				04BADAA11B1C389900ABB52B /* UIImageView+AFNetworking.m in Sources */,
 				047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */,
+				0450AEAC1B1DB3840003ED6B /* RegisteViewController.m in Sources */,
 				04BADA9F1B1C389900ABB52B /* UIAlertView+AFNetworking.m in Sources */,
 				04BADA831B1C384D00ABB52B /* AFURLRequestSerialization.m in Sources */,
 				04BADA7E1B1C383A00ABB52B /* AFHTTPSessionManager.m in Sources */,
 				04BADAA41B1C389900ABB52B /* UIWebView+AFNetworking.m in Sources */,
 				04BADA781B1C382900ABB52B /* AFHTTPRequestOperationManager.m in Sources */,
 				04BADA841B1C384D00ABB52B /* AFURLResponseSerialization.m in Sources */,
+				041B8FDB1B1D863500971014 /* MainViewController.m in Sources */,
 				04BADA771B1C382900ABB52B /* AFHTTPRequestOperation.m in Sources */,
 				048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */,
 				04BADA9E1B1C389900ABB52B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
