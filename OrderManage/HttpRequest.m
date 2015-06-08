@@ -50,11 +50,15 @@
      return nil;
 }
 
-+ (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL {
+#pragma mark 网络数据请求
++ (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL parameters:(id)param {
     NSData *listData = [[NSData alloc] init];   // block中访问Nsdata变量
     
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    NSMutableURLRequest *request = [requestSerializer requestWithMethod:@"POST" URLString:strURL parameters:nil error:nil];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request = [requestSerializer requestWithMethod:@"POST" URLString:strURL parameters:param error:nil];
+
+    request.timeoutInterval = 5; // 设置延迟5秒
     
     AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     AFHTTPResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
@@ -68,34 +72,6 @@
     id dict = [NSJSONSerialization JSONObjectWithData:listData options:0 error:nil];
     
     return dict;
-    
-    
-//    NSURL *url = [NSURL URLWithString:[strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//    __block NSData *listData = [[NSData alloc] init];
-//    
-//    //    从URL获取json数据
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
-//    [oper setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSString *html = operation.responseString;
-//        listData = [html dataUsingEncoding:NSUTF8StringEncoding];
-//        //id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
-//        NSLog(@"NSThread --- %@", [NSThread currentThread]);
-//        //NSString *statCode = [dict objectForKey:statusCdoe];
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"发生错误！%@",error);
-//    }];
-//    
-//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//    [queue addOperation:oper];
-//    [queue waitUntilAllOperationsAreFinished];  // 等待所有的operation 执行完毕
-//    
-//    
-//    
-//    return listData;
 }
-
-
 
 @end

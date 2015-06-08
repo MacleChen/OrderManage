@@ -1266,6 +1266,7 @@ typedef enum {
         }
 
         [mutableRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error]];
+        NSLog(@"mutableRequest = %@", mutableRequest.HTTPBody);
     }
 
     return mutableRequest;

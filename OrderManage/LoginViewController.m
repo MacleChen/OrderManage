@@ -7,11 +7,13 @@
 //
 
 #import "LoginViewController.h"
+#import "MBProgressHUD+MJ.h"
 
 #define loginSecUrl @"emp!login.action?"//emp.empname=gzcy&emp.emppwd=123456"
 
 // 登陆成功后获取会员详细信息
 NSDictionary *dictLogin = nil;
+NSDictionary *dictSendLogin = nil;
 
 @interface LoginViewController () <UITextFieldDelegate> {
     float _viewLoginInitY;
@@ -91,24 +93,26 @@ NSDictionary *dictLogin = nil;
     NSString *strUrl = [[NSString alloc] initWithFormat:@"%@emp!login.action?emp.empname=%@&emp.emppwd=%@", WEBBASEURL, self.edtName.text, self.edtPwd.text];
     
     //[HttpRequest HttpAFNetworkingRequestWithURL:strUrl];
-    
+    // 显示登录中
+    [MBProgressHUD showMessage:@"登录中..."];
     
     NSURL *url = [NSURL URLWithString:[strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     //    从URL获取json数据
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.timeoutInterval = 5; // 设置延迟时间
     AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
     [oper setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *html = operation.responseString;
         NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
-        NSLog(@"aaaa%@", [NSThread currentThread]);
-        NSLog(@"获取到的数据为：%@",dict);
         NSString *statCode = [dict objectForKey:statusCdoe];
         if ([statCode intValue] == 200) {
             self.lbInfo.text = loginSuccess;
             
             // 获取登录数据
             dictLogin = [dict objectForKey:message];
+            // 获取发送数据
+            dictSendLogin = @{@"userName": self.edtName.text, @"userPwd": self.edtPwd.text};
             
             // 跳转到主页面
             //    [self performSegueWithIdentifier:@"Main" sender:nil];
@@ -117,7 +121,7 @@ NSDictionary *dictLogin = nil;
             //[viewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal]; // 左右翻滚页
             [viewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];   // 立即效果
             //[viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];    // 由下向上
-            
+            [MBProgressHUD hideHUD];
             [self presentViewController: viewController animated:YES completion:^{
                 self.lbInfo.text = @"";
                 // 辞退上一个界面
@@ -126,11 +130,11 @@ NSDictionary *dictLogin = nil;
 
         } else {
             self.lbInfo.text = loginInfoErr;
+            [MBProgressHUD hideHUD];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"bbbb%@", [NSThread currentThread]);
-        NSLog(@"发生错误！%@",error);
         self.lbInfo.text = ConnectException;
+        [MBProgressHUD hideHUD];
     }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];

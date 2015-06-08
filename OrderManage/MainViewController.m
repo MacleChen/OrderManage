@@ -41,7 +41,6 @@
 
 - (IBAction)barBtnClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSLog(@"fwjfowjfw");
 }
 
 @end

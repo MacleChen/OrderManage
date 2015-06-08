@@ -8,11 +8,14 @@
 
 #import "RegisteViewController.h"
 #import "HttpRequest.h"
+#import "GetMoneyViewController.h"
+#import "MBProgressHUD+MJ.h"
 
 #define TF_BirthdayTag 10
 #define TF_CardTypeTag 20
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
+extern NSDictionary *dictSendLogin;  // 引用发送登录数据
 
 @interface RegisteViewController () <UIScrollViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>{
     float _mainScreenWidth;
@@ -215,7 +218,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     // 设置按钮，点击后退出 datePicker 或 pickerView 选择
     UIButton *btnExitPicker = [[UIButton alloc] initWithFrame:CGRectMake(_mainScreenWidth - 60, 0, 50, 30)];
-    btnExitPicker.backgroundColor = [UIColor blueColor];
+    btnExitPicker.backgroundColor = ColorMainSystem;
     [btnExitPicker setTitle:@"完成" forState:UIControlStateNormal];
     [btnExitPicker setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btnExitPicker addTarget:self action:@selector(btnExitPickerClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -264,7 +267,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
         if (([string isEqual:@""] && textField.text.length <= 1) || [self.tfPhoneNUM.text isEqual:@""] || [self.tfEmail.text isEqual:@""] || [self.tfbirthday.text isEqual:@""] || [self.tfcardID.text isEqual:@""] || [self.tfName.text isEqual:@""] || [self.tfpassword.text isEqual:@""] || [self.tfsurePass.text isEqual:@""]) {
             self.btnRegister.enabled = NO;
-            NSLog(@"有空");
         } else {
             self.btnRegister.enabled = YES;
             NSLog(@"empty, %i, %@", [self.tfEmail isEqual:@""], self.tfEmail);
@@ -311,8 +313,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     if (textField.tag == TF_BirthdayTag || textField.tag == TF_CardTypeTag) {  // 开始编辑 会员生日
         [self.view endEditing:YES];
         // 显示placeholder
-        self.tfbirthday.text = @"";
-        self.tfcardType.text = @"";
+       if(textField.tag == TF_BirthdayTag) self.tfbirthday.text = @"";
+       else self.tfcardType.text = @"";
+        
         datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
         
     } else {
@@ -339,7 +342,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (void)chooseDate:(UIDatePicker *)sender {
     NSDate *selectedDate = sender.date;     // 获取datePicker的时间
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    dateFormat.dateFormat = @"yyyy-MM-dd";  // 设置时间格式
+    dateFormat.dateFormat = @"yyyyMMdd";  // 设置时间格式
     
     self.tfbirthday.text = [dateFormat stringFromDate:selectedDate]; // 将时间转化为NSString
 }
@@ -402,11 +405,19 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 点击注册按钮时调用
 - (IBAction)btnregisteClick:(UIButton *)sender {
+    // 判断两次输入密码是否相等
+    if (![self.tfpassword.text isEqual:self.tfsurePass.text]) {
+        self.lbInfo.hidden = NO;
+        self.lbInfo.text = @"密码不相等";
+        
+        return;
+    }
+    
+    // 显示进度框
+    [MBProgressHUD showMessage:@""];
+    
     NSInteger selectedCardTypeRow = [self.pickerViewCardType selectedRowInComponent:0];
-    NSLog(@"row = %ld", selectedCardTypeRow);
-    
     NSDictionary *dictCardType = _arrayCardTypeData[selectedCardTypeRow];
-    
     // 会员卡类型打包
     NSString *strcdType = [NSString stringWithFormat:@"%@/%@", [dictCardType objectForKey:@"cdname"], [dictCardType objectForKey:@"cdpec"]];
     // 打包注册数据
@@ -420,7 +431,62 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                                      @"cubdate": self.tfbirthday.text,
                                      @"selcardmoney": [dictCardType objectForKey:@"cdmoney"],
                                      @"selcardtype": strcdType};
-    NSLog(@"registeBag = %@", dictRegisteData);
+    
+    
+    // 网络数据请求 --- 请求导购数据
+    NSString *strMyURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerAddAction];
+    
+    //test
+    NSString *strURLBody = [NSString stringWithFormat:@"cuname=%@&cuemail=%@&cupwd=%@&cuphone=%@&cuaddress=%@&cucardid=%@&cucardno=%@&cubdate=%@&emp.empid=%@", self.tfName.text, self.tfEmail.text, self.tfpassword.text, self.tfPhoneNUM.text, self.tfaddress.text, [dictCardType objectForKey:@"cdid"], self.tfcardID.text, self.tfbirthday.text, [dictSendLogin objectForKey:@"userPwd"]];    //[dictSendLogin objectForKey:@"userPwd"]       //[dictLogin objectForKey:@"emppwd"]
+    // POST请求:请求体
+    
+    // 2.1.设置请求路径
+    NSURL *url = [NSURL URLWithString:strMyURL];
+    
+    // 2.2.创建请求对象
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url]; // 默认就是GET请求
+    request.timeoutInterval = 5; // 设置请求超时
+    request.HTTPMethod = @"POST"; // 设置为POST请求
+    
+    // 通过请求头告诉服务器客户端的类型
+    [request setValue:@"IOS客户端" forHTTPHeaderField:@"User-Agent"];
+    
+    // 采用，改进的MD5加密 --- 对加密过的MD5码再进行一次特殊算法加密
+    
+    // 设置请求体
+    request.HTTPBody = [strURLBody dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // 2.3.发送请求
+    NSOperationQueue *queue = [NSOperationQueue mainQueue];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {  // 当请求结束的时候调用 (拿到了服务器的数据, 请求失败)
+        // 隐藏HUD (刷新UI界面, 一定要放在主线程, 不能放在子线程
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            
+            // 隐藏进度框
+            [MBProgressHUD hideHUD];
+            
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD hideHUD];
+                [MBProgressHUD showMessage:@"注册成功"];
+                //切换到下一个界面  --- push
+                GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+                viewControl.listDict = dictRegisteData;
+                viewControl.ReceDict = [listData objectForKey:message];
+                [self.navigationController pushViewController:viewControl animated:YES];
+            } else { // 数据有问题
+                self.lbInfo.hidden = NO;
+                self.lbInfo.text = [listData objectForKey:message];
+            }
+        } else { // 请求失败
+            self.lbInfo.hidden = NO;
+            self.lbInfo.text = ConnectException;
+            
+            // 隐藏进度框
+            [MBProgressHUD hideHUD];
+        }
+    }];
 }
 
 #pragma RegisteCardTypeRequest 会员卡的类型数据请求
@@ -433,10 +499,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSOperationQueue *operQueue = [[NSOperationQueue alloc] init];
     [operQueue addOperationWithBlock:^{ // 产生子线程
         // 请求 shopid对应的卡号
-        id listCardNumData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardNum];
+        id listCardNumData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardNum parameters:nil];
         
         // 请求卡类型数据
-        id ListData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardType];
+        id ListData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardType parameters:nil];
         NSLog(@"currentThread1 -- %@", [NSThread currentThread]);
         
         // 切换到主线程中设置数据
