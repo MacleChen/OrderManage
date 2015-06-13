@@ -110,7 +110,7 @@ NSDictionary *dictSendLogin = nil;
             self.lbInfo.text = loginSuccess;
             
             // 获取登录数据
-            dictLogin = [dict objectForKey:message];
+            dictLogin = [dict objectForKey:MESSAGE];
             // 获取发送数据
             dictSendLogin = @{@"userName": self.edtName.text, @"userPwd": self.edtPwd.text};
             

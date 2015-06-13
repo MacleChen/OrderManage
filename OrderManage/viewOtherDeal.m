@@ -33,8 +33,8 @@ UIGraphicsBeginImageContext(size);
     return scaledImage;
 }
 
-+ (void)showAlert:(NSString *)title Mess:(NSString *) message TimeInterval:(float)timeValue {//时间
-    UIAlertView *promptAlert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
++ (void)showAlert:(NSString *)title Mess:(NSString *) mess TimeInterval:(float)timeValue {//时间
+    UIAlertView *promptAlert = [[UIAlertView alloc] initWithTitle:title message:mess delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     
     [NSTimer scheduledTimerWithTimeInterval:timeValue
                                      target:self
@@ -60,5 +60,17 @@ UIGraphicsBeginImageContext(size);
 }
 
 
-
+/**
+ *  实时获取输入框中的数据
+ */
++ (NSString *)NowInTextFiledText:(UITextField *)textField NowStrChar:(NSString *)string {
+    NSString *Str = [[NSMutableString alloc] init];
+    
+    Str = [NSMutableString stringWithFormat:@"%@%@", textField.text, string];
+    if ([string isEqual:@""]) {
+        Str = [Str substringToIndex:(Str.length - 1)];
+    }
+    
+    return Str;
+}
 @end

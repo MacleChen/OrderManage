@@ -74,4 +74,38 @@
     return dict;
 }
 
+
+/**
+ * 使用内嵌block进行网络数据请求
+ */
+//
++ (void)HttpAFNetworkingRequestBlockWithURL:(NSString *)strURL strHttpBody:(NSString *)body Retype:(NSString *)type willDone:(Donetask)done; {
+ 
+    
+    // 2.1.设置请求路径
+    NSURL *url = [NSURL URLWithString:strURL];
+    
+    // 2.2.创建请求对象
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url]; // 默认就是GET请求
+    request.timeoutInterval = 5; // 设置请求超时
+    request.HTTPMethod = type; // 设置请求类型，PSOT， GET
+    
+    // 通过请求头告诉服务器客户端的类型
+    [request setValue:@"IOS客户端" forHTTPHeaderField:@"User-Agent"];
+    
+    // 采用，改进的MD5加密 --- 对加密过的MD5码再进行一次特殊算法加密
+    
+    // 判断get 还是post 请求
+    if ([type isEqualToString:HttpPOST]) {
+        // 设置请求体
+        request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    // 2.3.发送请求
+    NSOperationQueue *queue = [NSOperationQueue mainQueue];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {  // 当请求结束的时候调用 (拿到了服务器的数据, 请求失败)
+        done(response, data, connectionError);
+    }];
+}
+
 @end

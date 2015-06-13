@@ -49,10 +49,12 @@
     _arrayGuidesDetail = [NSArray array];
     _MuarrayGuides = [[NSMutableArray alloc] init];
     
-    _arrayGuidesDetail = [self.ReceDict objectForKey:@"listemp"];
-    for (NSDictionary *tempDict in _arrayGuidesDetail) {
-        NSString *strGuideName = [tempDict objectForKey:@"empnickname"];
-        [_MuarrayGuides addObject:strGuideName];
+    if(self.ReceDict != nil) {
+        _arrayGuidesDetail = [self.ReceDict objectForKey:@"listemp"];
+        for (NSDictionary *tempDict in _arrayGuidesDetail) {
+            NSString *strGuideName = [tempDict objectForKey:@"empnickname"];
+            [_MuarrayGuides addObject:strGuideName];
+        }
     }
     
     // 设置代理
@@ -116,12 +118,6 @@
     // 隐藏显示窗口
     [MBProgressHUD hideHUD];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 
 - (IBAction)btnCashPay:(UIButton *)sender {
@@ -270,5 +266,11 @@
 #pragma mark 点击背景时，退出键盘
 -(void)HandleBackgroundTap:(UITapGestureRecognizer *)sender {
     [self.view endEditing:YES];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 @end

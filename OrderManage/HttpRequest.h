@@ -18,16 +18,31 @@
 #define WEBFindCardAction @"newcard!findcard.action?"
 #define WEBNewCardNumAction @"newcard!cardnum.action?"
 #define WEBCustomerAddAction @"customer!add.action?"
+#define WEBCustomerGetAction @"customer!get.action?"
+#define WEBTopupActiveAction @"topup!active.action?"
+#define WEBCustomerLockCardAction @"customer!lockcard.action?"
+#define WEBNewCardUpCardAction @"newcard!upcard.action?"
+#define WEBCustomerChangePwdAction @"customer!changepwd.action?"
+#define WEBCustomerUpdateAction @"customer!update.action?"
 
 
 #define statusCdoe @"statusCode"
-#define message    @"message"
+#define MESSAGE    @"message"
+#define ConnectDataError @"获取失败！"
 #define ConnectException @"网络繁忙，请稍后重试！"
+#define EmptyINPUTERROR @"输入不能为空"
+
+#define HttpPOST @"POST"
+#define HttpGET  @"GET"
+
+typedef void (^Donetask)(NSURLResponse *response, NSData *data, NSError *error);  
 
 @interface HttpRequest : NSObject
 
 + (NSData *)HttpsyncRequestPostWithURL:(NSString *)stURL;
 + (NSData *)HttpAFNetworkingRequestWithURL:(NSString *)stURL;
 + (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL parameters:(id)param;
+
++ (void)HttpAFNetworkingRequestBlockWithURL:(NSString *)strURL strHttpBody:(NSString *)body Retype:(NSString *)type willDone:(Donetask)done;
 
 @end

@@ -382,6 +382,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     self.tfcardType.text = _MuarrayCardType[row];
 }
 
+#pragma mark 对pickerview中的控件进行修改
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel* pickerLabel = (UILabel*)view;
     if (!pickerLabel){
@@ -437,7 +438,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     NSString *strMyURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerAddAction];
     
     //test
-    NSString *strURLBody = [NSString stringWithFormat:@"cuname=%@&cuemail=%@&cupwd=%@&cuphone=%@&cuaddress=%@&cucardid=%@&cucardno=%@&cubdate=%@&emp.empid=%@", self.tfName.text, self.tfEmail.text, self.tfpassword.text, self.tfPhoneNUM.text, self.tfaddress.text, [dictCardType objectForKey:@"cdid"], self.tfcardID.text, self.tfbirthday.text, [dictSendLogin objectForKey:@"userPwd"]];    //[dictSendLogin objectForKey:@"userPwd"]       //[dictLogin objectForKey:@"emppwd"]
+    NSString *strURLBody = [NSString stringWithFormat:@"cuname=%@&cuemail=%@&cupwd=%@&cuphone=%@&cuaddress=%@&cucardid=%@&cucardno=%@&cubdate=%@&emp.empid=%@", self.tfName.text, self.tfEmail.text, self.tfpassword.text, self.tfPhoneNUM.text, self.tfaddress.text, [dictCardType objectForKey:@"cdid"], self.tfcardID.text, self.tfbirthday.text, [dictLogin objectForKey:@"empid"]];
     // POST请求:请求体
     
     // 2.1.设置请求路径
@@ -473,11 +474,12 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
                 viewControl.listDict = dictRegisteData;
-                viewControl.ReceDict = [listData objectForKey:message];
+                viewControl.ReceDict = [listData objectForKey:MESSAGE];
+                
                 [self.navigationController pushViewController:viewControl animated:YES];
             } else { // 数据有问题
                 self.lbInfo.hidden = NO;
-                self.lbInfo.text = [listData objectForKey:message];
+                self.lbInfo.text = [listData objectForKey:MESSAGE];
             }
         } else { // 请求失败
             self.lbInfo.hidden = NO;
@@ -507,14 +509,14 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
         
         // 切换到主线程中设置数据
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{ // 回到主线程中
-            _arrayCardTypeData = [NSArray arrayWithObject:[ListData objectForKey:message]];
+            _arrayCardTypeData = [NSArray arrayWithObject:[ListData objectForKey:MESSAGE]];
             _arrayCardTypeData = _arrayCardTypeData[0];
             for (int i = 0; i < _arrayCardTypeData.count; i++) {
                 NSDictionary *dictTemp = _arrayCardTypeData[i];
                 NSString *strcardType = [NSString stringWithFormat:@"%@ | %@ | 价格：%@ | 次数：%@ ", [dictTemp objectForKey:@"typename"], [dictTemp objectForKey:@"cdname"], [dictTemp objectForKey:@"cdmoney"], [dictTemp objectForKey:@"cdcount"]];
                 [_MuarrayCardType addObject:strcardType];
             }
-            self.tfcardID.text = [listCardNumData objectForKey:message];
+            self.tfcardID.text = [listCardNumData objectForKey:MESSAGE];
             [self.pickerViewCardType reloadAllComponents];
         }];
     }];

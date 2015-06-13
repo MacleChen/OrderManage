@@ -19,8 +19,10 @@
 
 
 + (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size;
-+ (void)showAlert:(NSString *)title Mess:(NSString *) message TimeInterval:(float)timeValue;
++ (void)showAlert:(NSString *)title Mess:(NSString *)mess TimeInterval:(float)timeValue;
 + (void)timerFireMethod:(NSTimer*)theTimer;
 + (BOOL)isValidateEmail:(NSString *)email;
+
++ (NSString *)NowInTextFiledText:(UITextField *)textField NowStrChar:(NSString *)string;
 
 @end

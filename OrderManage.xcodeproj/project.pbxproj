@@ -38,11 +38,21 @@
 		04413B5A1B22BE9400503425 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 04413B4A1B22BE9400503425 /* UIImageView+HighlightedWebCache.m */; };
 		04413B5B1B22BE9400503425 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 04413B4C1B22BE9400503425 /* UIImageView+WebCache.m */; };
 		04413B5F1B22BF6200503425 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 04413B5E1B22BF6200503425 /* NSString+Hash.m */; };
+		0442F6451B26B06900C77AD4 /* MemberListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F6441B26B06900C77AD4 /* MemberListViewController.m */; };
+		0442F6481B26C89200C77AD4 /* HandOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F6471B26C89200C77AD4 /* HandOverViewController.m */; };
+		0442F64B1B26C92A00C77AD4 /* QuickComViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F64A1B26C92A00C77AD4 /* QuickComViewController.m */; };
+		0442F64E1B26C96100C77AD4 /* ComDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F64D1B26C96100C77AD4 /* ComDetailTableViewController.m */; };
+		0442F6511B26C9CD00C77AD4 /* SystemSetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F6501B26C9CD00C77AD4 /* SystemSetTableViewController.m */; };
+		0442F6541B26CA7C00C77AD4 /* CreditsMgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F6531B26CA7C00C77AD4 /* CreditsMgViewController.m */; };
+		0442F6571B26CAFC00C77AD4 /* MeterCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */; };
 		044C549C1B1EC5F700B5A5FF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044C549B1B1EC5F700B5A5FF /* Accelerate.framework */; };
 		0450AEAC1B1DB3840003ED6B /* RegisteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */; };
+		0453385C1B257FA700403281 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0453385B1B257FA700403281 /* AVFoundation.framework */; };
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
 		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
+		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
+		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
 		04A864B41B21382A001A3994 /* MebManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A864B31B21382A001A3994 /* MebManageViewController.m */; };
 		04B029B21B171FB000D88D16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B11B171FB000D88D16 /* main.m */; };
@@ -164,15 +174,33 @@
 		04413B4C1B22BE9400503425 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		04413B5D1B22BF6200503425 /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
 		04413B5E1B22BF6200503425 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
+		0442F6431B26B06900C77AD4 /* MemberListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberListViewController.h; sourceTree = "<group>"; };
+		0442F6441B26B06900C77AD4 /* MemberListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberListViewController.m; sourceTree = "<group>"; };
+		0442F6461B26C89200C77AD4 /* HandOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandOverViewController.h; sourceTree = "<group>"; };
+		0442F6471B26C89200C77AD4 /* HandOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOverViewController.m; sourceTree = "<group>"; };
+		0442F6491B26C92A00C77AD4 /* QuickComViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickComViewController.h; sourceTree = "<group>"; };
+		0442F64A1B26C92A00C77AD4 /* QuickComViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickComViewController.m; sourceTree = "<group>"; };
+		0442F64C1B26C96100C77AD4 /* ComDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComDetailTableViewController.h; sourceTree = "<group>"; };
+		0442F64D1B26C96100C77AD4 /* ComDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComDetailTableViewController.m; sourceTree = "<group>"; };
+		0442F64F1B26C9CD00C77AD4 /* SystemSetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemSetTableViewController.h; sourceTree = "<group>"; };
+		0442F6501B26C9CD00C77AD4 /* SystemSetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemSetTableViewController.m; sourceTree = "<group>"; };
+		0442F6521B26CA7C00C77AD4 /* CreditsMgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsMgViewController.h; sourceTree = "<group>"; };
+		0442F6531B26CA7C00C77AD4 /* CreditsMgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsMgViewController.m; sourceTree = "<group>"; };
+		0442F6551B26CAFC00C77AD4 /* MeterCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeterCardViewController.h; sourceTree = "<group>"; };
+		0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeterCardViewController.m; sourceTree = "<group>"; };
 		044C549B1B1EC5F700B5A5FF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		0450AEAA1B1DB3840003ED6B /* RegisteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisteViewController.h; sourceTree = "<group>"; };
 		0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteViewController.m; sourceTree = "<group>"; };
+		0453385B1B257FA700403281 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		046E73381B1869CD00C57B2D /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		047D2F9B1B17FF28003095DB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		048397071B1D5735005D6BB9 /* viewOtherDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewOtherDeal.h; sourceTree = "<group>"; };
 		048397081B1D5735005D6BB9 /* viewOtherDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewOtherDeal.m; sourceTree = "<group>"; };
+		048A29F71B27DB6700C7140D /* MebManageShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MebManageShowView.xib; sourceTree = "<group>"; };
+		048A29FD1B281C0300C7140D /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
+		048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
 		049670B11B207F7700430237 /* GetMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetMoneyViewController.h; sourceTree = "<group>"; };
 		049670B21B207F7700430237 /* GetMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMoneyViewController.m; sourceTree = "<group>"; };
 		04A864B21B21382A001A3994 /* MebManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MebManageViewController.h; sourceTree = "<group>"; };
@@ -263,6 +291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0453385C1B257FA700403281 /* AVFoundation.framework in Frameworks */,
 				044C549C1B1EC5F700B5A5FF /* Accelerate.framework in Frameworks */,
 				04BADAAE1B1C390D00ABB52B /* CoreGraphics.framework in Frameworks */,
 				04BADAAC1B1C390200ABB52B /* Foundation.framework in Frameworks */,
@@ -374,6 +403,20 @@
 				049670B21B207F7700430237 /* GetMoneyViewController.m */,
 				04A864B21B21382A001A3994 /* MebManageViewController.h */,
 				04A864B31B21382A001A3994 /* MebManageViewController.m */,
+				0442F6431B26B06900C77AD4 /* MemberListViewController.h */,
+				0442F6441B26B06900C77AD4 /* MemberListViewController.m */,
+				0442F6461B26C89200C77AD4 /* HandOverViewController.h */,
+				0442F6471B26C89200C77AD4 /* HandOverViewController.m */,
+				0442F6491B26C92A00C77AD4 /* QuickComViewController.h */,
+				0442F64A1B26C92A00C77AD4 /* QuickComViewController.m */,
+				0442F64C1B26C96100C77AD4 /* ComDetailTableViewController.h */,
+				0442F64D1B26C96100C77AD4 /* ComDetailTableViewController.m */,
+				0442F64F1B26C9CD00C77AD4 /* SystemSetTableViewController.h */,
+				0442F6501B26C9CD00C77AD4 /* SystemSetTableViewController.m */,
+				0442F6521B26CA7C00C77AD4 /* CreditsMgViewController.h */,
+				0442F6531B26CA7C00C77AD4 /* CreditsMgViewController.m */,
+				0442F6551B26CAFC00C77AD4 /* MeterCardViewController.h */,
+				0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -383,6 +426,7 @@
 			children = (
 				04B02A0B1B1722A400D88D16 /* Main.storyboard */,
 				04B029D51B171FFC00D88D16 /* LaunchScreen.xib */,
+				048A29F71B27DB6700C7140D /* MebManageShowView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -416,6 +460,15 @@
 			name = "http-request";
 			sourceTree = "<group>";
 		};
+		048A29F91B280F2400C7140D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				048A29FD1B281C0300C7140D /* CustomIOS7AlertView.h */,
+				048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		04B029A31B171FB000D88D16 = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +491,7 @@
 		04B029AE1B171FB000D88D16 /* OrderManage */ = {
 			isa = PBXGroup;
 			children = (
+				048A29F91B280F2400C7140D /* Extensions */,
 				04413B5C1B22BEA200503425 /* Category */,
 				04413B2D1B22BE7C00503425 /* SDWebImage */,
 				04413B241B22BE4400503425 /* MBProgressHUD */,
@@ -613,6 +667,7 @@
 		04BADAAF1B1C396700ABB52B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0453385B1B257FA700403281 /* AVFoundation.framework */,
 				044C549B1B1EC5F700B5A5FF /* Accelerate.framework */,
 				04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */,
 				04BADAAB1B1C390200ABB52B /* Foundation.framework */,
@@ -731,6 +786,7 @@
 				04B029FB1B17220600D88D16 /* 会员列表.png in Resources */,
 				04B02A071B17220600D88D16 /* 消费收银.png in Resources */,
 				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
+				048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */,
 				0423C2D21B1EEEF4000DCE8B /* imgbirthday.png in Resources */,
 				04B029FC1B17220600D88D16 /* 会员注册.png in Resources */,
 				04B029FD1B17220600D88D16 /* 积分管理.png in Resources */,
@@ -762,8 +818,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */,
 				04413B571B22BE9400503425 /* UIImage+GIF.m in Sources */,
 				04BADA8A1B1C386500ABB52B /* AFSecurityPolicy.m in Sources */,
+				0442F6571B26CAFC00C77AD4 /* MeterCardViewController.m in Sources */,
 				04BADA7D1B1C383A00ABB52B /* AFURLSessionManager.m in Sources */,
 				04BADAA01B1C389900ABB52B /* UIButton+AFNetworking.m in Sources */,
 				04BADA871B1C385A00ABB52B /* AFNetworkReachabilityManager.m in Sources */,
@@ -771,13 +829,17 @@
 				049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */,
 				04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */,
 				04413B4F1B22BE9400503425 /* SDImageCache.m in Sources */,
+				0442F6481B26C89200C77AD4 /* HandOverViewController.m in Sources */,
 				046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */,
 				04413B501B22BE9400503425 /* SDWebImageCompat.m in Sources */,
 				04B029B21B171FB000D88D16 /* main.m in Sources */,
 				04413B5A1B22BE9400503425 /* UIImageView+HighlightedWebCache.m in Sources */,
 				04413B551B22BE9400503425 /* SDWebImagePrefetcher.m in Sources */,
 				04413B531B22BE9400503425 /* SDWebImageDownloaderOperation.m in Sources */,
+				0442F6451B26B06900C77AD4 /* MemberListViewController.m in Sources */,
 				04BADAA31B1C389900ABB52B /* UIRefreshControl+AFNetworking.m in Sources */,
+				0442F6511B26C9CD00C77AD4 /* SystemSetTableViewController.m in Sources */,
+				0442F64E1B26C96100C77AD4 /* ComDetailTableViewController.m in Sources */,
 				04413B521B22BE9400503425 /* SDWebImageDownloader.m in Sources */,
 				04413B4E1B22BE9400503425 /* NSData+ImageContentType.m in Sources */,
 				04BADA761B1C382900ABB52B /* AFURLConnectionOperation.m in Sources */,
@@ -790,12 +852,14 @@
 				04413B5F1B22BF6200503425 /* NSString+Hash.m in Sources */,
 				04413B541B22BE9400503425 /* SDWebImageManager.m in Sources */,
 				04BADA831B1C384D00ABB52B /* AFURLRequestSerialization.m in Sources */,
+				0442F64B1B26C92A00C77AD4 /* QuickComViewController.m in Sources */,
 				04A864B41B21382A001A3994 /* MebManageViewController.m in Sources */,
 				04BADA7E1B1C383A00ABB52B /* AFHTTPSessionManager.m in Sources */,
 				04413B2A1B22BE6300503425 /* MBProgressHUD+MJ.m in Sources */,
 				04413B4D1B22BE9400503425 /* MKAnnotationView+WebCache.m in Sources */,
 				04BADAA41B1C389900ABB52B /* UIWebView+AFNetworking.m in Sources */,
 				04BADA781B1C382900ABB52B /* AFHTTPRequestOperationManager.m in Sources */,
+				0442F6541B26CA7C00C77AD4 /* CreditsMgViewController.m in Sources */,
 				04BADA841B1C384D00ABB52B /* AFURLResponseSerialization.m in Sources */,
 				04413B581B22BE9400503425 /* UIImage+MultiFormat.m in Sources */,
 				04413B591B22BE9400503425 /* UIImage+WebP.m in Sources */,
