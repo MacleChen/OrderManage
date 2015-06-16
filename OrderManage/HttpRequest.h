@@ -25,6 +25,10 @@
 #define WEBCustomerChangePwdAction @"customer!changepwd.action?"
 #define WEBCustomerUpdateAction @"customer!update.action?"
 
+#define WEBNewCardReturnAction @"newcard!returncard.action?"
+
+// 会员列表--网络请求
+#define WEBCustomerListAction @"customer!list.action?"
 
 #define statusCdoe @"statusCode"
 #define MESSAGE    @"message"

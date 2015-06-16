@@ -322,6 +322,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     // 初始化内容
+    self.lbCancelCard_CardID.text = self.lbCardID.text;
+    self.lbCancelCard_ReMoney.text = self.lbRemain_Times.text;
 }
 
 /**
@@ -480,7 +482,21 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 dictTempData = [dictTempData objectForKey:@"cus"];
                 // copy 查询到的会员信息
                 self.dictSearchMebInfo = dictTempData;
-
+                
+                // 表示该该卡已被退卡
+                if([[dictTempData objectForKey:@"cucardid"] isEqual:@"无"]) {
+                    [MBProgressHUD show:@"该手机号未绑定会员卡" icon:nil view:nil];
+                    // 清空显示信息
+                    self.lbCardID.text = @"";
+                    self.lbRemain_Times.text = @"";
+                    self.lbCredits.text = @"";
+                    self.lbCard_discount.text = @"";
+                    self.lbName.text = @"";
+                    self.lbphoneNUM.text = @"";
+                    self.lbBirday.text = @"";
+                    self.lbAddress.text = @"";
+                    return;
+                }
                 // 设置显示信息
                 self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
                 self.lbRemain_Times.text = [dictTempData objectForKey:@"lostmoney"];
@@ -868,12 +884,44 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 补卡处理
 - (void)MakeupCardDeal {
-
+    
 }
 
 #pragma mark 退卡处理
 - (void)CancelCardDeal {
-
+    [self.view endEditing:YES];
+    [self textFieldShouldBeginEditing:nil]; // 退出picker
+    [self.alertShow close];
+    
+    // 获取卡的类型对应-----   -1：储值卡   1：计次卡
+    NSString *StrcardtypeId = [self.dictSearchMebInfo objectForKey:@"cardtypeid"];
+    NSString *strFlag = [StrcardtypeId intValue] > 0 ? @"-1" : @"1";
+    
+    // 网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBNewCardReturnAction];
+    NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@&keyword1=%@&keyword2=%@&emp.empid=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], strFlag, self.lbRemain_Times.text, [dictLogin objectForKey:@"empid"]];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                // 刷新查询数据
+                [self btnSearchInfo:nil];
+                [MBProgressHUD show:[listData objectForKey: MESSAGE] icon:nil view:nil];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 #pragma mark 卡升级处理

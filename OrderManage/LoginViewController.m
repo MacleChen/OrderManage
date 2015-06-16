@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "viewOtherDeal.h"
 
 #define loginSecUrl @"emp!login.action?"//emp.empname=gzcy&emp.emppwd=123456"
 
@@ -46,9 +47,6 @@ NSDictionary *dictSendLogin = nil;
     self.edtPwd.secureTextEntry = YES;   // 设置为安全输入
     
     // 限制输入textfield的字符串的长度
-
-    // 设置第一响应者
-    [self.edtName becomeFirstResponder];
     
     // 设置代理
     self.edtName.delegate = self;
@@ -58,6 +56,9 @@ NSDictionary *dictSendLogin = nil;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    // 初始化登录数据
+    [self readNSUserDefaults];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,15 +77,7 @@ NSDictionary *dictSendLogin = nil;
 */
 //emp!login.action?emp.empname=gzcy&emp.emppwd=123456
 
-
-// 测试按钮响应方法
-- (IBAction)btnTest:(UIButton *)sender {
-    // 跳转到主页面
-    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"NavController"];  // 根据storyboardID获取视图
-    [viewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];   // 立即效果
-    
-    [self presentViewController: viewController animated:YES completion:nil];
-
+- (IBAction)SwSavePwd:(UISwitch *)sender {
 }
 
 - (IBAction)btnClick:(UIButton *)sender {
@@ -108,6 +101,9 @@ NSDictionary *dictSendLogin = nil;
         NSString *statCode = [dict objectForKey:statusCdoe];
         if ([statCode intValue] == 200) {
             self.lbInfo.text = loginSuccess;
+            
+            // 保存登录账户，密码
+            [self saveNSUserDefaults];
             
             // 获取登录数据
             dictLogin = [dict objectForKey:MESSAGE];
@@ -144,7 +140,6 @@ NSDictionary *dictSendLogin = nil;
 #pragma mark - textfield 的代理方法的实现
 #pragma mark  当输入框开始编辑时调用方法
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    self.btnLogin.enabled = NO;
     self.lbInfo.text = @"";
     
     return YES;
@@ -152,11 +147,10 @@ NSDictionary *dictSendLogin = nil;
 
 #pragma mark 编辑时，实时调用的方法
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    if (([string isEqual:@""] && textField.text.length <= 1) || [self.edtName.text isEqual:@""] || [self.edtPwd.text isEqual:@""]) {
-        self.btnLogin.enabled = NO;
-    } else {
-        self.btnLogin.enabled = YES;
-    }
+    
+    NSString *strTemp = [viewOtherDeal NowInTextFiledText:textField NowStrChar:string];
+    if([strTemp isEqual:@""]) self.btnLogin.enabled = NO;
+    else self.btnLogin.enabled = YES;
     
     return YES;
 }
@@ -202,6 +196,43 @@ NSDictionary *dictSendLogin = nil;
     self.viewLogin.frame = viewFrame;
     
     [UIView commitAnimations];
+}
+
+
+//保存数据到NSUserDefaults
+-(void)saveNSUserDefaults
+{
+    // 将登录数据保存到nsuserDefaults中
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    
+    // 存入数据
+    [userDef setObject:self.edtName.text forKey:@"name"];
+    [userDef setObject:self.edtPwd.text forKey:@"password"];
+    [userDef setBool:self.savePwd.on forKey:@"savepwd"];
+    
+    // 建议同步存储到磁盘中
+    [userDef synchronize];
+}
+
+//从NSUserDefaults中读取数据
+-(void)readNSUserDefaults
+{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    
+    // 读取数据到登录界面
+    self.edtName.text = [userDef objectForKey:@"name"];
+    if ([userDef boolForKey:@"savepwd"]) {  // 保存密码
+        self.edtPwd.text = [userDef objectForKey:@"password"];
+    }
+    self.savePwd.on = [userDef boolForKey:@"savepwd"];
+    
+    if([self.edtPwd.text isEqual:@""]) [self.edtName becomeFirstResponder];
+    if([self.edtName.text isEqual:@""]) [self.edtName becomeFirstResponder];
+    
+    if (![self.edtPwd.text isEqual:@""] && ![self.edtName.text isEqual:@""]) {
+        self.btnLogin.enabled = YES;
+        [self.view endEditing:YES];
+    }
 }
 
 @end

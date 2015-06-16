@@ -312,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3y-Ti-34I">
-                                <rect key="frame" x="0.0" y="52" width="320" height="307"/>
+                                <rect key="frame" x="0.0" y="52" width="320" height="342"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Baw-Cu-p1V">
                                         <rect key="frame" x="55" y="164" width="211" height="1"/>
@@ -338,15 +338,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="595-Da-avu">
-                                        <rect key="frame" x="60" y="249" width="206" height="31"/>
-                                        <state key="normal" title="Button" image="登陆按钮A.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="btnClick:" destination="hxN-sH-TDE" eventType="touchUpInside" id="QWw-Yk-flL"/>
-                                        </connections>
-                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="头像.png" translatesAutoresizingMaskIntoConstraints="NO" id="9KB-B9-T9h">
                                         <rect key="frame" x="119" y="8" width="82" height="82"/>
                                     </imageView>
@@ -363,6 +354,28 @@
                                         <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="记住密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaW-90-602">
+                                        <rect key="frame" x="164" y="237" width="51" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xOP-rC-DDb">
+                                        <rect key="frame" x="217" y="232" width="51" height="31"/>
+                                        <color key="onTintColor" red="0.045148248810546299" green="0.4517815806878307" blue="0.40500974221627495" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="SwSavePwd:" destination="hxN-sH-TDE" eventType="valueChanged" id="rm2-KO-Eri"/>
+                                        </connections>
+                                    </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="595-Da-avu">
+                                        <rect key="frame" x="57" y="276" width="206" height="34"/>
+                                        <state key="normal" title="Button" image="登陆按钮A.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btnClick:" destination="hxN-sH-TDE" eventType="touchUpInside" id="QWw-Yk-flL"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -376,6 +389,7 @@
                         <outlet property="edtPwd" destination="DOM-aQ-aBT" id="hdu-gL-mBt"/>
                         <outlet property="imgIcon" destination="9KB-B9-T9h" id="yY7-zU-G3n"/>
                         <outlet property="lbInfo" destination="HSQ-iv-k5e" id="DGu-cl-n4P"/>
+                        <outlet property="savePwd" destination="xOP-rC-DDb" id="8yv-Ye-pWD"/>
                         <outlet property="viewLogin" destination="Q3y-Ti-34I" id="vlT-An-sXm"/>
                     </connections>
                 </viewController>
@@ -612,15 +626,12 @@
         <scene sceneID="WgY-R1-3eh">
             <objects>
                 <tableViewController id="S4h-R5-WuD" customClass="MemberListViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UVf-vS-c6D">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UVf-vS-c6D" customClass="PullTableView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableFooterView" contentMode="redraw" placeholder="会员名称/会员卡号" id="usk-9Q-73o">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
+                        <inset key="scrollIndicatorInsets" minX="0.0" minY="100" maxX="0.0" maxY="0.0"/>
+                        <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="S4h-R5-WuD" id="2Wm-rt-O7d"/>
                             <outlet property="delegate" destination="S4h-R5-WuD" id="VYP-I4-vnI"/>
@@ -637,8 +648,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="pullTableView" destination="UVf-vS-c6D" id="dcd-Uw-p1u"/>
                         <outlet property="tableView" destination="UVf-vS-c6D" id="apU-ss-gBz"/>
-                        <outlet property="tfSearch" destination="usk-9Q-73o" id="ZzD-pe-1dY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yB-8F-CUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -900,7 +911,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" 收银员：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0w-mR-DkE">
                                 <rect key="frame" x="36" y="109" width="249" height="21"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

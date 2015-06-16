@@ -22,10 +22,9 @@
 
 @property (strong, nonatomic) IBOutlet UIView *viewLogin;
 
+@property (weak, nonatomic) IBOutlet UISwitch *savePwd;
 
-// 测试按钮
-- (IBAction)btnTest:(UIButton *)sender;
-
+- (IBAction)SwSavePwd:(UISwitch *)sender;
 
 
 - (IBAction)btnClick:(UIButton *)sender;

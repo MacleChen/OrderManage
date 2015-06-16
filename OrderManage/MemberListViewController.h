@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PullTableView.h"
 
 @interface MemberListViewController : UITableViewController
 
-@property (weak, nonatomic) IBOutlet UISearchBar *tfSearch;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UISearchBar *Searchbar;
+@property (strong, nonatomic) IBOutlet PullTableView *pullTableView;
+
+@property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
 - (IBAction)btnQRcode:(UIBarButtonItem *)sender;
 
