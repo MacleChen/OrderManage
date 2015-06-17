@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PullTableView.h"
 
 @interface ComDetailTableViewController : UITableViewController
+
+@property (strong, nonatomic) IBOutlet PullTableView *pullTableView;
 
 @end

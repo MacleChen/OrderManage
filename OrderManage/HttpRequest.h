@@ -30,6 +30,13 @@
 // 会员列表--网络请求
 #define WEBCustomerListAction @"customer!list.action?"
 
+#define WEBTurnOverTsaleAction @"turnover!tsale.action?"    // 结算交班 -- 请求数据
+#define WEBTurnOVerAddAction @"turnover!add.action?"         // 结算交班 -- 提交数据
+
+#define WEBSaleFastSaleAction @"sale!fastsale.action?"   // 快速消费 -- 提交数据
+
+#define WEBRecordListAction @"record!list.action?"      // 消费明细 -- 获取数据列表
+
 #define statusCdoe @"statusCode"
 #define MESSAGE    @"message"
 #define ConnectDataError @"获取失败！"

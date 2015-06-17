@@ -60,6 +60,7 @@
 @interface MebManageViewController : UIViewController <CustomIOS7AlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *tfSearch;
+@property (strong, nonatomic) NSDictionary *ReceDict; // 接收其它界面的传递数据
 
 @property (strong, nonatomic) NSDictionary *dictSearchMebInfo;  // 查询到的会员信息
 

@@ -74,6 +74,15 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 将view添加到键盘上面
     UIWindow *wind = [[[UIApplication sharedApplication] windows] lastObject];
     [wind addSubview:self.visualEffectView];
+    
+    // 设置初始值
+    if([self.tfSearch.text isEqual:@""])
+        self.tfSearch.text = [self.ReceDict objectForKey:@"cumb"];
+    if([self.tfSearch.text isEqual:@""])
+        self.tfSearch.text = [self.ReceDict objectForKey:@"cucardid"];
+    if([self.tfSearch.text isEqual:@""])
+        self.tfSearch.text = [self.ReceDict objectForKey:@"cuname"];
+    if(![self.tfSearch.text isEqual:@""])   [self btnSearchInfo:nil];
 }
 
 

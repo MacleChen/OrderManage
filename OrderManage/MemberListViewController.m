@@ -10,6 +10,7 @@
 #import "viewOtherDeal.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "MebManageViewController.h"
 
 #define CELL_HEIGHT 50
 
@@ -21,6 +22,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     NSInteger _memberTotalCount;  // 会员的总数量
     int _pages;     // 页数
+    
     NSMutableArray *_muArrayData; // 存储显示在界面上的数据
     NSArray *_arrayGetWebData;   // 获取网络数据
 }
@@ -45,17 +47,17 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.pullTableView.delegate = self;
     self.pullTableView.dataSource = self;
     self.pullTableView.pullDelegate = self;
-    self.Searchbar.delegate = self;
     
     
     // 设置搜索栏
     self.Searchbar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 50)];
     self.Searchbar.placeholder = @"会员名称/卡号/手机号";
+    self.Searchbar.delegate = self;
     [self.view addSubview:self.Searchbar];
     
     // 设置pullTableview
     self.pullTableView.pullArrowImage = [UIImage imageNamed:@"blackArrow"];
-    self.pullTableView.pullBackgroundColor = [UIColor lightGrayColor];
+    self.pullTableView.pullBackgroundColor = [UIColor groupTableViewBackgroundColor];
     self.pullTableView.pullTextColor = [UIColor blackColor];
     
     // 设置tableview 第一个cell距离导航栏的高度
@@ -99,6 +101,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                                                  };
                     [arrayTemp addObject:dictTemp2];
                 }
+                if(![self.Searchbar.text isEqual:@""]) [_muArrayData removeAllObjects];
                 _muArrayData[PageCount - 1] = arrayTemp;
                 
                 [self.pullTableView reloadData];  // 刷新整个表
@@ -146,11 +149,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.pullTableView.pullTableIsRefreshing = NO;
     
 //    // 获取网络数据
-    [_muArrayData removeAllObjects];  // 清空数据
+    //[_muArrayData removeAllObjects];  // 清空数据
     _pages = 1;
     [self GetWebResponseDataWithpage:_pages];
-    
-    NSLog(@"刷新");
 }
 
 #pragma mark 加载更多数据方法
@@ -174,9 +175,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         _pages++;
         [self GetWebResponseDataWithpage:_pages];
     }
-    
-    
-    NSLog(@"加载更多。。。 _page = %d , LastPage = %ld", _pages, LastPage);
 }
 
 #pragma mark - pulltableview 的代理方法实现
@@ -218,6 +216,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     lbShowcardID.font = [UIFont systemFontOfSize:12];
     [cell addSubview:lbShowcardID];
     
+    // 设置cell右边的样式
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     return cell;
 }
 
@@ -234,6 +235,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
 }
 
+#pragma mark 当开始拖拽时调用的方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.view endEditing:YES];
+}
+
 #pragma mark 设置每个row的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return CELL_HEIGHT;
@@ -241,7 +247,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark  选中cell时响应方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"选中 %ld", indexPath.row);
+    // 跳转到会员管理
+    //     返回到主界面 -- 回退根控制器界面
+    //[self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //切换到下一个界面  --- push
+    MebManageViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"MebManage"];
+    viewControl.ReceDict = _muArrayData[indexPath.section][indexPath.row];  // 传入数据
+    [self.navigationController pushViewController:viewControl animated:YES];
 }
 
 #pragma mark - PullTableViewDelegate
@@ -259,7 +272,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark - UISearchBarDelegate 的代理方法的实现
 #pragma mark - 当点击键盘上的搜索按钮时调用这个方法
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    [self GetWebResponseDataWithpage:1];
 }
 
 #pragma mark 当点击取消按钮时调用

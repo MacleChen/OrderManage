@@ -63,11 +63,15 @@
 		0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */; };
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
+		0480ED951B2FE5370041A1FC /* yesImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED931B2FE5370041A1FC /* yesImg.png */; };
+		0480ED961B2FE5370041A1FC /* NOImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED941B2FE5370041A1FC /* NOImg.png */; };
 		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
 		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
 		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
 		04A864B41B21382A001A3994 /* MebManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A864B31B21382A001A3994 /* MebManageViewController.m */; };
+		04A88C781B312E980016B18B /* OrderDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A88C771B312E980016B18B /* OrderDetailTableViewController.m */; };
+		04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A88C7B1B31324D0016B18B /* OrderDetailShowCellView.xib */; };
 		04B029B21B171FB000D88D16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B11B171FB000D88D16 /* main.m */; };
 		04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B029B41B171FB000D88D16 /* AppDelegate.m */; };
 		04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04B029BC1B171FB000D88D16 /* Images.xcassets */; };
@@ -123,6 +127,17 @@
 		04BADAAA1B1C38F700ABB52B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAA91B1C38F700ABB52B /* UIKit.framework */; };
 		04BADAAC1B1C390200ABB52B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAAB1B1C390200ABB52B /* Foundation.framework */; };
 		04BADAAE1B1C390D00ABB52B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */; };
+		04BEE3611B319FE4003D4061 /* checkbox1_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE35B1B319FE4003D4061 /* checkbox1_checked.png */; };
+		04BEE3621B319FE4003D4061 /* checkbox1_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE35C1B319FE4003D4061 /* checkbox1_checked@2x.png */; };
+		04BEE3631B319FE4003D4061 /* checkbox1_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE35D1B319FE4003D4061 /* checkbox1_unchecked.png */; };
+		04BEE3641B319FE4003D4061 /* checkbox1_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE35E1B319FE4003D4061 /* checkbox1_unchecked@2x.png */; };
+		04BEE3651B319FE4003D4061 /* QCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3601B319FE4003D4061 /* QCheckBox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		04BEE36B1B31A3A5003D4061 /* check_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE3671B31A3A5003D4061 /* check_icon.png */; };
+		04BEE36C1B31A3A5003D4061 /* check_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE3681B31A3A5003D4061 /* check_icon@2x.png */; };
+		04BEE36D1B31A3A5003D4061 /* uncheck_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE3691B31A3A5003D4061 /* uncheck_icon.png */; };
+		04BEE36E1B31A3A5003D4061 /* uncheck_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE36A1B31A3A5003D4061 /* uncheck_icon@2x.png */; };
+		04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */; };
+		04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */; };
 		04E1A3741B2BF8B100251D76 /* mebInitImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E1A3731B2BF8B100251D76 /* mebInitImg.png */; };
 /* End PBXBuildFile section */
 
@@ -227,6 +242,8 @@
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		047D2F9B1B17FF28003095DB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		0480ED931B2FE5370041A1FC /* yesImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yesImg.png; sourceTree = "<group>"; };
+		0480ED941B2FE5370041A1FC /* NOImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NOImg.png; sourceTree = "<group>"; };
 		048397071B1D5735005D6BB9 /* viewOtherDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewOtherDeal.h; sourceTree = "<group>"; };
 		048397081B1D5735005D6BB9 /* viewOtherDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewOtherDeal.m; sourceTree = "<group>"; };
 		048A29F71B27DB6700C7140D /* MebManageShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MebManageShowView.xib; sourceTree = "<group>"; };
@@ -236,6 +253,9 @@
 		049670B21B207F7700430237 /* GetMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMoneyViewController.m; sourceTree = "<group>"; };
 		04A864B21B21382A001A3994 /* MebManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MebManageViewController.h; sourceTree = "<group>"; };
 		04A864B31B21382A001A3994 /* MebManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MebManageViewController.m; sourceTree = "<group>"; };
+		04A88C761B312E980016B18B /* OrderDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailTableViewController.h; sourceTree = "<group>"; };
+		04A88C771B312E980016B18B /* OrderDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailTableViewController.m; sourceTree = "<group>"; };
+		04A88C7B1B31324D0016B18B /* OrderDetailShowCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailShowCellView.xib; sourceTree = "<group>"; };
 		04B029AC1B171FB000D88D16 /* OrderManage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderManage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B029B01B171FB000D88D16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04B029B11B171FB000D88D16 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -315,6 +335,20 @@
 		04BADAA91B1C38F700ABB52B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		04BADAAB1B1C390200ABB52B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04BADAAD1B1C390D00ABB52B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		04BEE35B1B319FE4003D4061 /* checkbox1_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox1_checked.png; sourceTree = "<group>"; };
+		04BEE35C1B319FE4003D4061 /* checkbox1_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_checked@2x.png"; sourceTree = "<group>"; };
+		04BEE35D1B319FE4003D4061 /* checkbox1_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox1_unchecked.png; sourceTree = "<group>"; };
+		04BEE35E1B319FE4003D4061 /* checkbox1_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_unchecked@2x.png"; sourceTree = "<group>"; };
+		04BEE35F1B319FE4003D4061 /* QCheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCheckBox.h; sourceTree = "<group>"; };
+		04BEE3601B319FE4003D4061 /* QCheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCheckBox.m; sourceTree = "<group>"; };
+		04BEE3671B31A3A5003D4061 /* check_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_icon.png; sourceTree = "<group>"; };
+		04BEE3681B31A3A5003D4061 /* check_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check_icon@2x.png"; sourceTree = "<group>"; };
+		04BEE3691B31A3A5003D4061 /* uncheck_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheck_icon.png; sourceTree = "<group>"; };
+		04BEE36A1B31A3A5003D4061 /* uncheck_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uncheck_icon@2x.png"; sourceTree = "<group>"; };
+		04BEE36F1B31BF21003D4061 /* BlueDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueDeviceViewController.h; sourceTree = "<group>"; };
+		04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueDeviceViewController.m; sourceTree = "<group>"; };
+		04BEE3721B31BF35003D4061 /* POSDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSDeviceViewController.h; sourceTree = "<group>"; };
+		04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDeviceViewController.m; sourceTree = "<group>"; };
 		04E1A3731B2BF8B100251D76 /* mebInitImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebInitImg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -426,6 +460,7 @@
 		0454F7551B2E6C3C00AA0EF3 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				04BEE35A1B319FCA003D4061 /* QCheckbox */,
 				0454F7561B2E6C7800AA0EF3 /* EGOTableViewPullRefresh */,
 				04413B241B22BE4400503425 /* MBProgressHUD */,
 				04413B2D1B22BE7C00503425 /* SDWebImage */,
@@ -476,30 +511,17 @@
 		047D2F9D1B1801ED003095DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				047D2F9A1B17FF28003095DB /* LoginViewController.h */,
-				047D2F9B1B17FF28003095DB /* LoginViewController.m */,
-				041B8FD91B1D863500971014 /* MainViewController.h */,
-				041B8FDA1B1D863500971014 /* MainViewController.m */,
-				0450AEAA1B1DB3840003ED6B /* RegisteViewController.h */,
-				0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */,
-				049670B11B207F7700430237 /* GetMoneyViewController.h */,
-				049670B21B207F7700430237 /* GetMoneyViewController.m */,
-				04A864B21B21382A001A3994 /* MebManageViewController.h */,
-				04A864B31B21382A001A3994 /* MebManageViewController.m */,
-				0442F6431B26B06900C77AD4 /* MemberListViewController.h */,
-				0442F6441B26B06900C77AD4 /* MemberListViewController.m */,
-				0442F6461B26C89200C77AD4 /* HandOverViewController.h */,
-				0442F6471B26C89200C77AD4 /* HandOverViewController.m */,
-				0442F6491B26C92A00C77AD4 /* QuickComViewController.h */,
-				0442F64A1B26C92A00C77AD4 /* QuickComViewController.m */,
-				0442F64C1B26C96100C77AD4 /* ComDetailTableViewController.h */,
-				0442F64D1B26C96100C77AD4 /* ComDetailTableViewController.m */,
-				0442F64F1B26C9CD00C77AD4 /* SystemSetTableViewController.h */,
-				0442F6501B26C9CD00C77AD4 /* SystemSetTableViewController.m */,
-				0442F6521B26CA7C00C77AD4 /* CreditsMgViewController.h */,
-				0442F6531B26CA7C00C77AD4 /* CreditsMgViewController.m */,
-				0442F6551B26CAFC00C77AD4 /* MeterCardViewController.h */,
-				0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */,
+				04A88C751B3104790016B18B /* LoginViewController */,
+				04A88C741B31045F0016B18B /* MainViewController */,
+				04A88C731B3104480016B18B /* RegisteViewController */,
+				04A88C721B3104390016B18B /* MebManageViewController */,
+				04A88C711B31042E0016B18B /* MemberListViewController */,
+				04A88C701B3104220016B18B /* HandOverViewController */,
+				04A88C6F1B3104180016B18B /* QuickComViewController */,
+				04A88C6E1B31040A0016B18B /* ComDetailViewController */,
+				04A88C6D1B3103FF0016B18B /* SystemSetViewController */,
+				04A88C6C1B3103EB0016B18B /* CreditsMgViewController */,
+				04A88C6B1B3103C70016B18B /* MeterCardViewController */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -510,6 +532,7 @@
 				04B02A0B1B1722A400D88D16 /* Main.storyboard */,
 				04B029D51B171FFC00D88D16 /* LaunchScreen.xib */,
 				048A29F71B27DB6700C7140D /* MebManageShowView.xib */,
+				04A88C7B1B31324D0016B18B /* OrderDetailShowCellView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -543,6 +566,15 @@
 			name = "http-request";
 			sourceTree = "<group>";
 		};
+		0480ED921B2FE4C50041A1FC /* HandOver */ = {
+			isa = PBXGroup;
+			children = (
+				0480ED931B2FE5370041A1FC /* yesImg.png */,
+				0480ED941B2FE5370041A1FC /* NOImg.png */,
+			);
+			name = HandOver;
+			sourceTree = "<group>";
+		};
 		048A29F91B280F2400C7140D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +582,113 @@
 				048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		04A88C6B1B3103C70016B18B /* MeterCardViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F6551B26CAFC00C77AD4 /* MeterCardViewController.h */,
+				0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */,
+			);
+			name = MeterCardViewController;
+			sourceTree = "<group>";
+		};
+		04A88C6C1B3103EB0016B18B /* CreditsMgViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F6521B26CA7C00C77AD4 /* CreditsMgViewController.h */,
+				0442F6531B26CA7C00C77AD4 /* CreditsMgViewController.m */,
+			);
+			name = CreditsMgViewController;
+			sourceTree = "<group>";
+		};
+		04A88C6D1B3103FF0016B18B /* SystemSetViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F64F1B26C9CD00C77AD4 /* SystemSetTableViewController.h */,
+				0442F6501B26C9CD00C77AD4 /* SystemSetTableViewController.m */,
+				04BEE36F1B31BF21003D4061 /* BlueDeviceViewController.h */,
+				04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */,
+				04BEE3721B31BF35003D4061 /* POSDeviceViewController.h */,
+				04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */,
+			);
+			name = SystemSetViewController;
+			sourceTree = "<group>";
+		};
+		04A88C6E1B31040A0016B18B /* ComDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F64C1B26C96100C77AD4 /* ComDetailTableViewController.h */,
+				0442F64D1B26C96100C77AD4 /* ComDetailTableViewController.m */,
+				04A88C761B312E980016B18B /* OrderDetailTableViewController.h */,
+				04A88C771B312E980016B18B /* OrderDetailTableViewController.m */,
+			);
+			name = ComDetailViewController;
+			sourceTree = "<group>";
+		};
+		04A88C6F1B3104180016B18B /* QuickComViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F6491B26C92A00C77AD4 /* QuickComViewController.h */,
+				0442F64A1B26C92A00C77AD4 /* QuickComViewController.m */,
+			);
+			name = QuickComViewController;
+			sourceTree = "<group>";
+		};
+		04A88C701B3104220016B18B /* HandOverViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F6461B26C89200C77AD4 /* HandOverViewController.h */,
+				0442F6471B26C89200C77AD4 /* HandOverViewController.m */,
+			);
+			name = HandOverViewController;
+			sourceTree = "<group>";
+		};
+		04A88C711B31042E0016B18B /* MemberListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0442F6431B26B06900C77AD4 /* MemberListViewController.h */,
+				0442F6441B26B06900C77AD4 /* MemberListViewController.m */,
+			);
+			name = MemberListViewController;
+			sourceTree = "<group>";
+		};
+		04A88C721B3104390016B18B /* MebManageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				04A864B21B21382A001A3994 /* MebManageViewController.h */,
+				04A864B31B21382A001A3994 /* MebManageViewController.m */,
+			);
+			name = MebManageViewController;
+			sourceTree = "<group>";
+		};
+		04A88C731B3104480016B18B /* RegisteViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0450AEAA1B1DB3840003ED6B /* RegisteViewController.h */,
+				0450AEAB1B1DB3840003ED6B /* RegisteViewController.m */,
+				049670B11B207F7700430237 /* GetMoneyViewController.h */,
+				049670B21B207F7700430237 /* GetMoneyViewController.m */,
+			);
+			name = RegisteViewController;
+			sourceTree = "<group>";
+		};
+		04A88C741B31045F0016B18B /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				041B8FD91B1D863500971014 /* MainViewController.h */,
+				041B8FDA1B1D863500971014 /* MainViewController.m */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
+		04A88C751B3104790016B18B /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				047D2F9A1B17FF28003095DB /* LoginViewController.h */,
+				047D2F9B1B17FF28003095DB /* LoginViewController.m */,
+			);
+			name = LoginViewController;
 			sourceTree = "<group>";
 		};
 		04B029A31B171FB000D88D16 = {
@@ -631,6 +770,7 @@
 		04B029E41B17211B00D88D16 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0480ED921B2FE4C50041A1FC /* HandOver */,
 				04E1A3721B2BF8A200251D76 /* memberImages */,
 				0423C2B51B1EE3AE000DCE8B /* registerImages */,
 				04B029E51B17220600D88D16 /* 产品入库.png */,
@@ -763,6 +903,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		04BEE35A1B319FCA003D4061 /* QCheckbox */ = {
+			isa = PBXGroup;
+			children = (
+				04BEE3661B31A391003D4061 /* Images */,
+				04BEE35B1B319FE4003D4061 /* checkbox1_checked.png */,
+				04BEE35C1B319FE4003D4061 /* checkbox1_checked@2x.png */,
+				04BEE35D1B319FE4003D4061 /* checkbox1_unchecked.png */,
+				04BEE35E1B319FE4003D4061 /* checkbox1_unchecked@2x.png */,
+				04BEE35F1B319FE4003D4061 /* QCheckBox.h */,
+				04BEE3601B319FE4003D4061 /* QCheckBox.m */,
+			);
+			name = QCheckbox;
+			sourceTree = "<group>";
+		};
+		04BEE3661B31A391003D4061 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				04BEE3671B31A3A5003D4061 /* check_icon.png */,
+				04BEE3681B31A3A5003D4061 /* check_icon@2x.png */,
+				04BEE3691B31A3A5003D4061 /* uncheck_icon.png */,
+				04BEE36A1B31A3A5003D4061 /* uncheck_icon@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		04E1A3721B2BF8A200251D76 /* memberImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -855,10 +1020,12 @@
 				04B02A021B17220600D88D16 /* 密码.png in Resources */,
 				04B02A031B17220600D88D16 /* 入库历史.png in Resources */,
 				0423C2D71B1EEEF4000DCE8B /* imgpassword.png in Resources */,
+				04BEE3611B319FE4003D4061 /* checkbox1_checked.png in Resources */,
 				04B02A091B17220600D88D16 /* 原大小.png in Resources */,
 				0423C2D61B1EEEF4000DCE8B /* imgName.png in Resources */,
 				04B029FA1B17220600D88D16 /* 会员管理.png in Resources */,
 				04B029D61B171FFC00D88D16 /* LaunchScreen.xib in Resources */,
+				04BEE36B1B31A3A5003D4061 /* check_icon.png in Resources */,
 				0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */,
 				0423C2DD1B1EFC1A000DCE8B /* registeButton2.png in Resources */,
 				0454F76E1B2E6CC600AA0EF3 /* blackArrow@2x.png in Resources */,
@@ -869,24 +1036,32 @@
 				04B02A081B17220600D88D16 /* 业务统计.png in Resources */,
 				04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */,
 				0423C2D81B1EEEF4000DCE8B /* imgPhoneNUM.png in Resources */,
+				04BEE3631B319FE4003D4061 /* checkbox1_unchecked.png in Resources */,
 				04B02A041B17220600D88D16 /* 头像.png in Resources */,
+				04BEE36E1B31A3A5003D4061 /* uncheck_icon@2x.png in Resources */,
 				04413B2B1B22BE6300503425 /* MBProgressHUD.bundle in Resources */,
 				0423C2D31B1EEEF4000DCE8B /* imgcardID.png in Resources */,
 				04B02A0A1B17220600D88D16 /* 账号.png in Resources */,
 				0454F7741B2E6CC600AA0EF3 /* whiteArrow@2x.png in Resources */,
 				0454F7701B2E6CC600AA0EF3 /* blueArrow@2x.png in Resources */,
 				04B029BD1B171FB000D88D16 /* Images.xcassets in Resources */,
+				04BEE36D1B31A3A5003D4061 /* uncheck_icon.png in Resources */,
 				0454F7731B2E6CC600AA0EF3 /* whiteArrow.png in Resources */,
 				0423C2DB1B1EFA24000DCE8B /* registeButton.png in Resources */,
+				04BEE3641B319FE4003D4061 /* checkbox1_unchecked@2x.png in Resources */,
 				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
 				04B029FB1B17220600D88D16 /* 会员列表.png in Resources */,
+				04BEE36C1B31A3A5003D4061 /* check_icon@2x.png in Resources */,
 				0454F7721B2E6CC600AA0EF3 /* grayArrow@2x.png in Resources */,
 				04B02A071B17220600D88D16 /* 消费收银.png in Resources */,
 				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
 				0454F76D1B2E6CC600AA0EF3 /* blackArrow.png in Resources */,
 				048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */,
+				0480ED961B2FE5370041A1FC /* NOImg.png in Resources */,
 				0423C2D21B1EEEF4000DCE8B /* imgbirthday.png in Resources */,
+				04BEE3621B319FE4003D4061 /* checkbox1_checked@2x.png in Resources */,
 				04B029FC1B17220600D88D16 /* 会员注册.png in Resources */,
+				0480ED951B2FE5370041A1FC /* yesImg.png in Resources */,
 				04B029FD1B17220600D88D16 /* 积分管理.png in Resources */,
 				04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */,
 				0423C2D51B1EEEF4000DCE8B /* imgEmail.png in Resources */,
@@ -900,6 +1075,7 @@
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
 				04E1A3741B2BF8B100251D76 /* mebInitImg.png in Resources */,
 				0454F7711B2E6CC600AA0EF3 /* grayArrow.png in Resources */,
+				04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */,
 				04B029F81B17220600D88D16 /* 产品入库.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -939,6 +1115,7 @@
 				04413B551B22BE9400503425 /* SDWebImagePrefetcher.m in Sources */,
 				04413B531B22BE9400503425 /* SDWebImageDownloaderOperation.m in Sources */,
 				0442F6451B26B06900C77AD4 /* MemberListViewController.m in Sources */,
+				04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */,
 				04BADAA31B1C389900ABB52B /* UIRefreshControl+AFNetworking.m in Sources */,
 				0442F6511B26C9CD00C77AD4 /* SystemSetTableViewController.m in Sources */,
 				0442F64E1B26C96100C77AD4 /* ComDetailTableViewController.m in Sources */,
@@ -962,6 +1139,8 @@
 				04BADAA41B1C389900ABB52B /* UIWebView+AFNetworking.m in Sources */,
 				0454F7641B2E6CB900AA0EF3 /* PullTableView.m in Sources */,
 				04BADA781B1C382900ABB52B /* AFHTTPRequestOperationManager.m in Sources */,
+				04BEE3651B319FE4003D4061 /* QCheckBox.m in Sources */,
+				04A88C781B312E980016B18B /* OrderDetailTableViewController.m in Sources */,
 				0442F6541B26CA7C00C77AD4 /* CreditsMgViewController.m in Sources */,
 				04BADA841B1C384D00ABB52B /* AFURLResponseSerialization.m in Sources */,
 				04413B581B22BE9400503425 /* UIImage+MultiFormat.m in Sources */,
@@ -971,6 +1150,7 @@
 				04BADA771B1C382900ABB52B /* AFHTTPRequestOperation.m in Sources */,
 				0454F7621B2E6CB900AA0EF3 /* LoadMoreTableFooterView.m in Sources */,
 				048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */,
+				04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */,
 				04BADA9E1B1C389900ABB52B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				04BADA9D1B1C389900ABB52B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				04413B2C1B22BE6300503425 /* MBProgressHUD.m in Sources */,
