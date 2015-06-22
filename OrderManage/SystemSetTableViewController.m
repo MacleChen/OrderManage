@@ -45,7 +45,6 @@
     [check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [check1 setImage:[UIImage imageNamed:@"uncheck_icon.png"] forState:UIControlStateNormal];
     [check1 setImage:[UIImage imageNamed:@"check_icon.png"] forState:UIControlStateSelected];
-    [check1 setChecked:YES];
     check1.tag = CHECK_BOX_BLUE_PRINT;
     self.ckBluePrint = check1;
     
@@ -58,7 +57,6 @@
     [check2.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [check2 setImage:[UIImage imageNamed:@"uncheck_icon.png"] forState:UIControlStateNormal];
     [check2 setImage:[UIImage imageNamed:@"check_icon.png"] forState:UIControlStateSelected];
-    [check2 setChecked:NO];
     check2.tag = CHECK_BOX_WEB_PRINT;
     self.ckWebPrint = check2;
     
@@ -71,9 +69,11 @@
     [check3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [check3 setImage:[UIImage imageNamed:@"uncheck_icon.png"] forState:UIControlStateNormal];
     [check3 setImage:[UIImage imageNamed:@"check_icon.png"] forState:UIControlStateSelected];
-    [check3 setChecked:NO];
     check3.tag = CHECK_BOX_POS_PRINT;
     self.ckPosPrint = check3;
+    
+    // 设置初始化选值
+    [self readNSUserDefaults];
     
 }
 
@@ -159,7 +159,6 @@
 
 
 #pragma mark - QCheckBoxDelegate
-
 - (void)didSelectedCheckBox:(QCheckBox *)checkbox checked:(BOOL)checked {
     
     if (self.ckBluePrint.tag == checkbox.tag) {
@@ -178,7 +177,40 @@
     if (checked) {
         checkbox.checked = YES;
         [checkbox setTitle:@"默认" forState:UIControlStateSelected];
+        // 存储选值
+        [self saveNSUserDefaults];
     }
+    
+}
+
+
+//保存数据到NSUserDefaults
+-(void)saveNSUserDefaults
+{
+    // 将登录数据保存到nsuserDefaults中
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    
+    // 存入数据
+    [userDef setBool:self.ckBluePrint.checked forKey:@"BluePrint"];
+    [userDef setBool:self.ckWebPrint.checked forKey:@"WebPrint"];
+    [userDef setBool:self.ckPosPrint.checked forKey:@"PosPrint"];
+    
+    // 建议同步存储到磁盘中
+    [userDef synchronize];
+}
+
+//从NSUserDefaults中读取数据
+-(void)readNSUserDefaults
+{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    
+    // 读取数据到登录界面
+    if ([userDef boolForKey:@"BluePrint"]) [self.ckBluePrint setChecked:YES];
+    else [self.ckBluePrint setChecked:NO];
+    if ([userDef boolForKey:@"WebPrint"]) [self.ckWebPrint setChecked:YES];
+    else [self.ckWebPrint setChecked:NO];
+    if ([userDef boolForKey:@"PosPrint"]) [self.ckPosPrint setChecked:YES];
+    else [self.ckPosPrint setChecked:NO];
 }
 
 - (void)didReceiveMemoryWarning {

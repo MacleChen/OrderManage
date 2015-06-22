@@ -11,9 +11,12 @@
 
 @interface MainViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *muArrayData; // 数据源
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *barBtnItem;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionview;
+
+
 
 - (IBAction)barBtnClick:(id)sender;
-
-
 @end

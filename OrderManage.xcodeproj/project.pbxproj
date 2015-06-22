@@ -66,6 +66,10 @@
 		0480ED951B2FE5370041A1FC /* yesImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED931B2FE5370041A1FC /* yesImg.png */; };
 		0480ED961B2FE5370041A1FC /* NOImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED941B2FE5370041A1FC /* NOImg.png */; };
 		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
+		0484CCDD1B36CB6C00102224 /* credits_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 0484CCDC1B36CB6C00102224 /* credits_search.png */; };
+		0484CCDF1B36CDB900102224 /* credits_search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0484CCDE1B36CDB900102224 /* credits_search2.png */; };
+		0484CCE11B36E74800102224 /* MeterCardSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0484CCE01B36E74800102224 /* MeterCardSearchView.xib */; };
+		0484CCE41B37013800102224 /* PayBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0484CCE31B37013800102224 /* PayBillViewController.m */; };
 		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
 		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
@@ -83,23 +87,23 @@
 		04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DB1B17210100D88D16 /* iPhone_iOS_57.png */; };
 		04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DC1B17210100D88D16 /* iPhone_iOS_57@2x.png */; };
 		04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029DD1B17210100D88D16 /* iPhone_iOS_60@2x.png */; };
-		04B029F81B17220600D88D16 /* 产品入库.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E51B17220600D88D16 /* 产品入库.png */; };
+		04B029F81B17220600D88D16 /* mainViewCell_1_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E51B17220600D88D16 /* mainViewCell_1_5.png */; };
 		04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E61B17220600D88D16 /* 登陆按钮A.png */; };
-		04B029FA1B17220600D88D16 /* 会员管理.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E71B17220600D88D16 /* 会员管理.png */; };
-		04B029FB1B17220600D88D16 /* 会员列表.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E81B17220600D88D16 /* 会员列表.png */; };
-		04B029FC1B17220600D88D16 /* 会员注册.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E91B17220600D88D16 /* 会员注册.png */; };
-		04B029FD1B17220600D88D16 /* 积分管理.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EA1B17220600D88D16 /* 积分管理.png */; };
-		04B029FE1B17220600D88D16 /* 计次卡.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EB1B17220600D88D16 /* 计次卡.png */; };
-		04B029FF1B17220600D88D16 /* 结算交班.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EC1B17220600D88D16 /* 结算交班.png */; };
-		04B02A001B17220600D88D16 /* 库存盘点.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029ED1B17220600D88D16 /* 库存盘点.png */; };
-		04B02A011B17220600D88D16 /* 快速消费.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EE1B17220600D88D16 /* 快速消费.png */; };
+		04B029FA1B17220600D88D16 /* mainViewCell_0_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E71B17220600D88D16 /* mainViewCell_0_2.png */; };
+		04B029FB1B17220600D88D16 /* mainViewCell_0_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E81B17220600D88D16 /* mainViewCell_0_3.png */; };
+		04B029FC1B17220600D88D16 /* mainViewCell_0_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029E91B17220600D88D16 /* mainViewCell_0_1.png */; };
+		04B029FD1B17220600D88D16 /* mainViewCell_0_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EA1B17220600D88D16 /* mainViewCell_0_8.png */; };
+		04B029FE1B17220600D88D16 /* mainViewCell_0_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EB1B17220600D88D16 /* mainViewCell_0_9.png */; };
+		04B029FF1B17220600D88D16 /* mainViewCell_0_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EC1B17220600D88D16 /* mainViewCell_0_4.png */; };
+		04B02A001B17220600D88D16 /* mainViewCell_1_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029ED1B17220600D88D16 /* mainViewCell_1_1.png */; };
+		04B02A011B17220600D88D16 /* mainViewCell_0_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EE1B17220600D88D16 /* mainViewCell_0_5.png */; };
 		04B02A021B17220600D88D16 /* 密码.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029EF1B17220600D88D16 /* 密码.png */; };
-		04B02A031B17220600D88D16 /* 入库历史.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F01B17220600D88D16 /* 入库历史.png */; };
+		04B02A031B17220600D88D16 /* mainViewCell_1_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F01B17220600D88D16 /* mainViewCell_1_2.png */; };
 		04B02A041B17220600D88D16 /* 头像.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F11B17220600D88D16 /* 头像.png */; };
-		04B02A051B17220600D88D16 /* 系统设置.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F21B17220600D88D16 /* 系统设置.png */; };
-		04B02A061B17220600D88D16 /* 消费明细.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F31B17220600D88D16 /* 消费明细.png */; };
-		04B02A071B17220600D88D16 /* 消费收银.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F41B17220600D88D16 /* 消费收银.png */; };
-		04B02A081B17220600D88D16 /* 业务统计.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F51B17220600D88D16 /* 业务统计.png */; };
+		04B02A051B17220600D88D16 /* mainViewCell_0_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F21B17220600D88D16 /* mainViewCell_0_7.png */; };
+		04B02A061B17220600D88D16 /* mainViewCell_0_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F31B17220600D88D16 /* mainViewCell_0_6.png */; };
+		04B02A071B17220600D88D16 /* mainViewCell_1_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F41B17220600D88D16 /* mainViewCell_1_3.png */; };
+		04B02A081B17220600D88D16 /* mainViewCell_1_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F51B17220600D88D16 /* mainViewCell_1_4.png */; };
 		04B02A091B17220600D88D16 /* 原大小.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F61B17220600D88D16 /* 原大小.png */; };
 		04B02A0A1B17220600D88D16 /* 账号.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B029F71B17220600D88D16 /* 账号.png */; };
 		04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04B02A0B1B1722A400D88D16 /* Main.storyboard */; };
@@ -246,6 +250,11 @@
 		0480ED941B2FE5370041A1FC /* NOImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NOImg.png; sourceTree = "<group>"; };
 		048397071B1D5735005D6BB9 /* viewOtherDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewOtherDeal.h; sourceTree = "<group>"; };
 		048397081B1D5735005D6BB9 /* viewOtherDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = viewOtherDeal.m; sourceTree = "<group>"; };
+		0484CCDC1B36CB6C00102224 /* credits_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits_search.png; sourceTree = "<group>"; };
+		0484CCDE1B36CDB900102224 /* credits_search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits_search2.png; sourceTree = "<group>"; };
+		0484CCE01B36E74800102224 /* MeterCardSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeterCardSearchView.xib; sourceTree = "<group>"; };
+		0484CCE21B37013800102224 /* PayBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBillViewController.h; sourceTree = "<group>"; };
+		0484CCE31B37013800102224 /* PayBillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayBillViewController.m; sourceTree = "<group>"; };
 		048A29F71B27DB6700C7140D /* MebManageShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MebManageShowView.xib; sourceTree = "<group>"; };
 		048A29FD1B281C0300C7140D /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
@@ -272,23 +281,23 @@
 		04B029DB1B17210100D88D16 /* iPhone_iOS_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone_iOS_57.png; sourceTree = "<group>"; };
 		04B029DC1B17210100D88D16 /* iPhone_iOS_57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_57@2x.png"; sourceTree = "<group>"; };
 		04B029DD1B17210100D88D16 /* iPhone_iOS_60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_iOS_60@2x.png"; sourceTree = "<group>"; };
-		04B029E51B17220600D88D16 /* 产品入库.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "产品入库.png"; sourceTree = "<group>"; };
+		04B029E51B17220600D88D16 /* mainViewCell_1_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_1_5.png; sourceTree = "<group>"; };
 		04B029E61B17220600D88D16 /* 登陆按钮A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登陆按钮A.png"; sourceTree = "<group>"; };
-		04B029E71B17220600D88D16 /* 会员管理.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员管理.png"; sourceTree = "<group>"; };
-		04B029E81B17220600D88D16 /* 会员列表.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员列表.png"; sourceTree = "<group>"; };
-		04B029E91B17220600D88D16 /* 会员注册.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "会员注册.png"; sourceTree = "<group>"; };
-		04B029EA1B17220600D88D16 /* 积分管理.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "积分管理.png"; sourceTree = "<group>"; };
-		04B029EB1B17220600D88D16 /* 计次卡.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "计次卡.png"; sourceTree = "<group>"; };
-		04B029EC1B17220600D88D16 /* 结算交班.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "结算交班.png"; sourceTree = "<group>"; };
-		04B029ED1B17220600D88D16 /* 库存盘点.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "库存盘点.png"; sourceTree = "<group>"; };
-		04B029EE1B17220600D88D16 /* 快速消费.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "快速消费.png"; sourceTree = "<group>"; };
+		04B029E71B17220600D88D16 /* mainViewCell_0_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_2.png; sourceTree = "<group>"; };
+		04B029E81B17220600D88D16 /* mainViewCell_0_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_3.png; sourceTree = "<group>"; };
+		04B029E91B17220600D88D16 /* mainViewCell_0_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_1.png; sourceTree = "<group>"; };
+		04B029EA1B17220600D88D16 /* mainViewCell_0_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_8.png; sourceTree = "<group>"; };
+		04B029EB1B17220600D88D16 /* mainViewCell_0_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_9.png; sourceTree = "<group>"; };
+		04B029EC1B17220600D88D16 /* mainViewCell_0_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_4.png; sourceTree = "<group>"; };
+		04B029ED1B17220600D88D16 /* mainViewCell_1_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_1_1.png; sourceTree = "<group>"; };
+		04B029EE1B17220600D88D16 /* mainViewCell_0_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_5.png; sourceTree = "<group>"; };
 		04B029EF1B17220600D88D16 /* 密码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码.png"; sourceTree = "<group>"; };
-		04B029F01B17220600D88D16 /* 入库历史.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "入库历史.png"; sourceTree = "<group>"; };
+		04B029F01B17220600D88D16 /* mainViewCell_1_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_1_2.png; sourceTree = "<group>"; };
 		04B029F11B17220600D88D16 /* 头像.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "头像.png"; sourceTree = "<group>"; };
-		04B029F21B17220600D88D16 /* 系统设置.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "系统设置.png"; sourceTree = "<group>"; };
-		04B029F31B17220600D88D16 /* 消费明细.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消费明细.png"; sourceTree = "<group>"; };
-		04B029F41B17220600D88D16 /* 消费收银.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消费收银.png"; sourceTree = "<group>"; };
-		04B029F51B17220600D88D16 /* 业务统计.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "业务统计.png"; sourceTree = "<group>"; };
+		04B029F21B17220600D88D16 /* mainViewCell_0_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_7.png; sourceTree = "<group>"; };
+		04B029F31B17220600D88D16 /* mainViewCell_0_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_0_6.png; sourceTree = "<group>"; };
+		04B029F41B17220600D88D16 /* mainViewCell_1_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_1_3.png; sourceTree = "<group>"; };
+		04B029F51B17220600D88D16 /* mainViewCell_1_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainViewCell_1_4.png; sourceTree = "<group>"; };
 		04B029F61B17220600D88D16 /* 原大小.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "原大小.png"; sourceTree = "<group>"; };
 		04B029F71B17220600D88D16 /* 账号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "账号.png"; sourceTree = "<group>"; };
 		04B02A0B1B1722A400D88D16 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -533,6 +542,7 @@
 				04B029D51B171FFC00D88D16 /* LaunchScreen.xib */,
 				048A29F71B27DB6700C7140D /* MebManageShowView.xib */,
 				04A88C7B1B31324D0016B18B /* OrderDetailShowCellView.xib */,
+				0484CCE01B36E74800102224 /* MeterCardSearchView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -566,13 +576,22 @@
 			name = "http-request";
 			sourceTree = "<group>";
 		};
-		0480ED921B2FE4C50041A1FC /* HandOver */ = {
+		0480ED921B2FE4C50041A1FC /* HandOverImages */ = {
 			isa = PBXGroup;
 			children = (
 				0480ED931B2FE5370041A1FC /* yesImg.png */,
 				0480ED941B2FE5370041A1FC /* NOImg.png */,
 			);
-			name = HandOver;
+			name = HandOverImages;
+			sourceTree = "<group>";
+		};
+		0484CCDB1B36CB4D00102224 /* CreditsMgImages */ = {
+			isa = PBXGroup;
+			children = (
+				0484CCDE1B36CDB900102224 /* credits_search2.png */,
+				0484CCDC1B36CB6C00102224 /* credits_search.png */,
+			);
+			name = CreditsMgImages;
 			sourceTree = "<group>";
 		};
 		048A29F91B280F2400C7140D /* Extensions */ = {
@@ -589,6 +608,8 @@
 			children = (
 				0442F6551B26CAFC00C77AD4 /* MeterCardViewController.h */,
 				0442F6561B26CAFC00C77AD4 /* MeterCardViewController.m */,
+				0484CCE21B37013800102224 /* PayBillViewController.h */,
+				0484CCE31B37013800102224 /* PayBillViewController.m */,
 			);
 			name = MeterCardViewController;
 			sourceTree = "<group>";
@@ -770,26 +791,27 @@
 		04B029E41B17211B00D88D16 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				0480ED921B2FE4C50041A1FC /* HandOver */,
+				0484CCDB1B36CB4D00102224 /* CreditsMgImages */,
+				0480ED921B2FE4C50041A1FC /* HandOverImages */,
 				04E1A3721B2BF8A200251D76 /* memberImages */,
 				0423C2B51B1EE3AE000DCE8B /* registerImages */,
-				04B029E51B17220600D88D16 /* 产品入库.png */,
+				04B029E51B17220600D88D16 /* mainViewCell_1_5.png */,
 				04B029E61B17220600D88D16 /* 登陆按钮A.png */,
-				04B029E71B17220600D88D16 /* 会员管理.png */,
-				04B029E81B17220600D88D16 /* 会员列表.png */,
-				04B029E91B17220600D88D16 /* 会员注册.png */,
-				04B029EA1B17220600D88D16 /* 积分管理.png */,
-				04B029EB1B17220600D88D16 /* 计次卡.png */,
-				04B029EC1B17220600D88D16 /* 结算交班.png */,
-				04B029ED1B17220600D88D16 /* 库存盘点.png */,
-				04B029EE1B17220600D88D16 /* 快速消费.png */,
+				04B029E71B17220600D88D16 /* mainViewCell_0_2.png */,
+				04B029E81B17220600D88D16 /* mainViewCell_0_3.png */,
+				04B029E91B17220600D88D16 /* mainViewCell_0_1.png */,
+				04B029EA1B17220600D88D16 /* mainViewCell_0_8.png */,
+				04B029EB1B17220600D88D16 /* mainViewCell_0_9.png */,
+				04B029EC1B17220600D88D16 /* mainViewCell_0_4.png */,
+				04B029ED1B17220600D88D16 /* mainViewCell_1_1.png */,
+				04B029EE1B17220600D88D16 /* mainViewCell_0_5.png */,
 				04B029EF1B17220600D88D16 /* 密码.png */,
-				04B029F01B17220600D88D16 /* 入库历史.png */,
+				04B029F01B17220600D88D16 /* mainViewCell_1_2.png */,
 				04B029F11B17220600D88D16 /* 头像.png */,
-				04B029F21B17220600D88D16 /* 系统设置.png */,
-				04B029F31B17220600D88D16 /* 消费明细.png */,
-				04B029F41B17220600D88D16 /* 消费收银.png */,
-				04B029F51B17220600D88D16 /* 业务统计.png */,
+				04B029F21B17220600D88D16 /* mainViewCell_0_7.png */,
+				04B029F31B17220600D88D16 /* mainViewCell_0_6.png */,
+				04B029F41B17220600D88D16 /* mainViewCell_1_3.png */,
+				04B029F51B17220600D88D16 /* mainViewCell_1_4.png */,
 				04B029F61B17220600D88D16 /* 原大小.png */,
 				04B029F71B17220600D88D16 /* 账号.png */,
 			);
@@ -1016,14 +1038,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B02A051B17220600D88D16 /* 系统设置.png in Resources */,
+				04B02A051B17220600D88D16 /* mainViewCell_0_7.png in Resources */,
 				04B02A021B17220600D88D16 /* 密码.png in Resources */,
-				04B02A031B17220600D88D16 /* 入库历史.png in Resources */,
+				04B02A031B17220600D88D16 /* mainViewCell_1_2.png in Resources */,
 				0423C2D71B1EEEF4000DCE8B /* imgpassword.png in Resources */,
 				04BEE3611B319FE4003D4061 /* checkbox1_checked.png in Resources */,
 				04B02A091B17220600D88D16 /* 原大小.png in Resources */,
 				0423C2D61B1EEEF4000DCE8B /* imgName.png in Resources */,
-				04B029FA1B17220600D88D16 /* 会员管理.png in Resources */,
+				04B029FA1B17220600D88D16 /* mainViewCell_0_2.png in Resources */,
 				04B029D61B171FFC00D88D16 /* LaunchScreen.xib in Resources */,
 				04BEE36B1B31A3A5003D4061 /* check_icon.png in Resources */,
 				0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */,
@@ -1033,7 +1055,7 @@
 				0454F76F1B2E6CC600AA0EF3 /* blueArrow.png in Resources */,
 				0423C2D11B1EEEF4000DCE8B /* imgaddress.png in Resources */,
 				04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */,
-				04B02A081B17220600D88D16 /* 业务统计.png in Resources */,
+				04B02A081B17220600D88D16 /* mainViewCell_1_4.png in Resources */,
 				04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */,
 				0423C2D81B1EEEF4000DCE8B /* imgPhoneNUM.png in Resources */,
 				04BEE3631B319FE4003D4061 /* checkbox1_unchecked.png in Resources */,
@@ -1050,33 +1072,36 @@
 				0423C2DB1B1EFA24000DCE8B /* registeButton.png in Resources */,
 				04BEE3641B319FE4003D4061 /* checkbox1_unchecked@2x.png in Resources */,
 				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
-				04B029FB1B17220600D88D16 /* 会员列表.png in Resources */,
+				0484CCDF1B36CDB900102224 /* credits_search2.png in Resources */,
+				04B029FB1B17220600D88D16 /* mainViewCell_0_3.png in Resources */,
 				04BEE36C1B31A3A5003D4061 /* check_icon@2x.png in Resources */,
 				0454F7721B2E6CC600AA0EF3 /* grayArrow@2x.png in Resources */,
-				04B02A071B17220600D88D16 /* 消费收银.png in Resources */,
+				04B02A071B17220600D88D16 /* mainViewCell_1_3.png in Resources */,
 				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
 				0454F76D1B2E6CC600AA0EF3 /* blackArrow.png in Resources */,
+				0484CCDD1B36CB6C00102224 /* credits_search.png in Resources */,
 				048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */,
 				0480ED961B2FE5370041A1FC /* NOImg.png in Resources */,
 				0423C2D21B1EEEF4000DCE8B /* imgbirthday.png in Resources */,
 				04BEE3621B319FE4003D4061 /* checkbox1_checked@2x.png in Resources */,
-				04B029FC1B17220600D88D16 /* 会员注册.png in Resources */,
+				04B029FC1B17220600D88D16 /* mainViewCell_0_1.png in Resources */,
 				0480ED951B2FE5370041A1FC /* yesImg.png in Resources */,
-				04B029FD1B17220600D88D16 /* 积分管理.png in Resources */,
+				0484CCE11B36E74800102224 /* MeterCardSearchView.xib in Resources */,
+				04B029FD1B17220600D88D16 /* mainViewCell_0_8.png in Resources */,
 				04B029E11B17210100D88D16 /* iPhone_iOS_57.png in Resources */,
 				0423C2D51B1EEEF4000DCE8B /* imgEmail.png in Resources */,
-				04B02A061B17220600D88D16 /* 消费明细.png in Resources */,
-				04B02A011B17220600D88D16 /* 快速消费.png in Resources */,
+				04B02A061B17220600D88D16 /* mainViewCell_0_6.png in Resources */,
+				04B02A011B17220600D88D16 /* mainViewCell_0_5.png in Resources */,
 				04B029DF1B17210100D88D16 /* iPhone_iOS_29@2x.png in Resources */,
-				04B029FF1B17220600D88D16 /* 结算交班.png in Resources */,
+				04B029FF1B17220600D88D16 /* mainViewCell_0_4.png in Resources */,
 				0423C2D41B1EEEF4000DCE8B /* imgcardType.png in Resources */,
-				04B029FE1B17220600D88D16 /* 计次卡.png in Resources */,
-				04B02A001B17220600D88D16 /* 库存盘点.png in Resources */,
+				04B029FE1B17220600D88D16 /* mainViewCell_0_9.png in Resources */,
+				04B02A001B17220600D88D16 /* mainViewCell_1_1.png in Resources */,
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
 				04E1A3741B2BF8B100251D76 /* mebInitImg.png in Resources */,
 				0454F7711B2E6CC600AA0EF3 /* grayArrow.png in Resources */,
 				04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */,
-				04B029F81B17220600D88D16 /* 产品入库.png in Resources */,
+				04B029F81B17220600D88D16 /* mainViewCell_1_5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1150,6 +1175,7 @@
 				04BADA771B1C382900ABB52B /* AFHTTPRequestOperation.m in Sources */,
 				0454F7621B2E6CB900AA0EF3 /* LoadMoreTableFooterView.m in Sources */,
 				048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */,
+				0484CCE41B37013800102224 /* PayBillViewController.m in Sources */,
 				04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */,
 				04BADA9E1B1C389900ABB52B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				04BADA9D1B1C389900ABB52B /* AFNetworkActivityIndicatorManager.m in Sources */,

@@ -42,9 +42,9 @@
 
 // 会员信息
 @property (strong, nonatomic) UIView *viewcuInfo;
-@property (weak, nonatomic) UILabel *lbcuName;          //  会员姓名
-@property (weak, nonatomic) UILabel *lbcuPhone;         //  会员手机
-@property (weak, nonatomic) UILabel *lbcuAddress;       //  会员地址
+@property (strong, nonatomic) UILabel *lbcuName;          //  会员姓名
+@property (strong, nonatomic) UILabel *lbcuPhone;         //  会员手机
+@property (strong, nonatomic) UILabel *lbcuAddress;       //  会员地址
 
 // 订单详情
 @property (strong, nonatomic) UIView *viewMenuDetail;

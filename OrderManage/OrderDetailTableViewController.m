@@ -8,11 +8,14 @@
 
 #import "OrderDetailTableViewController.h"
 #import "viewOtherDeal.h"
+#import "HttpRequest.h"
+#import "MBProgressHUD+MJ.h"
 
 
 
 @interface OrderDetailTableViewController () {
     NSArray *_arrayHeaderTitle; // 菜单头部标题
+    NSArray *_arrayShowData;   // 显示所有消费明细
     
     float _mainScreenWidth;
     float _mainScreenHeight;
@@ -30,7 +33,6 @@
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
     
     // 初始化
-    self.dictData = [NSDictionary dictionary];
     _arrayHeaderTitle = @[@"会员信息", @"订单信息", @"消费明细"];
     self.viewcuInfo = [[UIView alloc] init];
     self.viewMenuDetail = [[UIView alloc] init];
@@ -38,8 +40,8 @@
     // 获取section的view
     [self GetCellViewFromXib];
     
-    // 填充初始化数据
-    [self InitData];
+    // 获取网络数据，并填充数据
+    [self GetWebResponseData];
 }
 
 #pragma mark - pulltableview 的代理方法实现
@@ -53,7 +55,7 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0 || section == 1) return 1;
-    return self.dictData.count + 1;
+    return _arrayShowData.count + 1;
 }
 
 #pragma mark 设置每个cell的内容
@@ -69,6 +71,11 @@
     } else {    // 消费明细
         if(indexPath.row == 0)
             [cell addSubview:[self GetViewCustomPropertys]];
+        else {
+            UIView *viewIncell = [[UIView alloc] init];
+            viewIncell = [self GetViewCustomProValuesWithSeqNum:indexPath.row];
+            [cell addSubview: viewIncell];
+        }
     }
     
     return cell;
@@ -93,8 +100,8 @@
 
 #pragma mark 设置每个row的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section == 0) return self.viewcuInfo.frame.size.height;
-    if(indexPath.section == 1) return self.viewMenuDetail.frame.size.height;
+    if(indexPath.section == 0)  return 94;//return self.viewcuInfo.frame.size.height;
+    if(indexPath.section == 1) return 240;//return self.viewMenuDetail.frame.size.height;
     
     return CELL_HEIGHT;
 }
@@ -143,13 +150,104 @@
         if(viewTemp.tag == SECTION_TWO_VIEW_BTNSecondPay) self.btnSecondPay = (UIButton *)viewTemp;
         if(viewTemp.tag == SECTION_TWO_VIEW_BTNMenuCancel) self.btnMenuCancel = (UIButton *)viewTemp;
     }
+    
+    // 设置UIButton 的响应方法
+    [self.btnModify addTarget:self action:@selector(btnModifyClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnPintNote addTarget:self action:@selector(btnPintNoteClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnSecondPay addTarget:self action:@selector(btnSecondPayClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnMenuCancel addTarget:self action:@selector(btnMenuCancelClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 /**
  *  获取网络数据后进行初始化
  */
-- (void)InitData {
-    self.lbcuName.text = @"good boy";
+- (void)GetWebResponseData {
+    //网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordDetailAction];
+    NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@", [self.dictData objectForKey:@"rcid"]];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [self InitResponseDataWithData:[listData objectForKey:MESSAGE]];
+                
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+
+    
+}
+
+/**
+ *  初始化整个界面上的数据
+ */
+- (void)InitResponseDataWithData:(NSDictionary *)listData {
+    NSDictionary *dictTemp = [listData objectForKey:@"cus"];            // 获取会员信息
+    
+    // 获取会员信息
+    if((NSNull *)dictTemp != [NSNull null]) {
+        self.lbcuName.text = [dictTemp objectForKey:@"cuname"];             // 会员姓名
+        self.lbcuPhone.text = [dictTemp objectForKey:@"cumb"];              // 会员手机
+        self.lbcuAddress.text = [dictTemp objectForKey:@"cuaddress"];       // 会员地址
+    }
+    
+    //  订单信息
+    dictTemp = [listData objectForKey:@"record"];                       // 获取订单信息
+    if((NSNull *)dictTemp != [NSNull null]) {
+        self.lbTime.text = [dictTemp objectForKey:@"rcdate"];               // 日期
+        self.lbMenuType.text = [dictTemp objectForKey:@"typename"];         // 类型
+        self.lbStatus.text = [dictTemp objectForKey:@"stname"];             // 状态
+        //self.lbNumber.text = [dictTemp objectForKey:@"pnum"];             // 数量
+        //self.lbOriginMoney.text = [dictTemp objectForKey:@""];            // 原价
+        self.lbPayMoney.text = [dictTemp objectForKey:@"endtotal"];         // 应付
+        self.lbAlreadyPay.text = [dictTemp objectForKey:@"rctotal"];        // 已付
+        self.lbDebtMoney.text = [dictTemp objectForKey:@"lostmoney"];       // 欠款
+        self.lbUnionMenuId.text = [self.dictData objectForKey:@"unionpayno"];   // 银联订单号
+    }
+    
+    NSArray *arrayTemp = [listData objectForKey:@"list_money"];         // 消费列表
+    if (arrayTemp.count > 0) {
+        dictTemp = arrayTemp[0];
+        self.lbPayType.text = [dictTemp objectForKey:@"typename"];      // 支付方式
+    }
+    arrayTemp = [listData objectForKey:@"list_re"];
+    if (arrayTemp.count > 0) {
+        dictTemp = arrayTemp[0];
+        self.lbBussSaler.text = [dictTemp objectForKey:@"empname"];     // 业务员
+    }
+    
+    //  消费明细
+    arrayTemp = [listData objectForKey:@"list_dt"];     // 获取消费明细
+    if(arrayTemp.count > 0) {
+        NSMutableArray *MuarrayTemp = [NSMutableArray array];
+        for (NSDictionary *dict in arrayTemp) {
+            NSDictionary *DictTemp2  = @{@"prodname" : [dict objectForKey:@"prodname"],
+                                         @"prodnum" : [dict objectForKey:@"prodnum"],
+                                         @"produnit" : [dict objectForKey:@"produnit"],
+                                         @"count" : [dict objectForKey:@"count"],
+                                         @"price" : [dict objectForKey:@"price"],
+                                         @"realprice" : [dict objectForKey:@"realprice"],
+                                         @"point" : [dict objectForKey:@"point"]};
+            [MuarrayTemp addObject:DictTemp2];
+        }
+        // MutableArray 转变成 Array
+        _arrayShowData = [MuarrayTemp copy];
+        // 刷新一个section的数据
+        NSIndexSet *indexset = [[NSIndexSet alloc] initWithIndex:2];
+        [self.tableView reloadSections:indexset withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 /**
@@ -231,64 +329,65 @@
 /**
  *  设置消费明细的 属性值view 并设置值
  */
-- (UIView *)GetViewCustomProValues {
+- (UIView *)GetViewCustomProValuesWithSeqNum:(NSInteger)seqNum {
     UIView *viewValuesCell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _mainScreenWidth, CELL_HEIGHT)];
+    NSDictionary *showdata = _arrayShowData[seqNum - 1];
     
     // 设置label
     int propertyCount = 8;
     int initY = 5, labelWith = 35, labelHeight = viewValuesCell.frame.size.height, gap = (_mainScreenWidth - (propertyCount*labelWith))/(propertyCount+1);
     
     UILabel *lbSeqNumber = [[UILabel alloc] initWithFrame:CGRectMake(gap*1 + labelWith*0, initY, labelWith, labelHeight)];
-    lbSeqNumber.text = [self.dictData objectForKey:@"rccode"];         // 序号
     lbSeqNumber.font = [UIFont systemFontOfSize:12];
     lbSeqNumber.numberOfLines = 2;
     lbSeqNumber.textAlignment = NSTextAlignmentCenter;
+    lbSeqNumber.text = [NSString stringWithFormat:@"%ld", seqNum];      // 序号
     [viewValuesCell addSubview:lbSeqNumber];
     
     UILabel *lbCustomName = [[UILabel alloc] initWithFrame:CGRectMake(gap*2 + labelWith*1, initY, labelWith, labelHeight)];
-    lbCustomName.text = [self.dictData objectForKey:@"cuname"];         // 名称
+    lbCustomName.text = [showdata objectForKey:@"prodname"];         // 名称
     lbCustomName.font = [UIFont systemFontOfSize:12];
     lbCustomName.numberOfLines = 2;
     lbCustomName.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbCustomName];
     
     UILabel *lbSerialID = [[UILabel alloc] initWithFrame:CGRectMake(gap*3 + labelWith*2, initY, labelWith, labelHeight)];
-    lbSerialID.text = [self.dictData objectForKey:@"typename"];         // 编号
+    lbSerialID.text = [showdata objectForKey:@"prodnum"];         // 编号
     lbSerialID.font = [UIFont systemFontOfSize:12];
     lbSerialID.numberOfLines = 2;
     lbSerialID.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbSerialID];
     
     UILabel *lbUnit = [[UILabel alloc] initWithFrame:CGRectMake(gap*4 + labelWith*3, initY, labelWith, labelHeight)];
-    lbUnit.text = [self.dictData objectForKey:@"endtotal"];         // 单位
+    lbUnit.text = [showdata objectForKey:@"produnit"];         // 单位
     lbUnit.font = [UIFont systemFontOfSize:12];
     lbUnit.numberOfLines = 2;
     lbUnit.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbUnit];
     
     UILabel *lbCustomCount = [[UILabel alloc] initWithFrame:CGRectMake(gap*5 + labelWith*4, initY, labelWith, labelHeight)];
-    lbCustomCount.text = [self.dictData objectForKey:@"cardcount"];         // 数量
+    lbCustomCount.text = [showdata objectForKey:@"count"];         // 数量
     lbCustomCount.font = [UIFont systemFontOfSize:12];
     lbCustomCount.numberOfLines = 2;
     lbCustomCount.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbCustomCount];
     
     UILabel *lbProDiscount = [[UILabel alloc] initWithFrame:CGRectMake(gap*6 + labelWith*5, initY, labelWith, labelHeight)];
-    lbProDiscount.text = [self.dictData objectForKey:@"stname"];         // 折前单价
+    lbProDiscount.text = [showdata objectForKey:@"price"];         // 折前单价
     lbProDiscount.font = [UIFont systemFontOfSize:12];
     lbProDiscount.numberOfLines = 2;
     lbProDiscount.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbProDiscount];
     
     UILabel *lbNexDiscount = [[UILabel alloc] initWithFrame:CGRectMake(gap*7 + labelWith*6, initY, labelWith, labelHeight)];
-    lbNexDiscount.text = [self.dictData objectForKey:@"cardcount"];         // 折后单价
+    lbNexDiscount.text = [showdata objectForKey:@"realprice"];         // 折后单价
     lbNexDiscount.font = [UIFont systemFontOfSize:12];
     lbNexDiscount.numberOfLines = 2;
     lbNexDiscount.textAlignment = NSTextAlignmentCenter;
     [viewValuesCell addSubview:lbNexDiscount];
     
     UILabel *lbDeductCount = [[UILabel alloc] initWithFrame:CGRectMake(gap*8 + labelWith*7, initY, labelWith, labelHeight)];
-    lbDeductCount.text = [self.dictData objectForKey:@"stname"];         // 扣次
+    lbDeductCount.text = [showdata objectForKey:@"point"];         // 扣次
     lbDeductCount.font = [UIFont systemFontOfSize:12];
     lbDeductCount.numberOfLines = 2;
     lbDeductCount.textAlignment = NSTextAlignmentCenter;
@@ -298,6 +397,23 @@
     return viewValuesCell;
 }
 
+#pragma  mark - 订单信息上按钮的响应方法
+#pragma mark 修改
+-(void)btnModifyClick:(UIButton *)sender {
+    NSLog(@"修改");
+}
+#pragma mark 补打小票
+-(void)btnPintNoteClick:(UIButton *)sender {
+    NSLog(@"补打小票");
+}
+#pragma mark 补缴款
+-(void)btnSecondPayClick:(UIButton *)sender {
+    NSLog(@"补缴款");
+}
+#pragma mark 作废
+-(void)btnMenuCancelClick:(UIButton *)sender {
+    NSLog(@"作废");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

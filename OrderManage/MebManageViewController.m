@@ -95,7 +95,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [self.navigationController popToRootViewControllerAnimated:YES];
     
     //切换到下一个界面  --- push
-    RegisteViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"Registe"];
+    RegisteViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"mainViewCell_0_1"];
     [self.navigationController pushViewController:viewControl animated:YES];
     
     // 返回到前一个控制器
@@ -661,7 +661,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         // Setup label properties - frame, font, colors etc
         //adjustsFontSizeToFitWidth property to YES
         pickerLabel.adjustsFontSizeToFitWidth = YES;
-        pickerLabel.textAlignment = UITextAlignmentCenter;
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
     }
@@ -737,7 +737,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 [MBProgressHUD show:@"挂失成功" icon:nil view:nil];
-                NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                //NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }

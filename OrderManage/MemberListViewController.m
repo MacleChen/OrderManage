@@ -252,7 +252,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     //[self.navigationController popToRootViewControllerAnimated:YES];
     
     //切换到下一个界面  --- push
-    MebManageViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"MebManage"];
+    MebManageViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"mainViewCell_0_2"];
     viewControl.ReceDict = _muArrayData[indexPath.section][indexPath.row];  // 传入数据
     [self.navigationController pushViewController:viewControl animated:YES];
 }

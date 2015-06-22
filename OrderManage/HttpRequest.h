@@ -36,6 +36,7 @@
 #define WEBSaleFastSaleAction @"sale!fastsale.action?"   // 快速消费 -- 提交数据
 
 #define WEBRecordListAction @"record!list.action?"      // 消费明细 -- 获取数据列表
+#define WEBRecordDetailAction @"record!detail.action?"  // 消费明细》订单明细
 
 #define statusCdoe @"statusCode"
 #define MESSAGE    @"message"

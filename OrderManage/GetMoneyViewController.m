@@ -248,7 +248,7 @@
         // Setup label properties - frame, font, colors etc
         //adjustsFontSizeToFitWidth property to YES
         pickerLabel.adjustsFontSizeToFitWidth = YES;
-        pickerLabel.textAlignment = UITextAlignmentCenter;
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
     }
