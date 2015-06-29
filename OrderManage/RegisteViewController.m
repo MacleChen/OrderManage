@@ -228,7 +228,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     UILabel *lb_info = [[UILabel alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 20)];
     self.lbInfo = lb_info;
     self.lbInfo.backgroundColor = ColorMainSystem;
-    self.lbInfo.textAlignment = UITextAlignmentCenter;
+    self.lbInfo.textAlignment = NSTextAlignmentCenter;
     self.lbInfo.textColor = [UIColor whiteColor];
     self.lbInfo.font = [UIFont systemFontOfSize:12];
     self.lbInfo.hidden = YES;
@@ -390,7 +390,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
         // Setup label properties - frame, font, colors etc
         //adjustsFontSizeToFitWidth property to YES
         pickerLabel.adjustsFontSizeToFitWidth = YES;
-        pickerLabel.textAlignment = UITextAlignmentCenter;
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
         [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
     }
@@ -470,7 +470,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
             
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 [MBProgressHUD hideHUD];
-                [MBProgressHUD showMessage:@"注册成功"];
+                [MBProgressHUD show:@"注册成功！" icon:nil view:nil];
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
                 viewControl.listDict = dictRegisteData;
@@ -490,6 +490,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
         }
     }];
 }
+
 
 #pragma RegisteCardTypeRequest 会员卡的类型数据请求
 - (void)RegisteCardTypeRequest {

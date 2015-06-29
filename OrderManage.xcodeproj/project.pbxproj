@@ -61,6 +61,9 @@
 		0454F7731B2E6CC600AA0EF3 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */; };
 		0454F7741B2E6CC600AA0EF3 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */; };
 		0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */; };
+		045C9BC21B3E95240066AD49 /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C9BC11B3E95240066AD49 /* QRCodeViewController.m */; };
+		04648E201B4033A500A7C378 /* mebInitImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E1F1B4033A500A7C378 /* mebInitImg.png */; };
+		04648E221B4033FD00A7C378 /* mebInitImg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E211B4033FD00A7C378 /* mebInitImg2.png */; };
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
 		0480ED951B2FE5370041A1FC /* yesImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED931B2FE5370041A1FC /* yesImg.png */; };
@@ -70,6 +73,10 @@
 		0484CCDF1B36CDB900102224 /* credits_search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0484CCDE1B36CDB900102224 /* credits_search2.png */; };
 		0484CCE11B36E74800102224 /* MeterCardSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0484CCE01B36E74800102224 /* MeterCardSearchView.xib */; };
 		0484CCE41B37013800102224 /* PayBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0484CCE31B37013800102224 /* PayBillViewController.m */; };
+		04862A7F1B3E3B2600E5E6ED /* libUMSCashierPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04862A7C1B3E3B2600E5E6ED /* libUMSCashierPlugin.a */; };
+		04862A801B3E3B2600E5E6ED /* UMSCashierPlugin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04862A7D1B3E3B2600E5E6ED /* UMSCashierPlugin.bundle */; };
+		04862A821B3E3FE600E5E6ED /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04862A811B3E3FE600E5E6ED /* libicucore.dylib */; };
+		04862A841B3E400800E5E6ED /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04862A831B3E400800E5E6ED /* CoreData.framework */; };
 		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
 		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
@@ -142,7 +149,6 @@
 		04BEE36E1B31A3A5003D4061 /* uncheck_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE36A1B31A3A5003D4061 /* uncheck_icon@2x.png */; };
 		04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */; };
 		04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */; };
-		04E1A3741B2BF8B100251D76 /* mebInitImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E1A3731B2BF8B100251D76 /* mebInitImg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +248,10 @@
 		0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		045C9BC01B3E95240066AD49 /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
+		045C9BC11B3E95240066AD49 /* QRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
+		04648E1F1B4033A500A7C378 /* mebInitImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebInitImg.png; sourceTree = "<group>"; };
+		04648E211B4033FD00A7C378 /* mebInitImg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebInitImg2.png; sourceTree = "<group>"; };
 		046E73381B1869CD00C57B2D /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -255,6 +265,11 @@
 		0484CCE01B36E74800102224 /* MeterCardSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeterCardSearchView.xib; sourceTree = "<group>"; };
 		0484CCE21B37013800102224 /* PayBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayBillViewController.h; sourceTree = "<group>"; };
 		0484CCE31B37013800102224 /* PayBillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayBillViewController.m; sourceTree = "<group>"; };
+		04862A7C1B3E3B2600E5E6ED /* libUMSCashierPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSCashierPlugin.a; sourceTree = "<group>"; };
+		04862A7D1B3E3B2600E5E6ED /* UMSCashierPlugin.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSCashierPlugin.bundle; sourceTree = "<group>"; };
+		04862A7E1B3E3B2600E5E6ED /* UMSCashierPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSCashierPlugin.h; sourceTree = "<group>"; };
+		04862A811B3E3FE600E5E6ED /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		04862A831B3E400800E5E6ED /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		048A29F71B27DB6700C7140D /* MebManageShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MebManageShowView.xib; sourceTree = "<group>"; };
 		048A29FD1B281C0300C7140D /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
@@ -358,7 +373,6 @@
 		04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueDeviceViewController.m; sourceTree = "<group>"; };
 		04BEE3721B31BF35003D4061 /* POSDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSDeviceViewController.h; sourceTree = "<group>"; };
 		04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDeviceViewController.m; sourceTree = "<group>"; };
-		04E1A3731B2BF8B100251D76 /* mebInitImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebInitImg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +380,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04862A841B3E400800E5E6ED /* CoreData.framework in Frameworks */,
+				04862A821B3E3FE600E5E6ED /* libicucore.dylib in Frameworks */,
 				0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */,
 				0453385C1B257FA700403281 /* AVFoundation.framework in Frameworks */,
 				044C549C1B1EC5F700B5A5FF /* Accelerate.framework in Frameworks */,
@@ -376,6 +392,7 @@
 				04BADAA61B1C38BB00ABB52B /* Security.framework in Frameworks */,
 				04BADA691B1C371000ABB52B /* MobileCoreServices.framework in Frameworks */,
 				04BADA671B1C370100ABB52B /* SystemConfiguration.framework in Frameworks */,
+				04862A7F1B3E3B2600E5E6ED /* libUMSCashierPlugin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +486,7 @@
 		0454F7551B2E6C3C00AA0EF3 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				04862A7B1B3E3ADC00E5E6ED /* UMSCashierPlugin */,
 				04BEE35A1B319FCA003D4061 /* QCheckbox */,
 				0454F7561B2E6C7800AA0EF3 /* EGOTableViewPullRefresh */,
 				04413B241B22BE4400503425 /* MBProgressHUD */,
@@ -517,9 +535,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		045C9BBF1B3E94E80066AD49 /* QRCodeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				045C9BC01B3E95240066AD49 /* QRCodeViewController.h */,
+				045C9BC11B3E95240066AD49 /* QRCodeViewController.m */,
+			);
+			name = QRCodeViewController;
+			sourceTree = "<group>";
+		};
 		047D2F9D1B1801ED003095DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				045C9BBF1B3E94E80066AD49 /* QRCodeViewController */,
 				04A88C751B3104790016B18B /* LoginViewController */,
 				04A88C741B31045F0016B18B /* MainViewController */,
 				04A88C731B3104480016B18B /* RegisteViewController */,
@@ -592,6 +620,16 @@
 				0484CCDC1B36CB6C00102224 /* credits_search.png */,
 			);
 			name = CreditsMgImages;
+			sourceTree = "<group>";
+		};
+		04862A7B1B3E3ADC00E5E6ED /* UMSCashierPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				04862A7C1B3E3B2600E5E6ED /* libUMSCashierPlugin.a */,
+				04862A7D1B3E3B2600E5E6ED /* UMSCashierPlugin.bundle */,
+				04862A7E1B3E3B2600E5E6ED /* UMSCashierPlugin.h */,
+			);
+			name = UMSCashierPlugin;
 			sourceTree = "<group>";
 		};
 		048A29F91B280F2400C7140D /* Extensions */ = {
@@ -911,6 +949,8 @@
 		04BADAAF1B1C396700ABB52B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04862A831B3E400800E5E6ED /* CoreData.framework */,
+				04862A811B3E3FE600E5E6ED /* libicucore.dylib */,
 				0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */,
 				0453385B1B257FA700403281 /* AVFoundation.framework */,
 				044C549B1B1EC5F700B5A5FF /* Accelerate.framework */,
@@ -953,7 +993,8 @@
 		04E1A3721B2BF8A200251D76 /* memberImages */ = {
 			isa = PBXGroup;
 			children = (
-				04E1A3731B2BF8B100251D76 /* mebInitImg.png */,
+				04648E211B4033FD00A7C378 /* mebInitImg2.png */,
+				04648E1F1B4033A500A7C378 /* mebInitImg.png */,
 			);
 			name = memberImages;
 			sourceTree = "<group>";
@@ -1050,6 +1091,7 @@
 				04BEE36B1B31A3A5003D4061 /* check_icon.png in Resources */,
 				0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */,
 				0423C2DD1B1EFC1A000DCE8B /* registeButton2.png in Resources */,
+				04648E201B4033A500A7C378 /* mebInitImg.png in Resources */,
 				0454F76E1B2E6CC600AA0EF3 /* blackArrow@2x.png in Resources */,
 				04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */,
 				0454F76F1B2E6CC600AA0EF3 /* blueArrow.png in Resources */,
@@ -1074,6 +1116,7 @@
 				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
 				0484CCDF1B36CDB900102224 /* credits_search2.png in Resources */,
 				04B029FB1B17220600D88D16 /* mainViewCell_0_3.png in Resources */,
+				04648E221B4033FD00A7C378 /* mebInitImg2.png in Resources */,
 				04BEE36C1B31A3A5003D4061 /* check_icon@2x.png in Resources */,
 				0454F7721B2E6CC600AA0EF3 /* grayArrow@2x.png in Resources */,
 				04B02A071B17220600D88D16 /* mainViewCell_1_3.png in Resources */,
@@ -1098,9 +1141,9 @@
 				04B029FE1B17220600D88D16 /* mainViewCell_0_9.png in Resources */,
 				04B02A001B17220600D88D16 /* mainViewCell_1_1.png in Resources */,
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
-				04E1A3741B2BF8B100251D76 /* mebInitImg.png in Resources */,
 				0454F7711B2E6CC600AA0EF3 /* grayArrow.png in Resources */,
 				04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */,
+				04862A801B3E3B2600E5E6ED /* UMSCashierPlugin.bundle in Resources */,
 				04B029F81B17220600D88D16 /* mainViewCell_1_5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1131,6 +1174,7 @@
 				04BADAA21B1C389900ABB52B /* UIProgressView+AFNetworking.m in Sources */,
 				049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */,
 				04B029B51B171FB000D88D16 /* AppDelegate.m in Sources */,
+				045C9BC21B3E95240066AD49 /* QRCodeViewController.m in Sources */,
 				04413B4F1B22BE9400503425 /* SDImageCache.m in Sources */,
 				0442F6481B26C89200C77AD4 /* HandOverViewController.m in Sources */,
 				046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */,
@@ -1219,7 +1263,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: li wang (C4HEVAEJW8)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1237,8 +1282,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OrderManage",
+					"$(PROJECT_DIR)/OrderManage/Lib/UMSCashierPlugin",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-all_load";
+				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1260,7 +1312,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: li wang (C4HEVAEJW8)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1272,7 +1325,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OrderManage",
+					"$(PROJECT_DIR)/OrderManage/Lib/UMSCashierPlugin",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-all_load";
+				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1282,9 +1343,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
 				INFOPLIST_FILE = OrderManage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OrderManage",
+					"$(PROJECT_DIR)/OrderManage/Lib/UMSCashierPlugin",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
 			};
 			name = Debug;
 		};
@@ -1292,9 +1363,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
 				INFOPLIST_FILE = OrderManage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OrderManage",
+					"$(PROJECT_DIR)/OrderManage/Lib/UMSCashierPlugin",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
 			};
 			name = Release;
 		};

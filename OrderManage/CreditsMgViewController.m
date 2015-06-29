@@ -9,12 +9,13 @@
 #import "CreditsMgViewController.h"
 
 #import "viewOtherDeal.h"
+#import "QRCodeViewController.h"
 
 #define TF_SELECT_CREDITS_TAG 30  // 选择积分的类型
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface CreditsMgViewController () <AVCaptureMetadataOutputObjectsDelegate, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource> {
+@interface CreditsMgViewController () <AVCaptureMetadataOutputObjectsDelegate, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, QRCodeViewDelegate> {
     float _mainScreenWidth;
     float _mainScreenHeight;
     
@@ -68,46 +69,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 二维码的扫描
 - (IBAction)btnQRCode:(UIButton *)sender {
-    NSError *error = [[NSError alloc] init];
-    // 判断当前设备是否有捕获数据流的设备
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
-    
-    if (!input) {
-        
-        NSLog(@"%@", [error localizedDescription]);
-        
-        return;
-        
-    }
-    
-    self.captureSession = [[AVCaptureSession alloc] init];
-    [self.captureSession addInput:input];
-    
-    //对应输出
-    AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
-    
-    [_captureSession addOutput:captureMetadataOutput];
-    
-    //创建一个队列
-    dispatch_queue_t dispatchQueue;
-    
-    dispatchQueue = dispatch_queue_create("myQueue",NULL);
-    [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
-    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
-    
-    //降捕获的数据流展现出来
-    _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
-    [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
-    [_videoPreviewLayer setFrame:self.view.layer.bounds];
-    
-    [self.view.layer addSublayer:_videoPreviewLayer];
-    
-    
-    //开始捕获
-    [_captureSession startRunning];
-    
+    //切换到下一个界面  --- push
+    QRCodeViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"QRCodeview"];
+    viewControl.delegate = self;
+    [self.navigationController pushViewController:viewControl animated:YES];
 }
 
 #pragma mark 查询按钮点击
@@ -131,13 +96,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         [MBProgressHUD show:@"请输入查询内容" icon:nil view:nil];
         return;
     }
-    
+    [MBProgressHUD showMessage:@""];
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetAction];
     
     NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&keyword=%@", [dictLogin objectForKey:@"groupid"], self.tfSearch.text];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -273,6 +239,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [self.view endEditing:YES];
 }
 
+
+#pragma mark QRCodeviewdelegate
+- (void)QRCodeViewBackString:(NSString *)QRCodeSanString {
+    self.tfSearch.text = QRCodeSanString;
+    [self btnSearchInfo:nil];
+    //[self searchBarSearchButtonClicked:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

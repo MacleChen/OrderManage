@@ -11,12 +11,13 @@
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "MebManageViewController.h"
+#import "QRCodeViewController.h"
 
 #define CELL_HEIGHT 50
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface MemberListViewController () <PullTableViewDelegate, UISearchBarDelegate> {
+@interface MemberListViewController () <PullTableViewDelegate, UISearchBarDelegate, QRCodeViewDelegate> {
     float _mainScreenWidth;
     float _mainScreenHeight;
     
@@ -66,17 +67,25 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 }
 
 
+#pragma mark 扫一扫
 - (IBAction)btnQRcode:(UIBarButtonItem *)sender {
+    
+    //切换到下一个界面  --- push
+    QRCodeViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"QRCodeview"];
+    viewControl.delegate = self;
+    [self.navigationController pushViewController:viewControl animated:YES];
 }
 
 
 // 获取网络数据
 - (void)GetWebResponseDataWithpage:(int)PageCount {
+    [MBProgressHUD showMessage:@""];
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerListAction];
     NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&shopid=%@&keyword=%@&pageNum=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"], self.Searchbar.text, [NSString stringWithFormat:@"%i", PageCount]];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -204,7 +213,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置cell中的内容
     cell.textLabel.text = [dictTempData objectForKey:@"cuname"];  // 姓名
     cell.detailTextLabel.text = [dictTempData objectForKey:@"cumb"];         // 电话
-    cell.imageView.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"mebInitImg.png"] size:CGSizeMake(35, 45)];   // 控制图片大小          // 图片
+    cell.imageView.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"mebInitImg2.png"] size:CGSizeMake(35, 45)];   // 控制图片大小          // 图片
     
     // 设置背景色
     if (indexPath.row % 2 == 0) {
@@ -278,6 +287,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark 当点击取消按钮时调用
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
 
+}
+
+
+#pragma mark QRCodeviewdelegate
+- (void)QRCodeViewBackString:(NSString *)QRCodeSanString {
+    self.Searchbar.text = QRCodeSanString;
+    [self searchBarSearchButtonClicked:nil];
 }
 
 - (void)didReceiveMemoryWarning {

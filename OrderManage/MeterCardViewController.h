@@ -27,6 +27,7 @@
 
 @property (strong, nonatomic) IBOutlet PullTableView *pullTableView;
 
+@property (strong, nonatomic) NSDictionary *dictSearchMebInfo;  // 查询到的会员信息
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *itemSearch;
 @property (weak, nonatomic) IBOutlet UILabel *lbSelectedCount;

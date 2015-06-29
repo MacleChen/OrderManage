@@ -36,9 +36,9 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
     [oper setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *html = operation.responseString;
-        NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
-        id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
+//        NSString *html = operation.responseString;
+//        NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
+//        id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

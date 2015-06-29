@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "QCheckBox.h"
+#import "UMSCashierPlugin.h"
 
-@interface POSDeviceViewController : UIViewController
+@interface POSDeviceViewController : UIViewController <UMSCashierPluginDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *tfuserID;
 @property (weak, nonatomic) IBOutlet UITextField *tfuserTerminalID;

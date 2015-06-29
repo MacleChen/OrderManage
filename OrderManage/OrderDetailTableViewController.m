@@ -341,7 +341,7 @@
     lbSeqNumber.font = [UIFont systemFontOfSize:12];
     lbSeqNumber.numberOfLines = 2;
     lbSeqNumber.textAlignment = NSTextAlignmentCenter;
-    lbSeqNumber.text = [NSString stringWithFormat:@"%ld", seqNum];      // 序号
+    lbSeqNumber.text = [NSString stringWithFormat:@"%ld", (long)seqNum];      // 序号
     [viewValuesCell addSubview:lbSeqNumber];
     
     UILabel *lbCustomName = [[UILabel alloc] initWithFrame:CGRectMake(gap*2 + labelWith*1, initY, labelWith, labelHeight)];

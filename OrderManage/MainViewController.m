@@ -49,8 +49,8 @@
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = _cellSize;
     //flowLayout.sectionInset = UIEdgeInsetsMake(20, 10, 0, 0);
-    flowLayout.minimumInteritemSpacing = 20;
-    flowLayout.minimumLineSpacing = 20;
+    flowLayout.minimumInteritemSpacing = 0;
+    flowLayout.minimumLineSpacing = 0;
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     
     self.collectionview =[[UICollectionView alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, _mainScreenHeight - 108) collectionViewLayout:flowLayout];
@@ -87,7 +87,8 @@
             UIImage *imageTemp = [UIImage imageNamed:[NSString stringWithFormat:@"mainViewCell_%d_%d.png", i, j + 1]];
             
             if(imageTemp == nil) continue;   // 为空时不保存
-            [muarrayTemp addObject:[viewOtherDeal scaleToSize:imageTemp size:CGSizeMake(90, 90)]];
+            [muarrayTemp addObject:imageTemp];
+            //[muarrayTemp addObject:[viewOtherDeal scaleToSize:imageTemp size:CGSizeMake(90, 90)]];
         }
         [self.muArrayData addObject:muarrayTemp];
     }
@@ -116,7 +117,7 @@
     // 设置随机色
     //cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
     cell.backgroundView = [[UIImageView alloc] initWithImage:self.muArrayData[indexPath.section][indexPath.row]];
-    
+    cell.hidden = NO;
     // 设置cell的位置和大小
     CGRect cellRect = cell.frame;
     cellRect.size = _cellSize;
@@ -129,6 +130,8 @@
     
     return cell;
 }
+
+
 
 #pragma mark --UICollectionViewDelegateFlowLayout
 
@@ -151,12 +154,11 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 获取对应的cell
-    //UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     //临时改变个颜色，看好，只是临时改变的。如果要永久改变，可以先改数据源，然后在cellForItemAtIndexPath中控制。（和UITableView差不多吧！O(∩_∩)O~）
 //    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
 //    imageview.backgroundColor = [UIColor lightGrayColor];
 //    cell.selectedBackgroundView = imageview;
-
     //切换到下一个界面  --- push
     NSString *strIdentifier = [NSString stringWithFormat:@"mainViewCell_%ld_%ld", indexPath.section, indexPath.row + 1];
     UIViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:strIdentifier];

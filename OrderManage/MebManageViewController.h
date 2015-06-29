@@ -12,6 +12,7 @@
 #import "MBProgressHUD+MJ.h"
 #import "CustomIOS7AlertView.h"
 #import "GetMoneyViewController.h"
+#import "QRCodeViewController.h"
 
 // 充值
 #define RECHANGE_VIEW_TAG 101
@@ -59,6 +60,7 @@
 
 @interface MebManageViewController : UIViewController <CustomIOS7AlertViewDelegate, UITextFieldDelegate>
 
+
 @property (strong, nonatomic) IBOutlet UISearchBar *tfSearch;
 @property (strong, nonatomic) NSDictionary *ReceDict; // 接收其它界面的传递数据
 
@@ -77,9 +79,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *makeup;
 
-
-@property (nonatomic,strong) AVCaptureSession *captureSession;    //输入设备捕获数据流
-@property (nonatomic,strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;  //展示被捕获的数据流
 
 @property (weak, nonatomic) UIDatePicker *datePicker;           //  时间滚轴
 @property (weak, nonatomic) UIPickerView *pickerViewCardType;   //  数据滚轴

@@ -11,6 +11,13 @@
 #import "MBProgressHUD+MJ.h"
 
 
+// 付款
+enum {
+    GetMoneyViewPayStateError = -1,
+    GetMoneyViewPayStateZero = 0,
+    GetMoneyViewPayStateSuccess = 1,
+};
+
 @interface GetMoneyViewController : UIViewController
 
 @property (strong, nonatomic) NSDictionary *listDict;   // 注册页面数据

@@ -14,7 +14,7 @@
 #import "MebManageViewController.h"
 #import "OrderDetailTableViewController.h"
 
-#define CELL_HEIGHT 50
+#define CELL_HEIGHT2 50
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
@@ -105,7 +105,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.pullTableView.pullTextColor = [UIColor blackColor];
     
     // 设置tableview 第一个cell距离导航栏的高度
-    self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65 + CELL_HEIGHT)];
+    self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65 + CELL_HEIGHT2)];
     self.pullTableView.tableHeaderView.alpha = 0.0;
     
     
@@ -136,6 +136,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 // 获取网络数据
 - (void)GetWebResponseDataWithpage:(int)PageCount BeginDate:(NSString *)BeDate EndDate:(NSString *)EnDate searchKeyword:(NSString *)strKeywd CheckBox:(NSString *)CkBox {
+    [MBProgressHUD showMessage:@""];
      //网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordListAction];
     NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&emp.empid=%@&shopid=%@&keyword=%@&keyword1=%@&keyword2=%@&keyword3=%@&pageNum=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"empid"], [dictLogin objectForKey:@"shopid"], BeDate, EnDate, strKeywd, CkBox, [NSString stringWithFormat:@"%i", PageCount]];
@@ -276,7 +277,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     // 设置label
-    int initX = 10, initY = 5, lbWidth = 47, lbHeight = CELL_HEIGHT - 2 * initY, gaplb = CELL_HEIGHT - lbWidth;
+    int initX = 10, initY = 5, lbWidth = 47, lbHeight = CELL_HEIGHT2 - 2 * initY, gaplb = CELL_HEIGHT2 - lbWidth;
     UILabel *lbMenuID = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 0, initY, lbWidth, lbHeight)];
     lbMenuID.text = [dictTempData objectForKey:@"rccode"];         // 单号
     lbMenuID.font = [UIFont systemFontOfSize:12];
@@ -343,7 +344,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 设置每个row的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CELL_HEIGHT;
+    return CELL_HEIGHT2;
 }
 
 #pragma mark  选中cell时响应方法

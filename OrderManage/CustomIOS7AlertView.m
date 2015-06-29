@@ -30,9 +30,9 @@ CGFloat buttonSpacerHeight = 0;
 - (id)initWithParentView: (UIView *)_parentView
 {
     CustomIOS7AlertView *alertView = [self init];
-    if (_parentView) {
-        alertView.frame = _parentView.frame;
-        self.parentView = _parentView;
+    if (self.parentView) {
+        alertView.frame = self.parentView.frame;
+        self.parentView = self.parentView;
     }
     return alertView;
 }

@@ -10,10 +10,11 @@
 #import "viewOtherDeal.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "QRCodeViewController.h"
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface QuickComViewController () <UISearchBarDelegate>
+@interface QuickComViewController () <UISearchBarDelegate, QRCodeViewDelegate>
 
 @end
 
@@ -27,8 +28,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfSearchbar.delegate = self;
 }
 
-
+#pragma mark 扫一扫
 - (IBAction)btnQRCode:(UIButton *)sender {
+    //切换到下一个界面  --- push
+    QRCodeViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"QRCodeview"];
+    viewControl.delegate = self;
+    [self.navigationController pushViewController:viewControl animated:YES];
 }
 
 - (IBAction)btnSearch:(UIButton *)sender {
@@ -48,13 +53,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         [MBProgressHUD show:@"请输入查询内容" icon:nil view:nil];
         return;
     }
-    
+    [MBProgressHUD showMessage:@""];
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetAction];
     
     NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&keyword=%@", [dictLogin objectForKey:@"groupid"], self.tfSearchbar.text];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -109,7 +115,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 // 发送网络请求数据
 - (void)SubmitWebResponseData {
     // 网络请求   --   获取查询数据
-    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSaleAction];
+//    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSaleAction];
 //    NSString *strHttpBody = [NSString stringWithFormat:@"tov.groupid=%@&tov.shopid=%@&empid=%@&tov.recordcount=%@&tov.total=%@&tov.cash=%@&tov.market=%@&tov.cardsale=%@&tov.topup=%@&tov.given=%@&tov.unionpay=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"], [dictLogin objectForKey:@"empid"], self.lbAllBillCount.text, self.lbAllSellMoney.text, self.lbCurrMoney.text, self.lbMarketCash.text, self.lbSavCard.text, self.lbMebRechange.text, self.lbFreeMoney.text, self.lbUnionCard.text];
 //    
 //    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -133,6 +139,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 //    }];
 }
 
+#pragma mark QRCodeviewdelegate
+- (void)QRCodeViewBackString:(NSString *)QRCodeSanString {
+    self.tfSearchbar.text = QRCodeSanString;
+    [self searchBarSearchButtonClicked:nil];
+}
 
 #pragma mark 点击背景退出键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

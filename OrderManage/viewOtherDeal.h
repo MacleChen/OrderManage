@@ -12,6 +12,8 @@
 
 #define MenuAddNotificationHeight 44+20
 
+#define MenuBottomToolHeight 44
+
 #define ITEM_IMAGE_CGSZE CGSizeMake(26, 26)
 
 // 系统主色调

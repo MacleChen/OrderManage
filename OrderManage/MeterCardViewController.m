@@ -12,12 +12,13 @@
 #import "viewOtherDeal.h"
 #import "HttpRequest.h"
 #import "PayBillViewController.h"
+#import "QRCodeViewController.h"
 
 #define CELL_HEIGHT 40
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface MeterCardViewController () <PullTableViewDelegate, CustomIOS7AlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface MeterCardViewController () <PullTableViewDelegate, CustomIOS7AlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, QRCodeViewDelegate, UISearchBarDelegate> {
     float _mainScreenWidth;
     float _mainScreenHeight;
     
@@ -353,17 +354,97 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 扫一扫响应的方法
 - (void)btnQRCodeClick:(UIButton *)sender {
-    NSLog(@"扫一扫");
+    //切换到下一个界面  --- push
+    QRCodeViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"QRCodeview"];
+    viewControl.delegate = self;
+    [self.navigationController pushViewController:viewControl animated:YES];
+    
+    // 关闭alertview
+    [self.alertShow close];
+    
 }
 
 #pragma mark 在alertview中的查询响应的方法
 - (void)btnSearchAlertInClick:(UIButton *)sender {
-    NSLog(@"查询");
+    [self searchBarSearchButtonClicked:nil];
 }
 
 #pragma mark 点击view背景退出键盘
 -(void)HandleBackgroundTap:(UITapGestureRecognizer *)sender {
     [self.alertShow endEditing:YES];
+}
+
+#pragma mark - UISearchBarDelegate 的代理方法的实现
+#pragma mark - 当点击键盘上的搜索按钮时调用这个方法
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    // 判断输入不能为空
+    if ([self.seaBarInput.text isEqual:@""]) {
+        [MBProgressHUD show:@"请输入查询内容" icon:nil view:nil];
+        return;
+    }
+    [MBProgressHUD showMessage:@""];
+    // 网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetAction];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&keyword=%@", [dictLogin objectForKey:@"groupid"], self.seaBarInput.text];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                dictTempData = [dictTempData objectForKey:@"cus"];
+                // copy 查询到的会员信息
+                self.dictSearchMebInfo = dictTempData;
+                
+                // 表示该该卡已被退卡
+                if([[dictTempData objectForKey:@"cucardid"] isEqual:@"无"]) {
+                    [MBProgressHUD show:@"该手机号未绑定会员卡" icon:nil view:nil];
+                    // 清空显示信息
+                    self.lbMeterCardID.text = @"";
+                    self.lbRemainCount.text = @"";
+                    self.lbCredits.text = @"";
+                    self.lbName.text = @"";
+                    self.lbPhoneNum.text = @"";
+                    self.lbBirthday.text = @"";
+                    self.lbRegisteAddr.text = @"";
+                    return;
+                }
+                // 设置显示信息
+                self.lbMeterCardID.text = [dictTempData objectForKey:@"cucardno"];
+                self.lbRemainCount.text = [dictTempData objectForKey:@"cdpic"];
+                self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
+                self.lbName.text = [dictTempData objectForKey:@"cuname"];
+                self.lbPhoneNum.text = [dictTempData objectForKey:@"cumb"];
+                self.lbBirthday.text = [dictTempData objectForKey:@"cubdate_str"];
+                self.lbRegisteAddr.text = [dictTempData objectForKey:@"shopname"];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+    
+    
+}
+
+
+#pragma mark QRCodeviewdelegate
+- (void)QRCodeViewBackString:(NSString *)QRCodeSanString {
+    // 显示alertShowView
+    [self.alertShow show];
+    self.seaBarInput.text = QRCodeSanString;
+    [self btnSearchAlertInClick:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {

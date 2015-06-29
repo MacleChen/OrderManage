@@ -7,6 +7,7 @@
 //
 
 #import "GetMoneyViewController.h"
+#import "UMSCashierPlugin.h"
 
 #define TF_Guide1Tag 30
 #define TF_Guide2Tag 40
@@ -107,7 +108,7 @@
     UILabel *lb_info = [[UILabel alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 20)];
     self.lbInfo = lb_info;
     self.lbInfo.backgroundColor = ColorMainSystem;
-    self.lbInfo.textAlignment = UITextAlignmentCenter;
+    self.lbInfo.textAlignment = NSTextAlignmentCenter;
     self.lbInfo.textColor = [UIColor whiteColor];
     self.lbInfo.font = [UIFont systemFontOfSize:12];
     self.lbInfo.hidden = YES;
@@ -116,7 +117,7 @@
     [self.view addSubview:_visualEffectView];
     
     // 隐藏显示窗口
-    [MBProgressHUD hideHUD];
+    //[MBProgressHUD hideHUD];
 }
 
 
@@ -149,8 +150,26 @@
 
 
 - (IBAction)btnSureClick:(UIButton *)sender {
-    // 连接打印机
+    // 付款
+    if([self.tfCashpay.text floatValue] != 0.0f)
+        if([self funcCashPay] == GetMoneyViewPayStateError) {
+            [MBProgressHUD show:@"现金支付失败" icon:nil view:nil];
+            return;
+        };
     
+    if([self.tfUnionpay.text floatValue] != 0.0f)
+        if([self funcCashPay] == GetMoneyViewPayStateError) {
+            [MBProgressHUD show:@"银联支付失败" icon:nil view:nil];
+            return;
+        };
+    
+    if([self.tfCoupons.text floatValue] != 0.0f)
+        if([self funcCashPay] == GetMoneyViewPayStateError) {
+            [MBProgressHUD show:@"优惠券支付失败" icon:nil view:nil];
+            return;
+        };
+    
+    // 连接打印机打印
 }
 
 #pragma  mark - textField的代理方法的实现
@@ -255,6 +274,27 @@
     // Fill the label text here
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;
+}
+
+#pragma mark 现金支付方法
+- (int)funcCashPay {
+    // 现金付款
+    return GetMoneyViewPayStateSuccess;
+}
+
+#pragma mark 银联支付方法
+- (int)funcUnionPay {
+    
+    
+    
+    // 银联付款
+    return GetMoneyViewPayStateSuccess;
+}
+
+#pragma mark 优惠券支付方法
+- (int)funcCouponsPay {
+    // 优惠劵
+    return GetMoneyViewPayStateSuccess;
 }
 
 #pragma mark 点击picker的完成按钮时调用该方法
