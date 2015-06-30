@@ -28,6 +28,9 @@ NSDictionary *dictSendLogin = nil;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 沉睡一会儿
+    [NSThread sleepForTimeInterval:3.0];
+    
     _viewLoginInitY = self.viewLogin.frame.origin.y;
     self.lbInfo.text = @"";
     

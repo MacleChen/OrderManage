@@ -160,7 +160,7 @@
 //    imageview.backgroundColor = [UIColor lightGrayColor];
 //    cell.selectedBackgroundView = imageview;
     //切换到下一个界面  --- push
-    NSString *strIdentifier = [NSString stringWithFormat:@"mainViewCell_%ld_%ld", indexPath.section, indexPath.row + 1];
+    NSString *strIdentifier = [NSString stringWithFormat:@"mainViewCell_%ld_%ld", (long)indexPath.section, (long)indexPath.row + 1];
     UIViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:strIdentifier];
     [self.navigationController pushViewController:viewControl animated:YES];
 }

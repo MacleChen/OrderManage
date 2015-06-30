@@ -149,6 +149,7 @@
 		04BEE36E1B31A3A5003D4061 /* uncheck_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BEE36A1B31A3A5003D4061 /* uncheck_icon@2x.png */; };
 		04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */; };
 		04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */; };
+		04D08B6D1B4285D100E7345D /* saoyisao3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D08B6C1B4285D100E7345D /* saoyisao3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -373,6 +374,7 @@
 		04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueDeviceViewController.m; sourceTree = "<group>"; };
 		04BEE3721B31BF35003D4061 /* POSDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSDeviceViewController.h; sourceTree = "<group>"; };
 		04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDeviceViewController.m; sourceTree = "<group>"; };
+		04D08B6C1B4285D100E7345D /* saoyisao3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -829,6 +831,7 @@
 		04B029E41B17211B00D88D16 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04D08B6C1B4285D100E7345D /* saoyisao3.png */,
 				0484CCDB1B36CB4D00102224 /* CreditsMgImages */,
 				0480ED921B2FE4C50041A1FC /* HandOverImages */,
 				04E1A3721B2BF8A200251D76 /* memberImages */,
@@ -1097,6 +1100,7 @@
 				0454F76F1B2E6CC600AA0EF3 /* blueArrow.png in Resources */,
 				0423C2D11B1EEEF4000DCE8B /* imgaddress.png in Resources */,
 				04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */,
+				04D08B6D1B4285D100E7345D /* saoyisao3.png in Resources */,
 				04B02A081B17220600D88D16 /* mainViewCell_1_4.png in Resources */,
 				04B029E01B17210100D88D16 /* iPhone_iOS_40@2x.png in Resources */,
 				0423C2D81B1EEEF4000DCE8B /* imgPhoneNUM.png in Resources */,

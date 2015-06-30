@@ -44,6 +44,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.alertShow.useMotionEffects = YES;
     // 设置代理
     self.alertShow.delegate = self;
+    self.tfCardID.delegate = self;
+    
+    // 设置储值卡的选择
+    self.tfCardID.tag = TF_CARDID_TAG;
     
     // 设置datePicker
     UIDatePicker *datePic = [[UIDatePicker alloc] init];
@@ -58,7 +62,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置毛玻璃的背景
     UIVisualEffectView *visEffView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.visualEffectView = visEffView;
-    self.visualEffectView.frame = CGRectMake(0, _mainScreenHeight, _mainScreenWidth, 260);
+    self.visualEffectView.frame = CGRectMake(0, _mainScreenHeight, _mainScreenWidth, 220);
     self.visualEffectView.alpha = 1.0;
     //    self.visualEffectView.layer.borderColor = [[UIColor grayColor] CGColor];
     //    self.visualEffectView.layer.borderWidth = 0.5; // 设置border
@@ -72,8 +76,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [self.visualEffectView addSubview:self.pickerViewCardType];
     
     // 将view添加到键盘上面
-    UIWindow *wind = [[[UIApplication sharedApplication] windows] lastObject];
-    [wind addSubview:self.visualEffectView];
+//    UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
+//    [window addSubview:self.visualEffectView];
+    
+    //[self.tfCardID setInputAccessoryView:self.visualEffectView];
+    [self.tfCardID setInputView:self.visualEffectView];
     
     // 设置初始值
     if([self.tfSearch.text isEqual:@""])
@@ -140,6 +147,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfReChange_Money.delegate = self;
     self.tfReChange_GiveMoney.delegate = self;
     
+    // 设置调出键盘类型
+    [self.tfReChange_Type setInputView:self.visualEffectView];
+    
     // 初始化内容  获取网络数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBTopupActiveAction];
     NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&shopid=%@", [self.dictSearchMebInfo objectForKey:@"groupid"], [self.dictSearchMebInfo objectForKey:@"shopid"]];
@@ -198,6 +208,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfModifyInfo_Phone.delegate = self;
     self.tfModifyInfo_Address.delegate = self;
     self.tfModifyInfo_Birday.delegate = self;
+    
+    // 设置键盘类型
+    [self.tfModifyInfo_Birday setInputView:self.visualEffectView];
     
     // 初始化内容
     self.tfModifyInfo_Name.text = self.lbName.text;
@@ -269,6 +282,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfAddCard_Type.delegate = self;
     self.tfAddCard_CardID.delegate = self;
     self.tfAddCard_Money.delegate = self;
+    
+    // 设置键盘类型
+    [self.tfAddCard_Type setInputView:self.visualEffectView];
     
     // 初始化内容
         // 获取卡的网络类型数据
@@ -532,37 +548,59 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGRect datepicFrame = self.visualEffectView.frame;
-    
-    // 添加对应的picker
-    if (textField.tag == MODIFYINFO_VIEW_birday_TAG) {  // 显示 datePicker
-        self.datePicker.hidden = NO;
-        self.pickerViewCardType.hidden = YES;
-    }
-    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == ADDCARD_VIEW_Type_TAG) {   // 显示数据 picker
-        self.datePicker.hidden = YES;
-        self.pickerViewCardType.hidden = NO;
-    }
-    // 添加动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.1];
-    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == MODIFYINFO_VIEW_birday_TAG || textField.tag == ADDCARD_VIEW_Type_TAG) {  // 开始编辑 会员生日
-        [self.view endEditing:YES];
-        // 显示placeholder
-        if(textField.tag == RECHANGE_VIEW_Type_TAG) self.tfReChange_Type.text = @"";
-        if(textField.tag == MODIFYINFO_VIEW_birday_TAG)  self.tfModifyInfo_Birday.text = @"";
-        if(textField.tag == ADDCARD_VIEW_Type_TAG)  self.tfAddCard_Type.text = @"";
+    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == MODIFYINFO_VIEW_birday_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG) {
+        //
+        // 添加对应的picker
+        if (textField.tag == MODIFYINFO_VIEW_birday_TAG) {  // 显示 datePicker
+            self.datePicker.hidden = NO;
+            self.pickerViewCardType.hidden = YES;
+        }
         
-        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-        
-    } else {
-        datepicFrame.origin.y = _mainScreenHeight;
+        if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG) {   // 显示数据 picker
+            
+            self.datePicker.hidden = YES;
+            self.pickerViewCardType.hidden = NO;
+        }
     }
     
-    self.visualEffectView.frame = datepicFrame;
-    [UIView commitAnimations];
-    
-//    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == MODIFYINFO_VIEW_birday_TAG || textField.tag == ADDCARD_VIEW_Type_TAG) return NO;
+    // 判断点击储值卡时，为空
+    if (textField.tag == TF_CARDID_TAG) {
+        if ([self.lbCardID.text isEqual:@""]) {
+            [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
+            return NO;
+        } else {
+            // 初始化内容  获取网络数据
+            NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBTopupActiveAction];
+            NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&shopid=%@", [self.dictSearchMebInfo objectForKey:@"groupid"], [self.dictSearchMebInfo objectForKey:@"shopid"]];
+            [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+                if (data) { // 请求成功
+                    NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+                    NSString *strStatus = [listData objectForKey:statusCdoe];
+                    if ([strStatus intValue] == 200) { // 获取正确的数据
+                        [_MuarrayType removeAllObjects]; // 清空陈旧的数据
+                        [_MuarrayType addObject:@"不选择活动fwfwfw"]; // 初始化一条数据
+                        self.tfReChange_Type.text = _MuarrayType[0]; // 默认为 不选择活动
+                        _arrayTypeData = [listData objectForKey:MESSAGE];
+                        // 存入获取到的数据
+                        for(NSDictionary *dictTemp in _arrayTypeData) {
+                            NSString *string = [NSString stringWithFormat:@"充值活动：充%@ 送%@，%@", [dictTemp objectForKey:@"realmoney"], [dictTemp objectForKey:@"freemoney"], [dictTemp objectForKey:@"time"]];
+                            [_MuarrayType addObject:string];
+                        }
+                        NSLog(@"%@", _MuarrayType);
+                        // 刷新数据
+                        [self.pickerViewCardType reloadComponent:0];
+                        
+                    } else { // 数据有问题
+                        [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                    }
+                } else { // 请求失败
+                    [MBProgressHUD show:ConnectException icon:nil view:nil];
+                }
+                
+            }];
+
+        }
+    }
     
     return YES;
 }

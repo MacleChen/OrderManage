@@ -14,6 +14,9 @@
 #import "GetMoneyViewController.h"
 #import "QRCodeViewController.h"
 
+// 储值卡
+#define TF_CARDID_TAG 50
+
 // 充值
 #define RECHANGE_VIEW_TAG 101
 #define RECHANGE_VIEW_Type_TAG 1011
@@ -67,7 +70,7 @@
 @property (strong, nonatomic) NSDictionary *dictSearchMebInfo;  // 查询到的会员信息
 
 
-@property (weak, nonatomic) IBOutlet UITextField *tfCardID; 
+@property (weak, nonatomic) IBOutlet UITextField *tfCardID;         // 显示选择卡
 @property (weak, nonatomic) IBOutlet UILabel *lbCardID;             // 储值卡号
 @property (weak, nonatomic) IBOutlet UILabel *lbName;               // 会员姓名
 @property (weak, nonatomic) IBOutlet UILabel *lbCard_discount;      // 卡类/折扣

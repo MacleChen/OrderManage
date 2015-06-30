@@ -142,6 +142,9 @@
             //切换到下一个界面  --- push
             BlueDeviceViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"BlueDevice"];
             [self.navigationController pushViewController:viewControl animated:YES];
+            
+            // 调用其它应用程序
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=Bluetooth"]];
         }
         if (indexPath.row == 1) {
             //切换到下一个界面  --- push
