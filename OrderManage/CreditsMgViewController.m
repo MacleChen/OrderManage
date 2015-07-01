@@ -63,7 +63,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     // 将view添加到当前view中
     [self.view addSubview:self.visualEffectView];
-    
 }
 
 
@@ -82,10 +81,88 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 增加积分
 - (IBAction)btnAddCreidtsClick:(UIButton *)sender {
+    if ([self.tfSearch.text isEqual:@""]) {
+        [MBProgressHUD show:@"请先查询会员信息" icon:nil view:nil];
+        return;
+    }
+    // 判断输入积分不能小于等于0
+    if ([self.tfInputCredits.text intValue] <= 0) {
+        [MBProgressHUD show:@"请输入积分" icon:nil view:nil];
+        return;
+    }
+    
+    // 处理增加积分
+    [MBProgressHUD showMessage:@""];
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerAddCredits];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&keyword=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], self.tfInputCredits.text];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                [self btnSearchInfo:nil]; // 重新刷新数据
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+    
 }
 
 #pragma mark 扣除积分
 - (IBAction)btnDeductClick:(UIButton *)sender {
+    if ([self.tfSearch.text isEqual:@""]) {
+        [MBProgressHUD show:@"请先查询会员信息" icon:nil view:nil];
+        return;
+    }
+    // 处理扣除积分
+    // 判断输入积分不能小于等于0
+    if ([self.tfInputCredits.text intValue] <= 0) {
+        [MBProgressHUD show:@"请输入积分" icon:nil view:nil];
+        return;
+    }
+    
+    [MBProgressHUD showMessage:@""];
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerSubCredits];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&keyword=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], self.tfInputCredits.text];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                [self btnSearchInfo:nil]; // 重新刷新数据
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+
 }
 
 #pragma mark - UISearchBarDelegate 的代理方法的实现
@@ -168,14 +245,15 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     CGRect datepicFrame = self.visualEffectView.frame;
     
+    // 获取网络数据 -- 积分类型
+    if(textField.tag == TF_SELECT_CREDITS_TAG)  [self getWebDataCreditsType];
     // 添加动画
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
-    if (textField.tag == TF_SELECT_CREDITS_TAG) {  // 开始编辑 会员生日
+    if (textField.tag == TF_SELECT_CREDITS_TAG) {  // 开始编辑
         [self.view endEditing:YES];
         // 显示placeholder
         self.tfSelectCredits.text = @"";
-
         datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
         
     } else {
@@ -203,14 +281,25 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 设置每个组件中的row的内容
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (row == 0) {
+        return _MuarrayType[row];
+    }
     
-    return _MuarrayType[row];
+    NSDictionary *dictTemp = _MuarrayType[row];
+    return [NSString stringWithFormat:@"%@(%@)", [dictTemp objectForKey:@"gname"], [dictTemp objectForKey:@"integral"]];
 }
 
 #pragma mark 当选中picker中的row时调用该方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (_MuarrayType.count > 0) {
-        self.tfSelectCredits.text = _MuarrayType[row];
+        if (row == 0) {
+            self.tfSelectCredits.text = _MuarrayType[row];
+            self.tfInputCredits.text = @"";
+            return;
+        }
+        NSDictionary *dicTemp = _MuarrayType[row];
+        self.tfSelectCredits.text = [dicTemp objectForKey:@"gname"];
+        self.tfInputCredits.text = [dicTemp objectForKey:@"integral"];
     }
 }
 
@@ -230,6 +319,48 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // Fill the label text here
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;
+}
+
+#pragma mark 获取网络数据 -- 积分类型
+- (void)getWebDataCreditsType {
+    [MBProgressHUD showMessage:@""]; // 加载显示
+    // 网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetGifList];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"shopid=%@", [dictLogin objectForKey:@"shopid"]];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                [_MuarrayType removeAllObjects]; // 清空
+                
+                // 设置默认数据
+                [_MuarrayType addObject:@"不兑换礼品"];
+                NSArray *arrayDataTemp = [dictTempData objectForKey:@"giftList"];
+                for (NSDictionary *dict in arrayDataTemp) {
+                    [_MuarrayType addObject:dict];
+                }
+                
+                // 刷新pickerview的数据
+                [self.pickerViewCardType reloadAllComponents];
+                
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 

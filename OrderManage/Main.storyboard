@@ -1638,7 +1638,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入积分" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-OD-nzD">
                                 <rect key="frame" x="52" y="119" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="30" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="积分类型" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WNm-tg-3fg">
                                 <rect key="frame" x="175" y="119" width="97" height="30"/>

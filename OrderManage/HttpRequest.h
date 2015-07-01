@@ -38,6 +38,11 @@
 #define WEBRecordListAction @"record!list.action?"      // 消费明细 -- 获取数据列表
 #define WEBRecordDetailAction @"record!detail.action?"  // 消费明细》订单明细
 
+// 积分管理
+#define WEBCustomerGetGifList @"customer!getGiftList.action?" // 获取礼品list
+#define WEBCustomerAddCredits @"customer!addinteg.action?"    // 增加积分
+#define WEBCustomerSubCredits @"customer!subinteg.action?"    // 扣除积分
+
 #define statusCdoe @"statusCode"
 #define MESSAGE    @"message"
 #define ConnectDataError @"获取失败！"
