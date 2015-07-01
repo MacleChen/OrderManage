@@ -18,6 +18,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     NSMutableArray *_MuarrayType; // 要显示到pcikerview中卡类型字符串
     NSArray *_arrayTypeData;   // 接收到的所有类型数据
+    
+    NSMutableArray *_MUarrayAllCards;  // 每个会员所对应的所有卡的详细
 }
 
 @end
@@ -32,6 +34,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.dictSearchMebInfo = [[NSDictionary alloc] init];
     _MuarrayType = [[NSMutableArray alloc] init];
     _arrayTypeData = [[NSArray alloc] init];
+    _MUarrayAllCards = [[NSMutableArray alloc] init];
     
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
@@ -569,24 +572,38 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
             return NO;
         } else {
+            
+            if ([self.tfSearch.text isEqual:@""]) {
+                [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
+                return NO;
+            }
+            
+            self.pickerViewCardType.tag = TF_CARDID_TAG; // 设置tag标识
             // 初始化内容  获取网络数据
-            NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBTopupActiveAction];
-            NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&shopid=%@", [self.dictSearchMebInfo objectForKey:@"groupid"], [self.dictSearchMebInfo objectForKey:@"shopid"]];
+            NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetAction];
+            NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&keyword=%@", [self.dictSearchMebInfo objectForKey:@"groupid"], self.tfSearch.text];
             [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
                 if (data) { // 请求成功
                     NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
                     NSString *strStatus = [listData objectForKey:statusCdoe];
                     if ([strStatus intValue] == 200) { // 获取正确的数据
+                        listData = [listData objectForKey:MESSAGE];
                         [_MuarrayType removeAllObjects]; // 清空陈旧的数据
-                        [_MuarrayType addObject:@"不选择活动fwfwfw"]; // 初始化一条数据
-                        self.tfReChange_Type.text = _MuarrayType[0]; // 默认为 不选择活动
-                        _arrayTypeData = [listData objectForKey:MESSAGE];
-                        // 存入获取到的数据
-                        for(NSDictionary *dictTemp in _arrayTypeData) {
-                            NSString *string = [NSString stringWithFormat:@"充值活动：充%@ 送%@，%@", [dictTemp objectForKey:@"realmoney"], [dictTemp objectForKey:@"freemoney"], [dictTemp objectForKey:@"time"]];
-                            [_MuarrayType addObject:string];
+                        [_MUarrayAllCards removeAllObjects];
+                        
+                        _arrayTypeData = [listData objectForKey:@"listcount"];
+                        listData = [listData objectForKey:@"cus"];
+                        [_MUarrayAllCards addObject:listData];
+                        [_MuarrayType addObject:[listData objectForKey:@"cucardid"]]; // 初始化一条数据
+                        //self.tfReChange_Type.text = _MuarrayType[0]; // 默认
+                        
+                        if (_arrayTypeData.count > 0) {  // 有数据
+                            // 存入获取到的数据
+                            for(NSDictionary *dictTemp in _arrayTypeData) {
+                                [_MuarrayType addObject:[dictTemp objectForKey:@"cardnum"]];
+                                [_MUarrayAllCards addObject:dictTemp];
+                            }
                         }
-                        NSLog(@"%@", _MuarrayType);
                         // 刷新数据
                         [self.pickerViewCardType reloadComponent:0];
                         
@@ -630,6 +647,23 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             break;
         case ADDCARD_VIEW_TAG:
             self.tfAddCard_Type.text = _MuarrayType[row];
+            break;
+        case TF_CARDID_TAG:{
+            NSDictionary *dictTempData = _MUarrayAllCards[row];
+            if (row == 0) {
+                // 设置显示信息
+                self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
+                self.lbRemain_Times.text = [dictTempData objectForKey:@"lostmoney"];
+                self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
+                self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
+            }
+            if (_arrayTypeData.count > 0 && row > 0) {
+                self.lbCardID.text = [dictTempData objectForKey:@"cardnum"];
+                self.lbRemain_Times.text = [dictTempData objectForKey:@"cardcount"];
+                //self.lbCredits.text = [dictTempData objectForKey:@""];
+                self.lbCard_discount.text = [dictTempData objectForKey:@"cdname"];
+            }
+        }
             break;
         default:
             break;

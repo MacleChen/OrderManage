@@ -150,6 +150,7 @@
 		04BEE3711B31BF21003D4061 /* BlueDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3701B31BF21003D4061 /* BlueDeviceViewController.m */; };
 		04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */; };
 		04D08B6D1B4285D100E7345D /* saoyisao3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D08B6C1B4285D100E7345D /* saoyisao3.png */; };
+		04D08B6F1B428C5A00E7345D /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -375,6 +376,7 @@
 		04BEE3721B31BF35003D4061 /* POSDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSDeviceViewController.h; sourceTree = "<group>"; };
 		04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDeviceViewController.m; sourceTree = "<group>"; };
 		04D08B6C1B4285D100E7345D /* saoyisao3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao3.png; sourceTree = "<group>"; };
+		04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D08B6F1B428C5A00E7345D /* CoreBluetooth.framework in Frameworks */,
 				04862A841B3E400800E5E6ED /* CoreData.framework in Frameworks */,
 				04862A821B3E3FE600E5E6ED /* libicucore.dylib in Frameworks */,
 				0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */,
@@ -952,6 +955,7 @@
 		04BADAAF1B1C396700ABB52B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */,
 				04862A831B3E400800E5E6ED /* CoreData.framework */,
 				04862A811B3E3FE600E5E6ED /* libicucore.dylib */,
 				0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */,
