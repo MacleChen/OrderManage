@@ -80,6 +80,7 @@
 		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
 		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
+		04A096C51B442C6F005E8BD1 /* AlbumQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A096C41B442C6F005E8BD1 /* AlbumQRCodeViewController.m */; };
 		04A864B41B21382A001A3994 /* MebManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A864B31B21382A001A3994 /* MebManageViewController.m */; };
 		04A88C781B312E980016B18B /* OrderDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A88C771B312E980016B18B /* OrderDetailTableViewController.m */; };
 		04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04A88C7B1B31324D0016B18B /* OrderDetailShowCellView.xib */; };
@@ -151,6 +152,8 @@
 		04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */; };
 		04D08B6D1B4285D100E7345D /* saoyisao3.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D08B6C1B4285D100E7345D /* saoyisao3.png */; };
 		04D08B6F1B428C5A00E7345D /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */; };
+		04FD235B1B443696009B3BF7 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04FD235A1B443695009B3BF7 /* AssetsLibrary.framework */; };
+		04FD235F1B4441FC009B3BF7 /* File.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04FD23611B4441FC009B3BF7 /* File.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +280,8 @@
 		048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
 		049670B11B207F7700430237 /* GetMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetMoneyViewController.h; sourceTree = "<group>"; };
 		049670B21B207F7700430237 /* GetMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMoneyViewController.m; sourceTree = "<group>"; };
+		04A096C31B442C6F005E8BD1 /* AlbumQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumQRCodeViewController.h; sourceTree = "<group>"; };
+		04A096C41B442C6F005E8BD1 /* AlbumQRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumQRCodeViewController.m; sourceTree = "<group>"; };
 		04A864B21B21382A001A3994 /* MebManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MebManageViewController.h; sourceTree = "<group>"; };
 		04A864B31B21382A001A3994 /* MebManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MebManageViewController.m; sourceTree = "<group>"; };
 		04A88C761B312E980016B18B /* OrderDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailTableViewController.h; sourceTree = "<group>"; };
@@ -377,6 +382,11 @@
 		04BEE3731B31BF35003D4061 /* POSDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDeviceViewController.m; sourceTree = "<group>"; };
 		04D08B6C1B4285D100E7345D /* saoyisao3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao3.png; sourceTree = "<group>"; };
 		04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		04FD235A1B443695009B3BF7 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		04FD23601B4441FC009B3BF7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/File.strings; sourceTree = "<group>"; };
+		04FD23621B44422B009B3BF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/File.strings; sourceTree = "<group>"; };
+		04FD23631B444249009B3BF7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/File.strings"; sourceTree = "<group>"; };
+		04FD23651B445428009B3BF7 /* QRCodeSuccess.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = QRCodeSuccess.aif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,6 +394,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FD235B1B443696009B3BF7 /* AssetsLibrary.framework in Frameworks */,
 				04D08B6F1B428C5A00E7345D /* CoreBluetooth.framework in Frameworks */,
 				04862A841B3E400800E5E6ED /* CoreData.framework in Frameworks */,
 				04862A821B3E3FE600E5E6ED /* libicucore.dylib in Frameworks */,
@@ -545,6 +556,8 @@
 			children = (
 				045C9BC01B3E95240066AD49 /* QRCodeViewController.h */,
 				045C9BC11B3E95240066AD49 /* QRCodeViewController.m */,
+				04A096C31B442C6F005E8BD1 /* AlbumQRCodeViewController.h */,
+				04A096C41B442C6F005E8BD1 /* AlbumQRCodeViewController.m */,
 			);
 			name = QRCodeViewController;
 			sourceTree = "<group>";
@@ -793,6 +806,8 @@
 		04B029AF1B171FB000D88D16 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04FD23641B445407009B3BF7 /* OrderManagesounds */,
+				04FD235C1B4441B0009B3BF7 /* SupportLaguage */,
 				04B029E41B17211B00D88D16 /* images */,
 				04B029D71B17203700D88D16 /* image_icon */,
 				04B029B01B171FB000D88D16 /* Info.plist */,
@@ -955,6 +970,7 @@
 		04BADAAF1B1C396700ABB52B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04FD235A1B443695009B3BF7 /* AssetsLibrary.framework */,
 				04D08B6E1B428C5A00E7345D /* CoreBluetooth.framework */,
 				04862A831B3E400800E5E6ED /* CoreData.framework */,
 				04862A811B3E3FE600E5E6ED /* libicucore.dylib */,
@@ -1004,6 +1020,22 @@
 				04648E1F1B4033A500A7C378 /* mebInitImg.png */,
 			);
 			name = memberImages;
+			sourceTree = "<group>";
+		};
+		04FD235C1B4441B0009B3BF7 /* SupportLaguage */ = {
+			isa = PBXGroup;
+			children = (
+				04FD23611B4441FC009B3BF7 /* File.strings */,
+			);
+			name = SupportLaguage;
+			sourceTree = "<group>";
+		};
+		04FD23641B445407009B3BF7 /* OrderManagesounds */ = {
+			isa = PBXGroup;
+			children = (
+				04FD23651B445428009B3BF7 /* QRCodeSuccess.aif */,
+			);
+			name = OrderManagesounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1069,6 +1101,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 04B029A31B171FB000D88D16;
 			productRefGroup = 04B029AD1B171FB000D88D16 /* Products */;
@@ -1098,6 +1131,7 @@
 				04BEE36B1B31A3A5003D4061 /* check_icon.png in Resources */,
 				0423C2D91B1EEEF4000DCE8B /* imgsurePass.png in Resources */,
 				0423C2DD1B1EFC1A000DCE8B /* registeButton2.png in Resources */,
+				04FD235F1B4441FC009B3BF7 /* File.strings in Resources */,
 				04648E201B4033A500A7C378 /* mebInitImg.png in Resources */,
 				0454F76E1B2E6CC600AA0EF3 /* blackArrow@2x.png in Resources */,
 				04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */,
@@ -1193,6 +1227,7 @@
 				04413B531B22BE9400503425 /* SDWebImageDownloaderOperation.m in Sources */,
 				0442F6451B26B06900C77AD4 /* MemberListViewController.m in Sources */,
 				04BEE3741B31BF35003D4061 /* POSDeviceViewController.m in Sources */,
+				04A096C51B442C6F005E8BD1 /* AlbumQRCodeViewController.m in Sources */,
 				04BADAA31B1C389900ABB52B /* UIRefreshControl+AFNetworking.m in Sources */,
 				0442F6511B26C9CD00C77AD4 /* SystemSetTableViewController.m in Sources */,
 				0442F64E1B26C96100C77AD4 /* ComDetailTableViewController.m in Sources */,
@@ -1252,6 +1287,19 @@
 			targetProxy = 04B029C61B171FB000D88D16 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		04FD23611B4441FC009B3BF7 /* File.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04FD23601B4441FC009B3BF7 /* en */,
+				04FD23621B44422B009B3BF7 /* Base */,
+				04FD23631B444249009B3BF7 /* zh-Hans */,
+			);
+			name = File.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		04B029CD1B171FB000D88D16 /* Debug */ = {

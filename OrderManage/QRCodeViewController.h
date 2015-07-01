@@ -18,7 +18,9 @@
 
 @end
 
-@interface QRCodeViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate, QCheckBoxDelegate>
+@interface QRCodeViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate, QCheckBoxDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+
+@property (nonatomic, strong) UIImagePickerController *picker;      // 调用系统相册view
 
 @property (nonatomic,strong) AVCaptureSession *captureSession;    //输入设备捕获数据流
 @property (nonatomic,strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;  //展示被捕获的数据流
@@ -32,8 +34,12 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;    // 底部菜单栏
 @property (weak, nonatomic) QCheckBox *ckLight; // 灯
 
+@property (strong, nonatomic) UIImageView *readLineView;  // 读取到的图片显示在中央
 
-- (IBAction)itemBtnCancelClick:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) UIImage *imgReadForSaoQR;   // 从图库中获取的照片
+
+
+- (IBAction)itemBtnToAlbumClick:(UIBarButtonItem *)sender;
 
 
 @end

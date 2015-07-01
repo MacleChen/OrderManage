@@ -2136,7 +2136,7 @@
                     <navigationItem key="navigationItem" title="二维码/条码" id="ZQn-1f-Sqg">
                         <barButtonItem key="rightBarButtonItem" title="相册" id="puw-Bd-eD3">
                             <connections>
-                                <action selector="itemBtnCancelClick:" destination="4Vf-XR-YJb" id="Pls-6L-B6T"/>
+                                <action selector="itemBtnToAlbumClick:" destination="4Vf-XR-YJb" id="nWA-E5-2Ce"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2158,6 +2158,54 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-473" y="649"/>
+        </scene>
+        <!--AlbumQR Code View Controller-->
+        <scene sceneID="Dtg-lv-5BJ">
+            <objects>
+                <viewController storyboardIdentifier="AlbumQRCode" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IGt-Az-bBH" customClass="AlbumQRCodeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HMg-aQ-l6n"/>
+                        <viewControllerLayoutGuide type="bottom" id="btx-Q9-TRq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Igy-Se-z6h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EkX-hv-HUJ">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="相册" id="rbY-Yq-jPA">
+                                        <barButtonItem key="rightBarButtonItem" title="取消" id="uEv-Ok-9Sa">
+                                            <connections>
+                                                <action selector="barBtnCancelClick:" destination="IGt-Az-bBH" id="Eme-an-Odp"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaN-HS-yY5">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95372166913853873" green="0.96073396018723745" blue="0.98177083333333337" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="zQC-vF-zKe" id="rDh-86-vme"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sC2-Ny-bHS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="O95-LR-fAA">
+                    <connections>
+                        <outlet property="delegate" destination="IGt-Az-bBH" id="EBk-33-8ez"/>
+                        <outlet property="searchContentsController" destination="IGt-Az-bBH" id="Heb-uA-lAr"/>
+                        <outlet property="searchResultsDataSource" destination="IGt-Az-bBH" id="xwM-jy-2vz"/>
+                        <outlet property="searchResultsDelegate" destination="IGt-Az-bBH" id="iIr-ZL-5C7"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="-801" y="649"/>
         </scene>
     </scenes>
     <resources>

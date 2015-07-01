@@ -14,6 +14,8 @@
 @interface QRCodeViewController () {
     float _mainScreenWidth;
     float _mainScreenHeight;
+    
+    SystemSoundID _QRCodeSuccess;   // 扫描成功的声音
 }
 
 @end
@@ -43,6 +45,12 @@
     [self.toolbar addSubview:ckLightTemp];
     
     [self startReading];
+    
+    // 设置readLineView
+    self.readLineView = [[UIImageView alloc] init];
+    
+    // 加载音效文件
+    _QRCodeSuccess = [self loadSound:@"QRCodeSuccess.aif"];
 }
 
 
@@ -96,21 +104,22 @@
     captureMetadataOutput.rectOfInterest = CGRectMake(0.2f, 0.2f, 0.8f, 0.8f);  // (0.2f, 0.2f, 0.8f, 0.8f)
     
     //10.1.扫描框
-    _boxView = [[UIView alloc] initWithFrame:CGRectMake(_mainScreenWidth * (2 - 1) / 2 / 2, _mainScreenHeight * (4 - 1) / 4 / 2, _mainScreenWidth / 2, _mainScreenHeight / 4)];
+    _boxView = [[UIView alloc] initWithFrame:CGRectMake(40 , _mainScreenHeight * (3 - 1) / 3 / 2, _mainScreenWidth - 40*2, _mainScreenHeight / 3)];
+//    _boxView = [[UIView alloc] initWithFrame:CGRectMake(_mainScreenWidth * (2 - 1) / 2 / 2, _mainScreenHeight * (4 - 1) / 4 / 2, _mainScreenWidth / 2, _mainScreenHeight / 4)];
     //CGRectMake(self.view.bounds.size.width * 0.2f, self.view.bounds.size.height * 0.2f, self.view.bounds.size.width - self.view.bounds.size.width * 0.4f, self.view.bounds.size.height - self.view.bounds.size.height * 0.4f)
     _boxView.layer.borderColor = [UIColor greenColor].CGColor;
-    _boxView.layer.borderWidth = 1.0f;
+    _boxView.layer.borderWidth = 1.5f;
     
     [self.view addSubview:_boxView];
     
     //10.2.扫描线
     _scanLayer = [[CALayer alloc] init];
-    _scanLayer.frame = CGRectMake(0, 0, _boxView.bounds.size.width, 1);
+    _scanLayer.frame = CGRectMake(0, -10, _boxView.bounds.size.width, 1);
     _scanLayer.backgroundColor = [UIColor brownColor].CGColor;
     
     [_boxView.layer addSublayer:_scanLayer];
     
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(moveScanLayer:) userInfo:nil repeats:YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(moveScanLayer:) userInfo:nil repeats:YES];
     
     [timer fire];
     
@@ -156,6 +165,12 @@
             _isReading = NO;
             NSLog(@"%@", [metadataObj stringValue]);
             dispatch_async(dispatch_get_main_queue(), ^{
+                // 播放声音
+                AudioServicesPlaySystemSound(1109);
+                
+                // 震动
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                
                 [self.navigationController popViewControllerAnimated:YES];
                 // 设置代理传值
                 [self.delegate QRCodeViewBackString:[metadataObj stringValue]];
@@ -174,7 +189,7 @@
         
         frame.origin.y += 5;
         
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.05f animations:^{
             _scanLayer.frame = frame;
         }];
     }
@@ -222,15 +237,81 @@
 */
 
 /**
- *  退出扫描界面
+ *  调用系统相册界面
  */
-- (IBAction)itemBtnCancelClick:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (IBAction)itemBtnToAlbumClick:(UIBarButtonItem *)sender {
     [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
     _isReading = NO;
     
+//    // 跳转到主页面
+//    //    [self performSegueWithIdentifier:@"Main" sender:nil];
+//    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AlbumQRCode"];  // 根据storyboardID获取视图
+//    [viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];    // 由下向上
+//    [self presentViewController: viewController animated:YES completion:nil];
+    
+    // 检测IOS设备支持那种获取图片方式
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        NSLog(@"支持相机");
+    }
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        NSLog(@"支持图库");
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    {
+        NSLog(@"支持相片库");
+    }
+    
+    self.picker = [[UIImagePickerController alloc]init];
+    self.picker.view.backgroundColor = [UIColor orangeColor];
+    UIImagePickerControllerSourceType sourcheType = UIImagePickerControllerSourceTypePhotoLibrary;
+    self.picker.sourceType = sourcheType;
+    self.picker.delegate = self;
+    self.picker.allowsEditing = YES;
+    
+    [self.picker setModalTransitionStyle:UIModalTransitionStyleCoverVertical]; // 设置视图出现效果
+    [self presentViewController:self.picker animated:YES completion:nil]; // 跳转界面
 }
 
+#pragma mark - UIImagePickerController 的代理方法的实现
+#pragma mark 当选取完成后调用
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    // 获取要扫描的图片
+    self.imgReadForSaoQR = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
+    // 设置readlineview 的frame
+    self.readLineView.frame = self.boxView.frame;
+    
+    self.readLineView.image = self.imgReadForSaoQR;
+    [self.view addSubview:self.readLineView];
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
+#pragma mark 当取消选取时调用
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark 加载音效文件
+- (SystemSoundID)loadSound:(NSString *)soundName {
+//    NSURL *url = [[NSBundle mainBundle] URLForResource:soundName withExtension:nil];
+//    
+//    // 创建声音
+//    SystemSoundID soundId;
+//    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(url), &soundId);
+    
+    
+    NSURL *tapSound   = [[NSBundle mainBundle] URLForResource: soundName withExtension: nil];
+    // Store the URL as a CFURLRef instance
+    CFURLRef soundFileURLRef = (__bridge CFURLRef)tapSound;
+    SystemSoundID    soundFileObject;
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (soundFileURLRef, &soundFileObject);
+    
+    return soundFileObject;
+}
 
 @end
