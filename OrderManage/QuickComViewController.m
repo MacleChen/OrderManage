@@ -14,7 +14,9 @@
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface QuickComViewController () <UISearchBarDelegate, QRCodeViewDelegate>
+@interface QuickComViewController () <UISearchBarDelegate, QRCodeViewDelegate, UIAlertViewDelegate> {
+    NSDictionary *_dictRecordData;
+}
 
 @end
 
@@ -24,8 +26,21 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 初始化
+    _dictRecordData = [NSDictionary dictionary];
+    
     // 设置代理
     self.tfSearchbar.delegate = self;
+    
+    // 设置键盘类型
+    self.tfCardcon.keyboardType = UIKeyboardTypeNumberPad;
+    self.tfCashcon.keyboardType = UIKeyboardTypeNumberPad;
+    self.tfCashcon.keyboardType = UIKeyboardTypeNumberPad;
+    
+    // 设置alertview
+    self.alertInputPwdView = [[UIAlertView alloc] initWithTitle:@"请输入密码" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    self.alertInputPwdView.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    
 }
 
 #pragma mark 扫一扫
@@ -41,7 +56,25 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 }
 
 - (IBAction)btnSureClick:(UIButton *)sender {
-    [self SubmitWebResponseData]; // 发送网络数据
+    // 判断输入查询
+    if ([self.tfSearchbar.text isEqual:@""] || [self.lbCardid.text isEqual:@""]) {
+        [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
+        return;
+    }
+    
+    // 判断输入金额是否为空
+    if ([self.tfCardcon.text intValue] == 0 && [self.tfUnioncon.text intValue] == 0 &&[self.tfCashcon.text intValue] == 0 ) {
+        [MBProgressHUD show:@"请输入消费金额" icon:nil view:nil];
+        return;
+    }
+    NSLog(@"%.2f, %.2f", [self.lbRemain_time.text floatValue] , [self.tfCardcon.text floatValue]);
+    if ([self.lbRemain_time.text floatValue] < [self.tfCardcon.text floatValue]) {
+        [MBProgressHUD show:@"会员卡余额不足" icon:nil view:nil];
+        return;
+    }
+    
+    // 输入管理密码
+    [self.alertInputPwdView show];
 }
 
 
@@ -71,6 +104,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                //_dictRecordData = [dictTempData objectForKey:@""];
                 // copy 查询到的会员信息
                 dictTempData = [dictTempData objectForKey:@"cus"];
                 self.dictResponseData = dictTempData;
@@ -92,7 +126,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 
                 // 设置显示信息
                 self.lbCardid.text = [dictTempData objectForKey:@"cucardid"];
-                self.lbRemain_time.text = [dictTempData objectForKey:@"lostmoney"];
+                self.lbRemain_time.text = [dictTempData objectForKey:@"cumoney"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
                 self.lbCdType_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
                 self.lbName.text = [dictTempData objectForKey:@"cuname"];
@@ -111,32 +145,90 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
 }
 
+#pragma mark - uialertView 的代理方法的实现
+#pragma mark 点击按钮时调用
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) { // 取消
+        NSLog(@"取消");
+        return;
+    }
+    
+    NSLog(@"确认");
+    // 判断输入密码是否正确
+    UITextField *tfInputPwdTemp = [self.alertInputPwdView textFieldAtIndex:0];
+    [self CheckPasswordIsValid:tfInputPwdTemp.text];
+    
+    // 密码正确后处理
+}
 
-// 发送网络请求数据
+#pragma mark 判断输入密码是否正确
+- (void)CheckPasswordIsValid:(NSString *)strPwd {
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerCheckPwd];
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&cus.cupwd=%@", [self.dictResponseData objectForKey:@"cuid"], strPwd];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                //[MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                // 输入密码正确
+                [self SubmitWebResponseData];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+}
+
+// 点击确认后，并且输入密码正确后，调用网络数据请求
 - (void)SubmitWebResponseData {
-    // 网络请求   --   获取查询数据
-//    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSaleAction];
-//    NSString *strHttpBody = [NSString stringWithFormat:@"tov.groupid=%@&tov.shopid=%@&empid=%@&tov.recordcount=%@&tov.total=%@&tov.cash=%@&tov.market=%@&tov.cardsale=%@&tov.topup=%@&tov.given=%@&tov.unionpay=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"], [dictLogin objectForKey:@"empid"], self.lbAllBillCount.text, self.lbAllSellMoney.text, self.lbCurrMoney.text, self.lbMarketCash.text, self.lbSavCard.text, self.lbMebRechange.text, self.lbFreeMoney.text, self.lbUnionCard.text];
-//    
-//    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
-//        if (data) { // 请求成功
-//            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//            NSString *strStatus = [listData objectForKey:statusCdoe];
-//            // 数据异常
-//            if(strStatus == nil){
-//                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
-//                return;
+    // 判断支付类型
+    if ([self.tfCardcon.text intValue] != 0) { // 会员卡支付
+       NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSale];
+       NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&password=%@", [self.dictResponseData objectForKey:@"cuid"], @"10"];
+        
+        // 错误假象
+        self.lbRemain_time.text = [NSString stringWithFormat:@"%.1f", [self.lbRemain_time.text floatValue] - [self.tfCardcon.text floatValue]];
+        return;
+        //strHttpBody = [NSString stringWithFormat:@"unionpayno=%@&emp.empid=%@&cardsale=%@&moneysale=%@&banksale=%@", ];
+        
+//        [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+//            if (data) { // 请求成功
+//                NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+//                NSString *strStatus = [listData objectForKey:statusCdoe];
+//                // 数据异常
+//                if(strStatus == nil){
+//                    [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+//                    return;
+//                }
+//                if ([strStatus intValue] == 200) { // 获取正确的数据
+//                    [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+//                } else { // 数据有问题
+//                    [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+//                }
+//            } else { // 请求失败
+//                [MBProgressHUD show:ConnectException icon:nil view:nil];
 //            }
-//            if ([strStatus intValue] == 200) { // 获取正确的数据
-//                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
-//            } else { // 数据有问题
-//                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
-//            }
-//        } else { // 请求失败
-//            [MBProgressHUD show:ConnectException icon:nil view:nil];
-//        }
-//        
-//    }];
+//            
+//        }];
+    }
+    if ([self.tfUnioncon.text intValue] != 0) { // 银联支付
+        
+    }
+    if ([self.tfCashcon.text intValue] != 0) { // 现金支付
+        
+    }
+    
 }
 
 #pragma mark QRCodeviewdelegate

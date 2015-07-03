@@ -473,7 +473,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 }
                 // 设置显示信息
                 self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
-                self.lbRemain_Times.text = [dictTempData objectForKey:@"lostmoney"];
+                self.lbRemain_Times.text = [dictTempData objectForKey:@"cumoney"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
                 self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
                 self.lbName.text = [dictTempData objectForKey:@"cuname"];
@@ -897,8 +897,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 // 刷新查询数据
-                [self btnSearchInfo:nil];
                 [MBProgressHUD show:[listData objectForKey: MESSAGE] icon:nil view:nil];
+                [self btnSearchInfo:nil];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }

@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *itemSearch;  // 搜索
 
 @property (weak, nonatomic) UIDatePicker *datePicker;           //  时间滚轴
-@property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
+@property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
 // 设置搜索窗口属性
 @property (strong, nonatomic) UIView *viewSearch;           // 搜索视图界面

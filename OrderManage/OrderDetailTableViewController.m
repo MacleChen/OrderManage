@@ -10,10 +10,12 @@
 #import "viewOtherDeal.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "GetMoneyViewController.h"
 
+extern NSDictionary *dictLogin;   // 引用全局登录数据
+extern NSDictionary *dictSendLogin;
 
-
-@interface OrderDetailTableViewController () {
+@interface OrderDetailTableViewController ()<UIAlertViewDelegate> {
     NSArray *_arrayHeaderTitle; // 菜单头部标题
     NSArray *_arrayShowData;   // 显示所有消费明细
     
@@ -42,6 +44,13 @@
     
     // 获取网络数据，并填充数据
     [self GetWebResponseData];
+    
+    // 设置alertview
+    self.alertShow = [[CustomIOS7AlertView alloc] init];
+    [self.alertShow setButtonTitles:[NSArray arrayWithObjects:@"取消", @"确定", nil]];
+    self.alertShow.useMotionEffects = YES;
+    // 设置代理
+    self.alertShow.delegate = self;
 }
 
 #pragma mark - pulltableview 的代理方法实现
@@ -123,6 +132,8 @@
     for (UIView *viewTemp in cellsView) {
         if(viewTemp.tag == SECTION_ONE_VIEW) self.viewcuInfo = viewTemp;
         if(viewTemp.tag == SECTION_TWO_VIEW) self.viewMenuDetail = viewTemp;
+        if(viewTemp.tag == SECTION_TWO_ModifyView_Tag) self.ModifyView = viewTemp;
+        if(viewTemp.tag == SECTION_TWO_CheckNamePwdView_tag) self.CheckNamePwdView = viewTemp;
     }
     
     // 获取ViewCell 中的内容控件
@@ -149,6 +160,21 @@
         if(viewTemp.tag == SECTION_TWO_VIEW_BTNPintNote) self.btnPintNote = (UIButton *)viewTemp;
         if(viewTemp.tag == SECTION_TWO_VIEW_BTNSecondPay) self.btnSecondPay = (UIButton *)viewTemp;
         if(viewTemp.tag == SECTION_TWO_VIEW_BTNMenuCancel) self.btnMenuCancel = (UIButton *)viewTemp;
+    }
+    
+    // 第二个section中修改弹出的view
+    for (UIView *viewTemp in [self.ModifyView subviews]) {
+        if(viewTemp.tag == SECTION_TWO_ModifyView_BussineMan1_Tag) self.tfMdViewBussMan1 = (UITextField *)viewTemp;
+        if(viewTemp.tag == SECTION_TWO_ModifyView_BussMan1_Money_Tag) self.tfMdViewBussMan1Money = (UITextField *)viewTemp;
+        if(viewTemp.tag == SECTION_TWO_ModifyView_BussineMan2_Tag) self.tfMdViewBussMan2 = (UITextField *)viewTemp;
+        if(viewTemp.tag == SECTION_TWO_ModifyView_bussMan2_Money_Tag) self.tfMdViewBussMan2Money = (UITextField *)viewTemp;
+    }
+    
+    // 第二个section中验证用户名，密码弹出的view
+    for (UIView *viewTemp in [self.CheckNamePwdView subviews]) {
+        if(viewTemp.tag == SECTION_TWO_CheckNamePwdView_Title_Tag) self.lbCKViewTitle = (UILabel *)viewTemp;
+        if(viewTemp.tag == SECTION_TWO_CheckNamePwdView_TFName_Tag) self.tfCKViewName = (UITextField *)viewTemp;
+        if(viewTemp.tag == SECTION_TWO_CheckNamePwdView_TFPwd_Tag) self.tfCKViewPassword = (UITextField *)viewTemp;
     }
     
     // 设置UIButton 的响应方法
@@ -400,19 +426,84 @@
 #pragma  mark - 订单信息上按钮的响应方法
 #pragma mark 修改
 -(void)btnModifyClick:(UIButton *)sender {
-    NSLog(@"修改");
+    self.alertShow.tag = SECTION_TWO_ModifyView_Tag;
+    
+    [self.alertShow setContainerView:self.ModifyView];
+    
+    [self.alertShow show];
 }
 #pragma mark 补打小票
 -(void)btnPintNoteClick:(UIButton *)sender {
-    NSLog(@"补打小票");
+    self.lbCKViewTitle.text = @"补打小票";
+    self.alertShow.tag = SECTION_TWO_CheckNamePwdView_tag;
+    
+    [self.alertShow setContainerView:self.CheckNamePwdView];
+    
+    [self.alertShow show];
 }
 #pragma mark 补缴款
 -(void)btnSecondPayClick:(UIButton *)sender {
-    NSLog(@"补缴款");
+    // 切换到付款页面
+    //切换到下一个界面  --- push
+//    GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+//    viewControl.listDict = dictRegisteData;
+//    viewControl.ReceDict = [listData objectForKey:MESSAGE];
+//    
+
 }
 #pragma mark 作废
 -(void)btnMenuCancelClick:(UIButton *)sender {
-    NSLog(@"作废");
+    self.lbCKViewTitle.text = @"单据作废";
+    self.alertShow.tag = SECTION_TWO_CancelCheckNamePwdView;
+    
+    [self.alertShow setContainerView:self.CheckNamePwdView];
+    [self.alertShow show];
+}
+
+#pragma mark 判断登录的用户名，密码是否匹配
+- (BOOL)ChectUserNameAndPwd:(NSString *)userName password:(NSString *)userPwd {
+    if ([userName isEqual:[dictSendLogin objectForKey:@"userName"]] && [userPwd isEqual:[dictSendLogin objectForKey:@"userPwd"]]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+#pragma mark -  CustomIOS7AlertViewDelegate 的代理方法实现
+/**
+ *  customIOS7dialogButtonTouchUpInside 方法
+ */
+- (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // 获取那个按钮点击
+    if(buttonIndex == 0) {
+        [self.alertShow close];
+        return;
+    } // 点击取消返回
+    
+    if(self.alertShow.tag == SECTION_TWO_ModifyView_Tag) { // 修改确认
+        NSLog(@"修改");
+        return;
+    }
+    
+    // 判断是否为空
+    if ([self.tfCKViewName.text isEqual:@""] || [self.tfCKViewPassword.text isEqual:@""]) {
+        [MBProgressHUD show:@"输入不能为空" icon:nil view:nil];
+        return;
+    }
+    
+    if (![self ChectUserNameAndPwd:self.tfCKViewName.text password:self.tfCKViewPassword.text]) {
+        [MBProgressHUD show:@"名称或密码不正确" icon:nil view:nil];
+        return;
+    }
+    
+    if(self.alertShow.tag == SECTION_TWO_CheckNamePwdView_tag) { // 补打小票确认
+        NSLog(@"补打小票");
+        
+    }
+    if(self.alertShow.tag == SECTION_TWO_CancelCheckNamePwdView) { // 作废确认
+        NSLog(@"作废");
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

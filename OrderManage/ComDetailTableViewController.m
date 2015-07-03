@@ -122,15 +122,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置毛玻璃的背景
     UIVisualEffectView *visEffView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.visualEffectView = visEffView;
-    self.visualEffectView.frame = CGRectMake(0, _mainScreenHeight, _mainScreenWidth, 260);
+    self.visualEffectView.frame = CGRectMake(0, 0, _mainScreenWidth, 220);
     self.visualEffectView.alpha = 1.0;
     //    self.visualEffectView.layer.borderColor = [[UIColor grayColor] CGColor];
     //    self.visualEffectView.layer.borderWidth = 0.5; // 设置border
     [self.visualEffectView addSubview:_datePicker];
-    
-    // 将view添加到键盘上面
-    UIWindow *wind = [[[UIApplication sharedApplication] windows] lastObject];
-    [wind addSubview:self.visualEffectView];
 }
 
 
@@ -139,7 +135,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [MBProgressHUD showMessage:@""];
      //网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordListAction];
-    NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&emp.empid=%@&shopid=%@&keyword=%@&keyword1=%@&keyword2=%@&keyword3=%@&pageNum=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"empid"], [dictLogin objectForKey:@"shopid"], BeDate, EnDate, strKeywd, CkBox, [NSString stringWithFormat:@"%i", PageCount]];
+    NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&emp.empid=%@&shopid=%@&keyword=%@&keyword1=%@&keyword2=%@&keyword3=%@&pageNum=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"empid"], [dictLogin objectForKey:@"shopid"], BeDate, EnDate, CkBox, strKeywd, [NSString stringWithFormat:@"%i", PageCount]];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
         [MBProgressHUD hideHUD];
@@ -408,6 +404,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.TF_BeginDate.tag = TFBEGIN_TAG;
     self.TF_BeginDate.font = [UIFont systemFontOfSize:13];
     self.TF_BeginDate.delegate = self;
+    [self.TF_BeginDate setInputView:self.visualEffectView];
     [view addSubview:tfBeginDate];
     
     // 设置结束时间
@@ -421,6 +418,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.TF_EndDate.font = [UIFont systemFontOfSize:13];
     self.TF_EndDate.tag = TFEND_TAG;
     self.TF_EndDate.delegate = self;
+    [self.TF_EndDate setInputView:self.visualEffectView];
     [view addSubview:tfEndDate];
     
     // 设置搜索关键词
@@ -498,8 +496,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         return;
     }
     
-    [MBProgressHUD showMessage:@"加载..."];
-    
     [self GetWebResponseDataWithpage:1 BeginDate:self.TF_BeginDate.text EndDate:self.TF_EndDate.text searchKeyword:self.TF_SearchKeywd.text CheckBox:[self GetStringCheckBoxs]];
     
 }
@@ -517,7 +513,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     if(![strCheckboxs isEqual:@""])
         return [strCheckboxs substringToIndex:strCheckboxs.length - 1];
     
-    return nil;
+    return @"";
 }
 
 
@@ -548,25 +544,25 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGRect datepicFrame = self.visualEffectView.frame;
-    
-    // 添加动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5];
-    if (textField.tag == TFBEGIN_TAG || textField.tag == TFEND_TAG) {  // 调出datePicker
-        [self.view endEditing:YES];
-        // 显示placeholder
-        if(textField.tag == TFBEGIN_TAG) self.TF_BeginDate.text = @"";
-        if(textField.tag == TFEND_TAG)  self.TF_EndDate.text = @"";
-        
-        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-        
-    } else {
-        datepicFrame.origin.y = _mainScreenHeight;
-    }
-    
-    self.visualEffectView.frame = datepicFrame;
-    [UIView commitAnimations];
+//    CGRect datepicFrame = self.visualEffectView.frame;
+//    
+//    // 添加动画
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.5];
+//    if (textField.tag == TFBEGIN_TAG || textField.tag == TFEND_TAG) {  // 调出datePicker
+//        [self.view endEditing:YES];
+//        // 显示placeholder
+//        if(textField.tag == TFBEGIN_TAG) self.TF_BeginDate.text = @"";
+//        if(textField.tag == TFEND_TAG)  self.TF_EndDate.text = @"";
+//        
+//        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
+//        
+//    } else {
+//        datepicFrame.origin.y = _mainScreenHeight;
+//    }
+//    
+//    self.visualEffectView.frame = datepicFrame;
+//    [UIView commitAnimations];
     
     return YES;
 }

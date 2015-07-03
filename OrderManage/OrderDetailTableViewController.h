@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomIOS7AlertView.h"
 
 #define CELL_HEIGHT 40
 
@@ -33,7 +34,20 @@
 #define SECTION_TWO_VIEW_BTNSecondPay 2034
 #define SECTION_TWO_VIEW_BTNMenuCancel 2035
 
-@interface OrderDetailTableViewController : UITableViewController
+#define SECTION_TWO_ModifyView_Tag 205  // 第二个section中修改弹出的view
+#define SECTION_TWO_ModifyView_BussineMan1_Tag 2051
+#define SECTION_TWO_ModifyView_BussMan1_Money_Tag 2052
+#define SECTION_TWO_ModifyView_BussineMan2_Tag 2053
+#define SECTION_TWO_ModifyView_bussMan2_Money_Tag 2054
+
+#define SECTION_TWO_CheckNamePwdView_tag 206 // 第二个section中的弹出用户名，密码验证的view
+#define SECTION_TWO_CheckNamePwdView_Title_Tag 2061
+#define SECTION_TWO_CheckNamePwdView_TFName_Tag 2062
+#define SECTION_TWO_CheckNamePwdView_TFPwd_Tag 263
+
+#define SECTION_TWO_CancelCheckNamePwdView 207
+
+@interface OrderDetailTableViewController : UITableViewController <CustomIOS7AlertViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *dictData; 
 
@@ -64,5 +78,22 @@
 @property (weak, nonatomic) UIButton *btnPintNote;      //  补打小票
 @property (weak, nonatomic) UIButton *btnSecondPay;     //  补交款
 @property (weak, nonatomic) UIButton *btnMenuCancel;    //  作废
+
+// 修改弹出的view
+@property (strong, nonatomic) UIView *ModifyView;
+@property (weak, nonatomic) UITextField *tfMdViewBussMan1;          // 业务员1
+@property (weak, nonatomic) UITextField *tfMdViewBussMan1Money;     // 业务员1处理金额
+@property (weak, nonatomic) UITextField *tfMdViewBussMan2;          // 业务员2
+@property (weak, nonatomic) UITextField *tfMdViewBussMan2Money;     // 业务员2处理金额
+
+// 验证用户名，密码弹出的view
+@property (strong, nonatomic) UIView *CheckNamePwdView;
+@property (weak, nonatomic) UILabel *lbCKViewTitle;                 // 标题
+@property (weak, nonatomic) UITextField *tfCKViewName;              // 用户名
+@property (weak, nonatomic) UITextField *tfCKViewPassword;          // 密码
+
+
+@property (strong, nonatomic) CustomIOS7AlertView *alertShow;               // 弹出小窗口
+
 
 @end

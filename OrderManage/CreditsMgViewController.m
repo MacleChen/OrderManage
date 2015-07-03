@@ -210,7 +210,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 }
                 // 设置显示信息
                 self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
-                self.lbRemain_Times.text = [dictTempData objectForKey:@"lostmoney"];
+                self.lbRemain_Times.text = [dictTempData objectForKey:@"cumoney"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
                 self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
                 self.lbName.text = [dictTempData objectForKey:@"cuname"];
