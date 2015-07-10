@@ -150,8 +150,8 @@
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Pv-oc-KqJ">
-                                <rect key="frame" x="127" y="110" width="158" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="🔽" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Pv-oc-KqJ">
+                                <rect key="frame" x="252" y="110" width="33" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -303,7 +303,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="jA4-JU-g7j" secondAttribute="bottom" id="06Q-a6-qNj"/>
-                            <constraint firstItem="rcn-Lw-kZk" firstAttribute="trailing" secondItem="4uv-nq-Xyl" secondAttribute="trailing" id="2B9-u2-hr7"/>
+                            <constraint firstItem="rcn-Lw-kZk" firstAttribute="trailing" secondItem="4uv-nq-Xyl" secondAttribute="trailing" constant="20" id="2B9-u2-hr7"/>
                             <constraint firstItem="CCm-R5-maZ" firstAttribute="trailing" secondItem="ihq-86-6Ku" secondAttribute="trailing" id="4O0-lI-dmx"/>
                             <constraint firstItem="rcn-Lw-kZk" firstAttribute="trailing" secondItem="0Pv-oc-KqJ" secondAttribute="trailing" id="5Ws-hR-KjG"/>
                             <constraint firstAttribute="trailing" secondItem="Jvx-SJ-ZHK" secondAttribute="trailing" constant="6" id="AWW-n4-ZPn"/>

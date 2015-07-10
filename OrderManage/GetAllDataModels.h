@@ -28,6 +28,7 @@
 @property (weak, nonatomic) NSString *strcubDate;       // 生日
 @property (weak, nonatomic) NSString *strSelcardMoney;  // 所选卡的金额
 @property (weak, nonatomic) NSString *strSelcardType;   // 所选卡的类型
+@property (weak, nonatomic) NSString *strCardTypeID;    // 卡的类型id
 
 /**
  * 初始化解数组数据包

@@ -25,6 +25,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSInteger _memberTotalCount;  // 会员的总数量
     int _pages;     // 页数
     
+    NSMutableArray *_MuarrayType; // 要显示到pcikerview中卡类型字符串
+    
     NSMutableArray *_muArrayData; // 存储显示在界面上的数据
     NSArray *_arrayGetWebData;   // 获取网络数据
 }
@@ -37,7 +39,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 获取屏幕的宽高
+    _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
+    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + TOP_MENU_HEIGHT;
+    
     // 初始化信息
+    self.dictSearchMebInfo = [NSDictionary dictionary];
+    _MuarrayType = [NSMutableArray array];
     self.itemSearch.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"credits_search2.png"] size:ITEM_IMAGE_CGSZE];
     
     // 设置代理
@@ -60,6 +68,19 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.alertShow.useMotionEffects = YES;
     // 设置代理
     self.alertShow.delegate = self;
+    
+    // 设置毛玻璃的背景
+    UIVisualEffectView *visEffView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    self.visualEffectView = visEffView;
+    self.visualEffectView.frame = CGRectMake(0, 0, _mainScreenWidth, INPUTVIEW_HEIGHT);
+    self.visualEffectView.alpha = 1.0;
+    
+    // 设置pickerView
+    UIPickerView *picker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, _mainScreenWidth, INPUTVIEW_HEIGHT)];
+    self.pickerViewData = picker;
+    self.pickerViewData.delegate = self;
+    self.pickerViewData.dataSource = self;
+    [self.visualEffectView addSubview:self.pickerViewData];
 }
 
 
@@ -87,7 +108,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         if(((UILabel *)viewTemp).tag == LB_PHONE_TAG) self.lbPhoneNum = viewTemp;
         if(((UILabel *)viewTemp).tag == LB_BIRTHDAY_TAG) self.lbBirthday = viewTemp;
         if(((UILabel *)viewTemp).tag == LB_REGISTEADDRESS_TAG) self.lbRegisteAddr = viewTemp;
+        if(((UITextField *)viewTemp).tag == TF_METERCARDID_SELECTS_TAG) self.tfMeterCardIDSelects = viewTemp;
     }
+    
+    // 设置代理
+    self.tfMeterCardIDSelects.delegate = self;
+    
+    // 设置键盘类型
+    self.tfMeterCardIDSelects.inputView = self.visualEffectView;
     
     // 设置响应方法
     [self.btnSaoyiSao addTarget:self action:@selector(btnQRCodeClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -212,51 +240,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = ColorTableCell;
     }
-    
-    // 设置label
-//    int initX = 10, initY = 5, lbWidth = 47, lbHeight = CELL_HEIGHT - 2 * initY, gaplb = CELL_HEIGHT - lbWidth;
-//    UILabel *lbMenuID = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 0, initY, lbWidth, lbHeight)];
-//    lbMenuID.text = [dictTempData objectForKey:@"rccode"];         // 单号
-//    lbMenuID.font = [UIFont systemFontOfSize:12];
-//    lbMenuID.numberOfLines = 2;
-//    lbMenuID.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbMenuID];
-//    
-//    UILabel *lbMebName = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 1, initY, lbWidth, lbHeight)];
-//    lbMebName.text = [dictTempData objectForKey:@"cuname"];         // 会员名称
-//    lbMebName.font = [UIFont systemFontOfSize:12];
-//    lbMebName.numberOfLines = 2;
-//    lbMebName.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbMebName];
-//    
-//    UILabel *lbType = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 2, initY, lbWidth, lbHeight)];
-//    lbType.text = [dictTempData objectForKey:@"typename"];         // 类型
-//    lbType.font = [UIFont systemFontOfSize:12];
-//    lbType.numberOfLines = 2;
-//    lbType.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbType];
-//    
-//    UILabel *lbCustom = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 3, initY, lbWidth, lbHeight)];
-//    lbCustom.text = [dictTempData objectForKey:@"endtotal"];         // 消费
-//    lbCustom.font = [UIFont systemFontOfSize:12];
-//    lbCustom.numberOfLines = 2;
-//    lbCustom.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbCustom];
-//    
-//    UILabel *lbCalTimes = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 4, initY, lbWidth, lbHeight)];
-//    lbCalTimes.text = [dictTempData objectForKey:@"cardcount"];         // 计次
-//    lbCalTimes.font = [UIFont systemFontOfSize:12];
-//    lbCalTimes.numberOfLines = 2;
-//    lbCalTimes.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbCalTimes];
-//    
-//    UILabel *lbStatus = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 5, initY, lbWidth, lbHeight)];
-//    lbStatus.text = [dictTempData objectForKey:@"stname"];         // 状态
-//    lbStatus.font = [UIFont systemFontOfSize:12];
-//    lbStatus.numberOfLines = 2;
-//    lbStatus.textAlignment = NSTextAlignmentCenter;
-//    [cell addSubview:lbStatus];
-    
     
     return cell;
 }
@@ -400,9 +383,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
-                dictTempData = [dictTempData objectForKey:@"cus"];
                 // copy 查询到的会员信息
                 self.dictSearchMebInfo = dictTempData;
+                dictTempData = [dictTempData objectForKey:@"cus"];
                 
                 // 表示该该卡已被退卡
                 if([[dictTempData objectForKey:@"cucardid"] isEqual:@"无"]) {
@@ -418,13 +401,15 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                     return;
                 }
                 // 设置显示信息
-                self.lbMeterCardID.text = [dictTempData objectForKey:@"cucardno"];
-                self.lbRemainCount.text = [dictTempData objectForKey:@"cdpic"];
+                NSArray *arrayTemp = [[listData objectForKey: MESSAGE] objectForKey:@"listcount"];
+                self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [arrayTemp[0] objectForKey:@"cardnum"], [arrayTemp[0] objectForKey:@"cdname"]];
+                self.lbRemainCount.text = [arrayTemp[0] objectForKey:@"cardcount"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
                 self.lbName.text = [dictTempData objectForKey:@"cuname"];
                 self.lbPhoneNum.text = [dictTempData objectForKey:@"cumb"];
                 self.lbBirthday.text = [dictTempData objectForKey:@"cubdate_str"];
                 self.lbRegisteAddr.text = [dictTempData objectForKey:@"shopname"];
+                
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }
@@ -445,6 +430,87 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.seaBarInput.text = QRCodeSanString;
     [self btnSearchAlertInClick:nil];
     
+}
+
+
+#pragma mark - pickerView代理方法的实现
+#pragma mark 设置有多少个组件块
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+#pragma mark 设置每个组件中有多少个row
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return _MuarrayType.count;
+}
+
+#pragma mark 设置每个组件中的row的内容
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return [NSString stringWithFormat:@"%@ | %@", [_MuarrayType[row] objectForKey:@"cardnum"], [_MuarrayType[row] objectForKey:@"cdname"]];
+}
+
+#pragma mark 当选中picker中的row时调用该方法
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (_MuarrayType.count > 0) {
+        NSDictionary *dicTemp = _MuarrayType[row];
+        // 重新设置属性
+        self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [_MuarrayType[row] objectForKey:@"cardnum"], [_MuarrayType[row] objectForKey:@"cdname"]];
+        self.lbRemainCount.text = [dicTemp objectForKey:@"cardcount"];
+    }
+}
+
+
+#pragma mark 对pickerview中的控件进行修改
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel){
+        pickerLabel = [[UILabel alloc] init];
+        // Setup label properties - frame, font, colors etc
+        //adjustsFontSizeToFitWidth property to YES
+        pickerLabel.adjustsFontSizeToFitWidth = YES;
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
+    }
+    // Fill the label text here
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
+    return pickerLabel;
+}
+
+#pragma mark - textField的代理方法的实现
+#pragma mark 正在编辑时，实时调用
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    return YES;
+}
+
+#pragma mark 当完成编辑时调用该方法
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+}
+
+#pragma mark 当textfield开始编辑时调用
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    // 判断点击储值卡时，为空
+    if (textField.tag == TF_METERCARDID_SELECTS_TAG) {
+        if ([self.lbMeterCardID.text isEqual:@""]) {
+            [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
+            return NO;
+        }
+            
+        if ([self.seaBarInput.text isEqual:@""]) {
+            [MBProgressHUD show:@"请查询会员信息" icon:nil view:nil];
+            return NO;
+        }
+        
+        self.pickerViewData.tag = TF_METERCARDID_SELECTS_TAG; // 设置tag标识
+        // 获取数据
+        //[_MuarrayType removeAllObjects];
+        _MuarrayType = [self.dictSearchMebInfo objectForKey:@"listcount"];
+        [self.pickerViewData reloadComponent:0]; // 重新加载数据
+    }
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

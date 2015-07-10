@@ -7,6 +7,7 @@
 //
 
 #import "HttpRequest.h"
+#import "MBProgressHUD+MJ.h"
 
 @implementation HttpRequest {
 
@@ -50,24 +51,22 @@
      return nil;
 }
 
-#pragma mark 网络数据请求
+/**
+ *  网络数据请求 -- 同步数据请求
+ */
 + (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL parameters:(id)param {
     NSData *listData = [[NSData alloc] init];   // block中访问Nsdata变量
-    
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    request = [requestSerializer requestWithMethod:@"POST" URLString:strURL parameters:param error:nil];
-
-    request.timeoutInterval = 5; // 设置延迟5秒
-    
-    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    NSString *strurlAddHttpBody = [NSString stringWithFormat:@"%@%@", strURL, param];
+    NSURL *url = [NSURL URLWithString:[strurlAddHttpBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.timeoutInterval = 5;
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     AFHTTPResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setResponseSerializer:responseSerializer];
+    [operation start];
+    [operation waitUntilFinished];  // 等待异步加载完毕
     
-    [requestOperation setResponseSerializer:responseSerializer];
-    [requestOperation start];
-    [requestOperation waitUntilFinished];
-    
-    NSString *html = requestOperation.responseString;
+    NSString *html = operation.responseString;
     listData = [html dataUsingEncoding:NSUTF8StringEncoding];
     id dict = [NSJSONSerialization JSONObjectWithData:listData options:0 error:nil];
     
@@ -76,7 +75,7 @@
 
 
 /**
- * 使用内嵌block进行网络数据请求
+ * 使用内嵌block进行网络数据请求  -- 异步数据请求
  */
 //
 + (void)HttpAFNetworkingRequestBlockWithURL:(NSString *)strURL strHttpBody:(NSString *)body Retype:(NSString *)type willDone:(Donetask)done; {

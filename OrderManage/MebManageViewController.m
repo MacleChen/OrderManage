@@ -619,6 +619,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         }
     }
     
+    if(textField.tag == ADDCARD_VIEW_CardMoney_TAG) return NO;
+    
     return YES;
 }
 
@@ -645,8 +647,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         case RECHANGE_VIEW_TAG:
             self.tfReChange_Type.text = _MuarrayType[row];
             break;
-        case ADDCARD_VIEW_TAG:
+        case ADDCARD_VIEW_TAG: {
             self.tfAddCard_Type.text = _MuarrayType[row];
+            self.tfAddCard_Money.text = [_arrayTypeData[row] objectForKey:@"cdmoney"];
+        }
             break;
         case TF_CARDID_TAG:{
             NSDictionary *dictTempData = _MUarrayAllCards[row];
@@ -797,7 +801,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBNewCardUpCardAction];
     
-    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&emp.empid=%@&keyword=%@&keyword1=%@&totalmoney=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [dictLogin objectForKey:@"empid"], self.tfAddCard_CardID, [dictSelectedCardType objectForKey:@"cdid"], self.tfAddCard_Money.text];
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&emp.empid=%@&keyword=%@&keyword1=%@&totalmoney=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [dictLogin objectForKey:@"empid"], self.tfAddCard_CardID.text, [dictSelectedCardType objectForKey:@"cdid"], self.tfAddCard_Money.text];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
         if (data) { // 请求成功
@@ -808,8 +812,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 [MBProgressHUD show:ConnectDataError icon:nil view:nil];
                 return;
             }
-            if ([strStatus intValue] == 200) { // 获取正确的数据
+            if ([strStatus intValue] == WebDataIsRight) { // 获取正确的数据
                 //NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                [MBProgressHUD show:@"新增卡成功！" icon:nil view:nil];
                 // 跳转到付款页面
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];

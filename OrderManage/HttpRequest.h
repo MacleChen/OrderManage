@@ -11,27 +11,31 @@
 #import "AFHTTPSessionManager.h"
 #import "AFNetworking.h"
 
-#define WEBBASEURL @"http://180.97.81.151/cshop/"
+#define WEBBASEURL @"http://180.97.81.151/cshop/"           // 测试url
 #define WEBBASEURLTest @"http://180.97.69.100/cshop_jspay/"
 
-#define WEBLoginAction @"emp!login.action?"
-#define WEBFindCardAction @"newcard!findcard.action?"
-#define WEBNewCardNumAction @"newcard!cardnum.action?"
-#define WEBCustomerAddAction @"customer!add.action?"
-#define WEBCustomerGetAction @"customer!get.action?"
-#define WEBTopupActiveAction @"topup!active.action?"
-#define WEBCustomerLockCardAction @"customer!lockcard.action?"
-#define WEBNewCardUpCardAction @"newcard!upcard.action?"
-#define WEBCustomerChangePwdAction @"customer!changepwd.action?"
-#define WEBCustomerUpdateAction @"customer!update.action?"
+// 登录
+#define WEBLoginAction @"emp!login.action?"                 // 验证登录信息
 
-#define WEBNewCardReturnAction @"newcard!returncard.action?"
+// 会员注册
+#define WEBFindCardAction @"newcard!findcard.action?"       // 查找卡的类型
+#define WEBNewCardNumAction @"newcard!cardnum.action?"      // 获取最新的卡号
+#define WEBCustomerAddAction @"customer!add.action?"        // 增加用户信息
+
+// 会员管理
+#define WEBCustomerGetAction @"customer!get.action?"                // 获取用户信息
+#define WEBTopupActiveAction @"topup!active.action?"                // 会员卡的充值
+#define WEBCustomerLockCardAction @"customer!lockcard.action?"      // 会员卡的挂失处理
+#define WEBNewCardUpCardAction @"newcard!upcard.action?"            // 新赠卡
+#define WEBCustomerChangePwdAction @"customer!changepwd.action?"    // 修改密码
+#define WEBCustomerUpdateAction @"customer!update.action?"          // 修改资料
+#define WEBNewCardReturnAction @"newcard!returncard.action?"        // 退卡
 
 // 会员列表--网络请求
-#define WEBCustomerListAction @"customer!list.action?"
+#define WEBCustomerListAction @"customer!list.action?"              // 获取会员列表信息
 
-#define WEBTurnOverTsaleAction @"turnover!tsale.action?"    // 结算交班 -- 请求数据
-#define WEBTurnOVerAddAction @"turnover!add.action?"         // 结算交班 -- 提交数据
+#define WEBTurnOverTsaleAction @"turnover!tsale.action?"            // 结算交班 -- 请求数据
+#define WEBTurnOVerAddAction @"turnover!add.action?"                // 结算交班 -- 提交数据
 
 // 消费明细
 #define WEBRecordListAction @"record!list.action?"      // 消费明细 -- 获取数据列表
@@ -48,14 +52,21 @@
 #define WEBCustomerAddCredits @"customer!addinteg.action?"    // 增加积分
 #define WEBCustomerSubCredits @"customer!subinteg.action?"    // 扣除积分
 
-#define statusCdoe @"statusCode"
-#define MESSAGE    @"message"
+#define statusCdoe @"statusCode"     // 数据包的标志
+#define MESSAGE    @"message"       // 数据包的数据
+
+// 系统提示
 #define ConnectDataError @"获取失败！"
 #define ConnectException @"网络繁忙，请稍后重试！"
 #define EmptyINPUTERROR @"输入不能为空"
 
+// 网络数据请求类型
 #define HttpPOST @"POST"
 #define HttpGET  @"GET"
+
+// 网络数据到的数据判断
+#define WebDataIsRight 200  // 获取数据正确
+#define WebDataIsError 300 // 获取数据错误
 
 typedef void (^Donetask)(NSURLResponse *response, NSData *data, NSError *error);  
 

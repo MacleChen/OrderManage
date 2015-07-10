@@ -12,8 +12,9 @@
 #import "MBProgressHUD+MJ.h"
 #import "GetAllDataModels.h"
 
-#define TF_BirthdayTag 10
-#define TF_CardTypeTag 20
+#define TF_BirthdayTag 10  // 生日
+#define TF_CardTypeTag 20   // 卡的类型
+#define TF_ADDRESS_tag 30  // 地址
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 extern NSDictionary *dictSendLogin;  // 引用发送登录数据
@@ -24,6 +25,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     
     NSMutableArray *_MuarrayCardType; // 要显示到pcikerview中卡类型字符串
     NSArray *_arrayCardTypeData;   // 接收到的所有类型数据
+    NSDictionary *_dictProvincesCitysData;    // 存储中国的省份，城市
 }
 
 @end
@@ -43,6 +45,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     
     // 初始化
     _MuarrayCardType = [[NSMutableArray alloc] init];
+    _dictProvincesCitysData = [NSDictionary dictionary];
     
     float imgwidth = 20.0, imgheight = 20.0, imgX = 70.0, imgY = 75.0;
     float tfwidth = 180.0, tfheight = 30.0, tfX = 100.0, tfY = 70.0;
@@ -133,6 +136,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     TF_address.placeholder = @"会员地址";
     self.tfaddress = TF_address;
     self.tfaddress.delegate = self;
+    self.tfaddress.tag = TF_ADDRESS_tag;
     self.tfaddress.clearButtonMode = UITextFieldViewModeAlways;
     UIView *viewLineaddress = [[UIView alloc] initWithFrame:CGRectMake(viewLineX, viewLineY + gap * 5, viewLinewidth, viewLineheight)];
     viewLineaddress.backgroundColor = [UIColor grayColor];
@@ -220,14 +224,6 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     self.pickerViewCardType.dataSource = self;
     [self.visualEffectView addSubview:self.pickerViewCardType];
     
-    // 设置按钮，点击后退出 datePicker 或 pickerView 选择
-    UIButton *btnExitPicker = [[UIButton alloc] initWithFrame:CGRectMake(_mainScreenWidth - 60, 0, 50, 30)];
-    btnExitPicker.backgroundColor = ColorMainSystem;
-    [btnExitPicker setTitle:@"完成" forState:UIControlStateNormal];
-    [btnExitPicker setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnExitPicker addTarget:self action:@selector(btnExitPickerClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.visualEffectView addSubview:btnExitPicker];
-    
     // 设置窗口提示信息栏
     UILabel *lb_info = [[UILabel alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 20)];
     self.lbInfo = lb_info;
@@ -240,8 +236,13 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     
     // cardType网络数据请求
     [self RegisteCardTypeRequest];
+    // 获取中国的省份和城市列表
+    [self GetChinaProvincesAndCitys];
     
-    [self.view addSubview:_visualEffectView];
+    // 设置键盘类型
+    self.tfbirthday.inputView = self.visualEffectView;
+    self.tfaddress.inputView = self.visualEffectView;
+    self.tfcardType.inputView = self.visualEffectView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -300,40 +301,33 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGRect datepicFrame = self.visualEffectView.frame;
-    
-    // 添加对应的picker
-    if (textField.tag == TF_BirthdayTag) {
-        self.datePicker.hidden = NO;
-        self.pickerViewCardType.hidden = YES;
-    }
-    if (textField.tag == TF_CardTypeTag) {
-        self.datePicker.hidden = YES;
-        self.pickerViewCardType.hidden = NO;
-    }
-    // 添加动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    if (textField.tag == TF_BirthdayTag || textField.tag == TF_CardTypeTag) {  // 开始编辑 会员生日
-        [self.view endEditing:YES];
-        // 显示placeholder
-       if(textField.tag == TF_BirthdayTag) self.tfbirthday.text = @"";
-       else self.tfcardType.text = @"";
-        
-        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-        
-    } else {
-        datepicFrame.origin.y = _mainScreenHeight;
-    }
-    
     // 隐藏lbinfo提示窗口
     self.lbInfo.hidden = YES;
     MyPrint(@"开始编辑");
     
-    self.visualEffectView.frame = datepicFrame;
-    [UIView commitAnimations];
+    self.pickerViewCardType.tag = textField.tag;
     
-    if (textField.tag == TF_BirthdayTag || textField.tag == TF_CardTypeTag) return NO;
+    // 添加对应的picker
+    // 生日
+    if (textField.tag == TF_BirthdayTag) {
+        self.datePicker.hidden = NO;
+        self.pickerViewCardType.hidden = YES;
+    }
+    // 卡的类型
+    if (textField.tag == TF_CardTypeTag) {
+        self.datePicker.hidden = YES;
+        self.pickerViewCardType.hidden = NO;
+        // 刷新数据
+        [self.pickerViewCardType reloadAllComponents];
+    }
+    // 会员地址
+    if (textField.tag == TF_ADDRESS_tag) {
+        self.datePicker.hidden = YES;
+        self.pickerViewCardType.hidden = NO;
+        // 刷新数据
+        [self.pickerViewCardType reloadAllComponents];
+    }
+    
     return YES;
 }
 
@@ -367,22 +361,60 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
 #pragma mark - pickerView代理方法的实现
 #pragma mark 设置有多少个组件块
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    if (pickerView.tag == TF_ADDRESS_tag) return 2;
+    
     return 1;
 }
 
 #pragma mark 设置每个组件中有多少个row
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if(pickerView.tag == TF_ADDRESS_tag) {
+        if (component == 0) {
+            return  _dictProvincesCitysData.allKeys.count;
+        }
+        if (component == 1) {
+            NSInteger rowInZero = [pickerView selectedRowInComponent:0];
+            NSArray *arrayTemp = [_dictProvincesCitysData objectForKey: _dictProvincesCitysData.allKeys[rowInZero]];
+            return  arrayTemp.count;
+        }
+    }
+        
     return _MuarrayCardType.count;
 }
 
 #pragma mark 设置每个组件中的row的内容
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if(pickerView.tag == TF_ADDRESS_tag) {
+        if (component == 0) {
+            return  _dictProvincesCitysData.allKeys[row];
+        }
+        if (component == 1) {
+            NSInteger rowInZero = [pickerView selectedRowInComponent:0];
+            NSArray *arrayTemp = [_dictProvincesCitysData objectForKey: _dictProvincesCitysData.allKeys[rowInZero]];
+            return  arrayTemp[row];
+        }
+    }
     
     return _MuarrayCardType[row];
 }
 
 #pragma mark 当选中picker中的row时调用该方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if(pickerView.tag == TF_ADDRESS_tag) {
+        if (component == 0) {
+            // 刷新第二个齿轮
+            [pickerView reloadComponent:1];
+            return;
+        }
+        if (component == 1) {
+            NSInteger rowInZero = [pickerView selectedRowInComponent:0];
+            NSArray *arrayTemp = [_dictProvincesCitysData objectForKey: _dictProvincesCitysData.allKeys[rowInZero]];
+            self.tfaddress.text = [NSString stringWithFormat:@"%@  %@", _dictProvincesCitysData.allKeys[rowInZero], arrayTemp[row]];
+            return;
+        }
+    }
+    
+    
     self.tfcardType.text = _MuarrayCardType[row];
 }
 
@@ -396,17 +428,13 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
         pickerLabel.adjustsFontSizeToFitWidth = YES;
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
-        [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:16]];
     }
     // Fill the label text here
     pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
     return pickerLabel;
 }
 
-#pragma mark 点击picker的完成按钮时调用该方法
-- (void)btnExitPickerClick:(UIButton *)sender {
-    [self textFieldShouldBeginEditing:self.tfpassword];
-}
 
 #pragma mark 点击注册按钮时调用
 - (IBAction)btnregisteClick:(UIButton *)sender {
@@ -497,16 +525,22 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
 - (void)RegisteCardTypeRequest {
     if(dictLogin == nil) return;
     
-    NSString *strURLCardType = [NSString stringWithFormat:@"%@%@groupid=%@&shopid=%@&keyword=discount", WEBBASEURL, WEBFindCardAction, [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"]];
-    NSString *strURLCardNum = [NSString stringWithFormat:@"%@%@shopid=%@", WEBBASEURL, WEBNewCardNumAction, [dictLogin objectForKey:@"shopid"]];
+    // 卡的类型请求url和HTTPBody
+    NSString *strURLCardType = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBFindCardAction];
+    NSString *strHttpBodyCardType = [NSString stringWithFormat:@"groupid=%@&shopid=%@&keyword=discount", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"]];
+    
+    // 最新卡号的请求url和HTTPBody
+    NSString *strURLCardNum = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBNewCardNumAction];
+    NSString *strHttpBodyCardNum = [NSString stringWithFormat:@"shopid=%@", [dictLogin objectForKey:@"shopid"]];
     
     NSOperationQueue *operQueue = [[NSOperationQueue alloc] init];
     [operQueue addOperationWithBlock:^{ // 产生子线程
         // 请求 shopid对应的卡号
-        id listCardNumData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardNum parameters:nil];
+        id listCardNumData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardNum parameters:strHttpBodyCardNum];
         
         // 请求卡类型数据
-        id ListData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardType parameters:nil];
+        id ListData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardType parameters:strHttpBodyCardType];
+        
         MyPrint(@"currentThread1 -- %@", [NSThread currentThread]);
         
         // 切换到主线程中设置数据
@@ -519,9 +553,16 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
                 [_MuarrayCardType addObject:strcardType];
             }
             self.tfcardID.text = [listCardNumData objectForKey:MESSAGE];
-            [self.pickerViewCardType reloadAllComponents];
         }];
     }];
+}
+
+/**
+ *  获取中国的省份和城市列表
+ */
+- (void)GetChinaProvincesAndCitys {
+    NSString *strPlistPath = [[NSBundle mainBundle] pathForResource:@"ChinaProvincesAndCitys.plist" ofType:nil];
+    _dictProvincesCitysData = [[NSDictionary alloc] initWithContentsOfFile:strPlistPath];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Global.h"
 #import "PullTableView.h"
 #import "QCheckBox.h"
 #import "CustomIOS7AlertView.h"
@@ -22,8 +23,9 @@
 #define LB_PHONE_TAG 3018               // 手机
 #define LB_BIRTHDAY_TAG 3019            // 生日
 #define LB_REGISTEADDRESS_TAG 3020      // 注册地址
+#define TF_METERCARDID_SELECTS_TAG 3021 // 选在计次卡号
 
-@interface MeterCardViewController : UIViewController 
+@interface MeterCardViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (strong, nonatomic) IBOutlet PullTableView *pullTableView;
 
@@ -40,7 +42,7 @@
 @property (strong, nonatomic) UIView *viewSearch;           // 搜索视图界面
 @property (weak, nonatomic) UIButton *btnSaoyiSao;          // 扫一扫
 @property (weak, nonatomic) UISearchBar *seaBarInput;       // 搜索输入框
-@property (weak, nonatomic) UIButton *btnAlertSearch;       // 查询
+@property (strong, nonatomic) UIButton *btnAlertSearch;       // 查询
 @property (weak, nonatomic) UILabel *lbMeterCardID;         // 计次卡号
 @property (weak, nonatomic) UILabel *lbRemainCount;         // 剩余次数
 @property (weak, nonatomic) UILabel *lbCredits;             // 积分
@@ -48,6 +50,10 @@
 @property (weak, nonatomic) UILabel *lbPhoneNum;            // 手机
 @property (weak, nonatomic) UILabel *lbBirthday;            // 生日
 @property (weak, nonatomic) UILabel *lbRegisteAddr;         // 注册地址
+@property (weak, nonatomic) UITextField *tfMeterCardIDSelects; // 选择计次卡号
+
+@property (weak, nonatomic) UIPickerView *pickerViewData;   //  数据滚轴
+@property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
 - (IBAction)itemBtnSearchClick:(UIBarButtonItem *)sender;
 

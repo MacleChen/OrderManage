@@ -50,7 +50,9 @@
 
 @interface OrderDetailTableViewController : UITableViewController <CustomIOS7AlertViewDelegate>
 
-@property (strong, nonatomic) NSDictionary *dictData; 
+@property (strong, nonatomic) NSDictionary *dictData;  // 接收上一个界面传递的数据
+
+@property (strong, nonatomic) NSDictionary *dictSaveOrderInfo;  // 存储获取到的订单信息
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 

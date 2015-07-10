@@ -43,6 +43,7 @@
     getmoney.strAddress = [dictData objectForKey:@"cuaddress"];
     getmoney.strCardno = [dictData objectForKey:@"cucardid"];
     getmoney.strcubDate = [dictData objectForKey:@"cucdate_str"];
+    getmoney.strCardTypeID = [dictData objectForKey:@"cardtypeid"];
 
     return getmoney;
 }

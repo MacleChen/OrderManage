@@ -61,6 +61,7 @@
 		0454F7731B2E6CC600AA0EF3 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */; };
 		0454F7741B2E6CC600AA0EF3 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */; };
 		0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */; };
+		045ABB881B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 045ABB871B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist */; };
 		045C9BC21B3E95240066AD49 /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C9BC11B3E95240066AD49 /* QRCodeViewController.m */; };
 		04648E201B4033A500A7C378 /* mebInitImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E1F1B4033A500A7C378 /* mebInitImg.png */; };
 		04648E221B4033FD00A7C378 /* mebInitImg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E211B4033FD00A7C378 /* mebInitImg2.png */; };
@@ -254,6 +255,7 @@
 		0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		045ABB871B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ChinaProvincesAndCitys.plist; sourceTree = "<group>"; };
 		045C9BC01B3E95240066AD49 /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
 		045C9BC11B3E95240066AD49 /* QRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
 		04648E1F1B4033A500A7C378 /* mebInitImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebInitImg.png; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 				04B029B01B171FB000D88D16 /* Info.plist */,
 				04B029B11B171FB000D88D16 /* main.m */,
 				047F53191B4E18D4008FE83C /* Global.h */,
+				045ABB871B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1195,6 +1198,7 @@
 				04B029DF1B17210100D88D16 /* iPhone_iOS_29@2x.png in Resources */,
 				04B029FF1B17220600D88D16 /* mainViewCell_0_4.png in Resources */,
 				0423C2D41B1EEEF4000DCE8B /* imgcardType.png in Resources */,
+				045ABB881B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist in Resources */,
 				04B029FE1B17220600D88D16 /* mainViewCell_0_9.png in Resources */,
 				04B02A001B17220600D88D16 /* mainViewCell_1_1.png in Resources */,
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,

@@ -11,6 +11,7 @@
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "GetMoneyViewController.h"
+#import "GetAllDataModels.h"
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 extern NSDictionary *dictSendLogin;
@@ -51,7 +52,7 @@ extern NSDictionary *dictSendLogin;
     _MuarrayType = [[NSMutableArray alloc] init];
     _arrayTypeData = [[NSArray alloc] init];
     _dictOrder = [NSDictionary dictionary];
-    _dictOrder = [NSDictionary dictionary];
+    self.dictSaveOrderInfo = [[NSDictionary alloc] init];
     _strMid = [NSString string];
     
     // 设置毛玻璃的背景
@@ -237,6 +238,7 @@ extern NSDictionary *dictSendLogin;
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
+                self.dictSaveOrderInfo = [listData objectForKey:MESSAGE];
                 [self InitResponseDataWithData:[listData objectForKey:MESSAGE]];
                 
             } else { // 数据有问题
@@ -525,12 +527,33 @@ extern NSDictionary *dictSendLogin;
 }
 #pragma mark 补缴款
 -(void)btnSecondPayClick:(UIButton *)sender {
+    // 判断订单是否有欠款
+    if ([self.lbDebtMoney.text intValue] <= 0) {
+        [MBProgressHUD show:@"该订单为没有欠款" icon:nil view:nil];
+        return;
+    }
+    
     // 切换到付款页面
     //切换到下一个界面  --- push
-//    GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
-//    viewControl.listDict = dictRegisteData;
-//    viewControl.ReceDict = [listData objectForKey:MESSAGE];
-//    
+    GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+    
+    // 打包传递的数据
+    GetMoneyReceDataModel *getmoney = [[GetMoneyReceDataModel alloc] initWithDictionaryPackBag:self.dictSaveOrderInfo];
+    // 获取卡类型
+    NSDictionary *dictCardTypeTemp = [self GETCardTypeWithCardTypeID:getmoney.strCardTypeID];
+    
+    // 拼接卡的类型/折扣
+    NSString *strcdType = [NSString stringWithFormat:@"%@/%@", [dictCardTypeTemp objectForKey:@"cdname"], [dictCardTypeTemp objectForKey:@"cdpec"]];
+    
+    getmoney.strCardid = [dictCardTypeTemp objectForKey:@"cdid"];
+    getmoney.strSelcardMoney = [dictCardTypeTemp objectForKey:@"cdmoney"];
+    getmoney.strSelcardType = strcdType;
+    NSDictionary *dictRegisteData = [getmoney getDictionaryPackBag];
+    MyPrint(@"%@", dictRegisteData);
+    
+    viewControl.listDict = dictRegisteData;
+    
+    [self.navigationController pushViewController:viewControl animated:YES];
 
 }
 #pragma mark 作废
@@ -610,7 +633,6 @@ extern NSDictionary *dictSendLogin;
         [MBProgressHUD show:@"名称或密码不正确" icon:nil view:nil];
         return;
     }
-    
     if(self.alertShow.tag == SECTION_TWO_CheckNamePwdView_tag) { // 补打小票确认
         MyPrint(@"补打小票");
         
@@ -712,6 +734,28 @@ extern NSDictionary *dictSendLogin;
     return pickerLabel;
 }
 
+/**
+ *  根据卡的类型id获取卡的对应卡的信息
+ */
+- (NSDictionary *)GETCardTypeWithCardTypeID:(NSString *)cardTypeId {
+    // 网络请求
+    // 1. 设置网络url
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBFindCardAction];
+    // 2. 设置请求参数体
+    NSString *strHttpBody = [NSString stringWithFormat:@"groupid=%@&shopid=%@&keyword=discount", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"]];
+    // 3. 请求网络数据
+    NSDictionary *dictCardTypes = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURL parameters:strHttpBody];
+    // 4. 判读网路数据的正确性
+    if ([(NSString *)[dictCardTypes objectForKey:statusCdoe] intValue] == WebDataIsRight) {
+        NSArray *arrayCardTypes = [dictCardTypes objectForKey:MESSAGE];
+        
+        for (NSDictionary *dict  in arrayCardTypes) {
+            if ([cardTypeId isEqual:[dict objectForKey:@"cdid"]]) return dict;
+        }
+    }
+    
+    return nil;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
