@@ -10,6 +10,8 @@
 
 #define PHONENUMCOUNT 11
 
+#define TOP_MENU_HEIGHT 20
+
 #define MenuAddNotificationHeight 44+20
 
 #define MenuBottomToolHeight 44

@@ -170,7 +170,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                     NSString *string = [NSString stringWithFormat:@"充值活动：充%@ 送%@，%@", [dictTemp objectForKey:@"realmoney"], [dictTemp objectForKey:@"freemoney"], [dictTemp objectForKey:@"time"]];
                     [_MuarrayType addObject:string];
                 }
-                NSLog(@"%@", _MuarrayType);
+                MyPrint(@"%@", _MuarrayType);
                 // 刷新数据
                 [self.pickerViewCardType reloadComponent:0];
                 

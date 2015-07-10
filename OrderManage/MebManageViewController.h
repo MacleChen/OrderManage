@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+
+#import "Global.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 #import "CustomIOS7AlertView.h"

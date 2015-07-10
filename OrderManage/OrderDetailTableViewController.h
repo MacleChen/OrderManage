@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Global.h"
 #import "CustomIOS7AlertView.h"
 
 #define CELL_HEIGHT 40
@@ -94,6 +95,9 @@
 
 
 @property (strong, nonatomic) CustomIOS7AlertView *alertShow;               // 弹出小窗口
+
+@property (weak, nonatomic) UIPickerView *pickerViewData;   //  数据滚轴
+@property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
 
 @end

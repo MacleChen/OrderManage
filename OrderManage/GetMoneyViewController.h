@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "viewOtherDeal.h"
-#import "MBProgressHUD+MJ.h"
 
-
+#import "Global.h"
 // 付款
 enum {
     GetMoneyViewPayStateError = -1,

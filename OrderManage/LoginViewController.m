@@ -17,6 +17,9 @@ NSDictionary *dictLogin = nil;
 NSDictionary *dictSendLogin = nil;
 
 @interface LoginViewController () <UITextFieldDelegate> {
+    float _mainScreenWidth;
+    float _mainScreenHeight;
+    
     float _viewLoginInitY;
 }
 
@@ -29,7 +32,11 @@ NSDictionary *dictSendLogin = nil;
     // Do any additional setup after loading the view.
     
     // 沉睡一会儿
-    [NSThread sleepForTimeInterval:3.0];
+    //[NSThread sleepForTimeInterval:3.0];
+    
+    // 获取屏幕的宽高
+    _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
+    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
     
     _viewLoginInitY = self.viewLogin.frame.origin.y;
     self.lbInfo.text = @"";
@@ -58,7 +65,7 @@ NSDictionary *dictSendLogin = nil;
     // 检测键盘的出现与隐藏
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];    
     
     // 初始化登录数据
     [self readNSUserDefaults];
@@ -98,6 +105,7 @@ NSDictionary *dictSendLogin = nil;
     request.timeoutInterval = 5; // 设置延迟时间
     AFHTTPRequestOperation *oper = [[AFHTTPRequestOperation alloc]initWithRequest:request];
     [oper setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [MBProgressHUD hideHUD];
         NSString *html = operation.responseString;
         NSData* data=[html dataUsingEncoding:NSUTF8StringEncoding];
         id dict=[NSJSONSerialization  JSONObjectWithData:data options:0 error:nil];
@@ -120,7 +128,6 @@ NSDictionary *dictSendLogin = nil;
             //[viewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal]; // 左右翻滚页
             [viewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];   // 立即效果
             //[viewController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];    // 由下向上
-            [MBProgressHUD hideHUD];
             [self presentViewController: viewController animated:YES completion:^{
                 self.lbInfo.text = @"";
                 // 辞退上一个界面
@@ -129,11 +136,10 @@ NSDictionary *dictSendLogin = nil;
 
         } else {
             self.lbInfo.text = loginInfoErr;
-            [MBProgressHUD hideHUD];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.lbInfo.text = ConnectException;
         [MBProgressHUD hideHUD];
+        self.lbInfo.text = ConnectException;
     }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -174,12 +180,12 @@ NSDictionary *dictSendLogin = nil;
     NSDictionary *userInfo = [aNotfication userInfo];
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
-    NSLog(@"%f, %f, %f, %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
+    MyPrint(@"%f, %f, %f, %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
 }
 
 #pragma mark 检测键盘的退出
 - (void)keyboardDidHide:(NSNotification *)aNotfication {
-    NSLog(@"exit键盘--- %f", self.viewLogin.frame.origin.y);
+    MyPrint(@"exit键盘--- %f", self.viewLogin.frame.origin.y);
 //    CGRect viewFrame = self.viewLogin.frame;
 //    viewFrame.origin.y = _viewLoginInitY;
 //    [self setAnimatForViewFordur:0.3 position:viewFrame];

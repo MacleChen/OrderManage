@@ -62,6 +62,7 @@
 
 + (MBProgressHUD *)showMessage:(NSString *)mess
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES]; // 顶部菜单栏显示加载小圈
     return [self showMessage:mess toView:nil];
 }
 
@@ -73,6 +74,7 @@
 
 + (void)hideHUD
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO]; // 顶部菜单栏显示加载小圈
     [self hideHUDForView:nil];
 }
 @end

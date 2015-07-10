@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Global.h"
 #import "viewOtherDeal.h"
 
 @interface RegisteViewController : UIViewController

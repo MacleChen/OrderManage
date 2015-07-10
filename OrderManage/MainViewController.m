@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "viewOtherDeal.h"
 
-#define SECTION_PAGE_COUNT 1  // 页数
+#define SECTION_PAGE_COUNT 2  // 页数
 #define CELL_IN_SECTION_COUNT 9 // 每页显示的cell数
 
 @interface MainViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
@@ -135,18 +135,6 @@
 
 #pragma mark --UICollectionViewDelegateFlowLayout
 
-////定义每个Item 的大小
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return CGSizeMake(90, 90);
-//}
-//
-////定义每个UICollectionView 的 margin
-//-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-//{
-//    return UIEdgeInsetsMake(10, 10, 10, 10);
-//}
-
 
 #pragma mark --UICollectionViewDelegate
 
@@ -176,7 +164,7 @@
 #pragma mark 当scrollview移动时，实时调用
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    _collectionPageIndex = self.collectionview.contentOffset.x / _mainScreenWidth;
-//    NSLog(@"%.2f", self.collectionview.contentOffset.x);
+//    MyPrint(@"%.2f", self.collectionview.contentOffset.x);
 //    
 }
 

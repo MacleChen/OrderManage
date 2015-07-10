@@ -13,6 +13,7 @@
 @interface AlbumQRCodeViewController : UIViewController
 
 @property (nonatomic,strong) UIViewController *nextVC;
+
 @property (nonatomic,strong) NSMutableArray        *groupArrays;
 @property (nonatomic,strong) UIImageView           *litimgView;
 

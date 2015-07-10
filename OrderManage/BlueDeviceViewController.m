@@ -196,15 +196,15 @@
 
 #pragma mark 发现蓝牙设备
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
-    NSLog(@"发现蓝牙设备");
+    MyPrint(@"发现蓝牙设备");
     NSString *str = [NSString stringWithFormat:@"Did discover peripheral. peripheral: %@ rssi: %@, advertisementData: %@ ", peripheral, RSSI, advertisementData];
-    NSLog(@"%@",str);
+    MyPrint(@"%@",str);
     [_MuarrayScanBluethDevices addObject:peripheral];
 }
 
 #pragma mark 连接上蓝牙设备成功时
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-    NSLog(@"Did connect to peripheral: %@", peripheral);
+    MyPrint(@"Did connect to peripheral: %@", peripheral);
     peripheral.delegate = self;
     [central stopScan];
     [peripheral discoverServices:nil];
@@ -214,13 +214,13 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     if (error)
     {
-        NSLog(@"Discovered services for %@ with error: %@", peripheral.name, [error localizedDescription]);
+        MyPrint(@"Discovered services for %@ with error: %@", peripheral.name, [error localizedDescription]);
         return;
     }
     
     for (CBService *service in peripheral.services)
     {
-        NSLog(@"Service found with UUID: %@", service.UUID);
+        MyPrint(@"Service found with UUID: %@", service.UUID);
         if ([service.UUID isEqual:[CBUUID UUIDWithString:@"FFE0"]])
         {
             [peripheral discoverCharacteristics:nil forService:service];
@@ -232,12 +232,12 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
     if (error)
     {
-        NSLog(@"Discovered characteristics for %@ with error: %@", service.UUID, [error localizedDescription]);
+        MyPrint(@"Discovered characteristics for %@ with error: %@", service.UUID, [error localizedDescription]);
         return;
     }
     for (CBCharacteristic * characteristic in service.characteristics)
     {
-        NSLog(@"%@", characteristic);
+        MyPrint(@"%@", characteristic);
         if( [characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFE1"]])
         {
             self.cbperi = peripheral;
@@ -245,14 +245,14 @@
             
             //read
             //[testPeripheral readValueForCharacteristic:characteristic];
-            NSLog(@"Found a Device Manufacturer Name Characteristic - Read manufacturer name");
+            MyPrint(@"Found a Device Manufacturer Name Characteristic - Read manufacturer name");
         }
     }
 }
 
 #pragma mark 蓝牙开关变化
 - (void)swbtnBluethStateClick:(UISwitch *)sender {
-    NSLog(@"%li", (long)self.cbCenterMg.state);
+    MyPrint(@"%li", (long)self.cbCenterMg.state);
     
     if (self.cbCenterMg.state == CBCentralManagerStatePoweredOff) {
         [MBProgressHUD show:@"请在：设置>蓝牙 中打开它" icon:nil view:nil];
@@ -260,7 +260,7 @@
     }
     
     if (self.swbtnBluethState.on) {  // 开
-        NSLog(@"开");
+        MyPrint(@"开");
         [self.atiview startAnimating];
         
         // 扫描蓝牙设备
@@ -271,7 +271,7 @@
         // 开启定时器
         [self.timer setFireDate:[NSDate distantPast]];
     } else {                        // 关
-        NSLog(@"关");
+        MyPrint(@"关");
         [self.atiview stopAnimating];
         
         // 关闭定时器
@@ -282,7 +282,7 @@
 
 #pragma mark 定时调用此方法，用于刷新tableview
 - (void)tableviewReloadData {
-    NSLog(@"定时器刷新");
+    MyPrint(@"定时器刷新");
     // 刷新第二个section
     NSIndexSet *indexset = [[NSIndexSet alloc] initWithIndex:1];
     [self.tableview reloadSections:indexset withRowAnimation:UITableViewRowAnimationAutomatic];

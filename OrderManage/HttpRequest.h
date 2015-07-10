@@ -33,8 +33,11 @@
 #define WEBTurnOverTsaleAction @"turnover!tsale.action?"    // 结算交班 -- 请求数据
 #define WEBTurnOVerAddAction @"turnover!add.action?"         // 结算交班 -- 提交数据
 
+// 消费明细
 #define WEBRecordListAction @"record!list.action?"      // 消费明细 -- 获取数据列表
 #define WEBRecordDetailAction @"record!detail.action?"  // 消费明细》订单明细
+#define WEBFindEmp @"emp!findemp.action?"               // 订单明细 》 修改 》获取业务员列表
+#define WEBUpRecord @"record!uprecord.action?"          // 订单明细 》 确认修改
 
 // 快速消费
 #define WEBCustomerCheckPwd @"customer!checkpwd.action?"  // 检查输入密码

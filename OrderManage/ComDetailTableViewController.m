@@ -59,7 +59,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置搜索栏
     UIView *viewProperty = [[UIView alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 50)];
 
-    int initX = 10 , initY = 10, labelWith = 50, labelHeight = 30;
+    int columnCount = 6; // tableview中的字段个数
+    int initX = 10 , initY = 10, labelWith = (_mainScreenWidth- 2*initX) / columnCount, labelHeight = CELL_HEIGHT2;
     UILabel *lbProMenuid = [[UILabel alloc] initWithFrame:CGRectMake(initX + labelWith * 0, initY, labelWith, labelHeight)];
     lbProMenuid.text = @"单号";
     lbProMenuid.font = [UIFont boldSystemFontOfSize:13];
@@ -273,7 +274,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     // 设置label
-    int initX = 10, initY = 5, lbWidth = 47, lbHeight = CELL_HEIGHT2 - 2 * initY, gaplb = CELL_HEIGHT2 - lbWidth;
+    int gaplb = 10, initX = 10, initY = 5, lbWidth = (_mainScreenWidth - 2*initX)/6 - gaplb, lbHeight = CELL_HEIGHT2 - 2 * initY;
     UILabel *lbMenuID = [[UILabel alloc] initWithFrame:CGRectMake(initX + (lbWidth+gaplb) * 0, initY, lbWidth, lbHeight)];
     lbMenuID.text = [dictTempData objectForKey:@"rccode"];         // 单号
     lbMenuID.font = [UIFont systemFontOfSize:12];
@@ -544,25 +545,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-//    CGRect datepicFrame = self.visualEffectView.frame;
-//    
-//    // 添加动画
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.5];
-//    if (textField.tag == TFBEGIN_TAG || textField.tag == TFEND_TAG) {  // 调出datePicker
-//        [self.view endEditing:YES];
-//        // 显示placeholder
-//        if(textField.tag == TFBEGIN_TAG) self.TF_BeginDate.text = @"";
-//        if(textField.tag == TFEND_TAG)  self.TF_EndDate.text = @"";
-//        
-//        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-//        
-//    } else {
-//        datepicFrame.origin.y = _mainScreenHeight;
-//    }
-//    
-//    self.visualEffectView.frame = datepicFrame;
-//    [UIView commitAnimations];
     
     return YES;
 }

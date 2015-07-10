@@ -10,6 +10,7 @@
 #import "HttpRequest.h"
 #import "GetMoneyViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "GetAllDataModels.h"
 
 #define TF_BirthdayTag 10
 #define TF_CardTypeTag 20
@@ -39,6 +40,9 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
+    
+    // 初始化
+    _MuarrayCardType = [[NSMutableArray alloc] init];
     
     float imgwidth = 20.0, imgheight = 20.0, imgX = 70.0, imgY = 75.0;
     float tfwidth = 180.0, tfheight = 30.0, tfX = 100.0, tfY = 70.0;
@@ -269,7 +273,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
             self.btnRegister.enabled = NO;
         } else {
             self.btnRegister.enabled = YES;
-            NSLog(@"empty, %i, %@", [self.tfEmail isEqual:@""], self.tfEmail);
+            MyPrint(@"empty, %i, %@", [self.tfEmail isEqual:@""], self.tfEmail);
             
         }
     
@@ -324,7 +328,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     
     // 隐藏lbinfo提示窗口
     self.lbInfo.hidden = YES;
-    NSLog(@"开始编辑");
+    MyPrint(@"开始编辑");
     
     self.visualEffectView.frame = datepicFrame;
     [UIView commitAnimations];
@@ -421,18 +425,6 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     NSDictionary *dictCardType = _arrayCardTypeData[selectedCardTypeRow];
     // 会员卡类型打包
     NSString *strcdType = [NSString stringWithFormat:@"%@/%@", [dictCardType objectForKey:@"cdname"], [dictCardType objectForKey:@"cdpec"]];
-    // 打包注册数据
-    NSDictionary *dictRegisteData =@{@"cuname": self.tfName.text,
-                                     @"cuemail": self.tfEmail.text,
-                                     @"cupwd": self.tfpassword.text,
-                                     @"cuphone": self.tfPhoneNUM.text,
-                                     @"cuaddress": self.tfaddress.text,
-                                     @"cucardid": [dictCardType objectForKey:@"cdid"],
-                                     @"cucardno": self.tfcardID.text,
-                                     @"cubdate": self.tfbirthday.text,
-                                     @"selcardmoney": [dictCardType objectForKey:@"cdmoney"],
-                                     @"selcardtype": strcdType};
-    
     
     // 网络数据请求 --- 请求导购数据
     NSString *strMyURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerAddAction];
@@ -473,8 +465,17 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
                 [MBProgressHUD show:@"注册成功！" icon:nil view:nil];
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+                
+                // 打包传递的数据
+                GetMoneyReceDataModel *getmoney = [[GetMoneyReceDataModel alloc] initWithDictionaryPackBag:[listData objectForKey:MESSAGE]];
+                
+                getmoney.strCardid = [dictCardType objectForKey:@"cdid"];
+                getmoney.strSelcardMoney = [dictCardType objectForKey:@"cdmoney"];
+                getmoney.strSelcardType = strcdType;
+                NSDictionary *dictRegisteData = [getmoney getDictionaryPackBag];
+                MyPrint(@"%@", dictRegisteData);
+                
                 viewControl.listDict = dictRegisteData;
-                viewControl.ReceDict = [listData objectForKey:MESSAGE];
                 
                 [self.navigationController pushViewController:viewControl animated:YES];
             } else { // 数据有问题
@@ -494,10 +495,10 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
 
 #pragma RegisteCardTypeRequest 会员卡的类型数据请求
 - (void)RegisteCardTypeRequest {
+    if(dictLogin == nil) return;
+    
     NSString *strURLCardType = [NSString stringWithFormat:@"%@%@groupid=%@&shopid=%@&keyword=discount", WEBBASEURL, WEBFindCardAction, [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"]];
     NSString *strURLCardNum = [NSString stringWithFormat:@"%@%@shopid=%@", WEBBASEURL, WEBNewCardNumAction, [dictLogin objectForKey:@"shopid"]];
-    
-    _MuarrayCardType = [[NSMutableArray alloc] init];
     
     NSOperationQueue *operQueue = [[NSOperationQueue alloc] init];
     [operQueue addOperationWithBlock:^{ // 产生子线程
@@ -506,7 +507,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
         
         // 请求卡类型数据
         id ListData = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURLCardType parameters:nil];
-        NSLog(@"currentThread1 -- %@", [NSThread currentThread]);
+        MyPrint(@"currentThread1 -- %@", [NSThread currentThread]);
         
         // 切换到主线程中设置数据
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{ // 回到主线程中

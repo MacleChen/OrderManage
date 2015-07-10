@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "Global.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
 
@@ -33,9 +34,8 @@
 @property (nonatomic,strong) AVCaptureSession *captureSession;    //输入设备捕获数据流
 @property (nonatomic,strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;  //展示被捕获的数据流
 
-@property (weak, nonatomic) UIDatePicker *datePicker;           //  时间滚轴
 @property (weak, nonatomic) UIPickerView *pickerViewCardType;   //  数据滚轴
-@property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
+@property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
 
 - (IBAction)btnQRCode:(UIButton *)sender; // 扫一扫

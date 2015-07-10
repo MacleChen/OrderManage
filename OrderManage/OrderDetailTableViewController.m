@@ -15,12 +15,22 @@
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 extern NSDictionary *dictSendLogin;
 
-@interface OrderDetailTableViewController ()<UIAlertViewDelegate> {
+@interface OrderDetailTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     NSArray *_arrayHeaderTitle; // 菜单头部标题
     NSArray *_arrayShowData;   // 显示所有消费明细
     
     float _mainScreenWidth;
     float _mainScreenHeight;
+    
+    NSMutableArray *_MuarrayType; // 要显示到pcikerview中卡类型字符串
+    NSArray *_arrayTypeData;   // 接收到的所有类型数据
+    
+    NSString *_strMid;
+    
+    // 订单信息
+    NSDictionary *_dictOrder;
+    // 会员信息
+    NSDictionary *_dictMember;
 }
 
 @end
@@ -38,6 +48,23 @@ extern NSDictionary *dictSendLogin;
     _arrayHeaderTitle = @[@"会员信息", @"订单信息", @"消费明细"];
     self.viewcuInfo = [[UIView alloc] init];
     self.viewMenuDetail = [[UIView alloc] init];
+    _MuarrayType = [[NSMutableArray alloc] init];
+    _arrayTypeData = [[NSArray alloc] init];
+    _dictOrder = [NSDictionary dictionary];
+    _dictOrder = [NSDictionary dictionary];
+    _strMid = [NSString string];
+    
+    // 设置毛玻璃的背景
+    self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    self.visualEffectView.frame = CGRectMake(0, 0, _mainScreenWidth, 220);
+    self.visualEffectView.alpha = 1.0;
+    
+    // 设置pickerView
+    UIPickerView *picker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, _mainScreenWidth, 220)];
+    self.pickerViewData = picker;
+    self.pickerViewData.delegate = self;
+    self.pickerViewData.dataSource = self;
+    [self.visualEffectView addSubview:self.pickerViewData];
     
     // 获取section的view
     [self GetCellViewFromXib];
@@ -140,7 +167,7 @@ extern NSDictionary *dictSendLogin;
     for (UILabel *viewTemp in [self.viewcuInfo subviews]) {
         if(viewTemp.tag == SECTION_ONE_VIEW_LBcuName) self.lbcuName = viewTemp;
         if(viewTemp.tag == SECTION_ONE_VIEW_LBcuPhone) self.lbcuPhone = viewTemp;
-        if(viewTemp.tag == SECTION_ONE_VIEW_LBcuAddress) self.lbcuPhone = viewTemp;
+        if(viewTemp.tag == SECTION_ONE_VIEW_LBcuAddress) self.lbcuAddress = viewTemp;
     }
     
     for (UIView *viewTemp in [self.viewMenuDetail subviews]) {
@@ -182,6 +209,14 @@ extern NSDictionary *dictSendLogin;
     [self.btnPintNote addTarget:self action:@selector(btnPintNoteClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnSecondPay addTarget:self action:@selector(btnSecondPayClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnMenuCancel addTarget:self action:@selector(btnMenuCancelClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 设置代理
+    self.tfMdViewBussMan1.delegate = self;
+    self.tfMdViewBussMan2.delegate = self;
+    
+    // 设置键盘类型
+    self.tfMdViewBussMan1.inputView = self.visualEffectView;
+    self.tfMdViewBussMan2.inputView = self.visualEffectView;
 }
 
 /**
@@ -221,6 +256,7 @@ extern NSDictionary *dictSendLogin;
  */
 - (void)InitResponseDataWithData:(NSDictionary *)listData {
     NSDictionary *dictTemp = [listData objectForKey:@"cus"];            // 获取会员信息
+    _dictMember = dictTemp;
     
     // 获取会员信息
     if((NSNull *)dictTemp != [NSNull null]) {
@@ -231,6 +267,7 @@ extern NSDictionary *dictSendLogin;
     
     //  订单信息
     dictTemp = [listData objectForKey:@"record"];                       // 获取订单信息
+    _dictOrder = dictTemp;
     if((NSNull *)dictTemp != [NSNull null]) {
         self.lbTime.text = [dictTemp objectForKey:@"rcdate"];               // 日期
         self.lbMenuType.text = [dictTemp objectForKey:@"typename"];         // 类型
@@ -250,8 +287,12 @@ extern NSDictionary *dictSendLogin;
     }
     arrayTemp = [listData objectForKey:@"list_re"];
     if (arrayTemp.count > 0) {
-        dictTemp = arrayTemp[0];
-        self.lbBussSaler.text = [dictTemp objectForKey:@"empname"];     // 业务员
+        NSMutableString *muStrSalerTemp = [NSMutableString string];
+        for (dictTemp in arrayTemp) {
+            [muStrSalerTemp appendFormat:@"%@(￥%@) |", [dictTemp objectForKey:@"empname"], [dictTemp objectForKey:@"money"]];
+        }
+        self.lbBussSaler.text = [muStrSalerTemp substringToIndex:muStrSalerTemp.length - 1]; // 去掉最后一个字符, 给业务员
+        _strMid = [dictTemp objectForKey:@"mid"];
     }
     
     //  消费明细
@@ -428,15 +469,56 @@ extern NSDictionary *dictSendLogin;
 -(void)btnModifyClick:(UIButton *)sender {
     self.alertShow.tag = SECTION_TWO_ModifyView_Tag;
     
+    self.ModifyView.frame = CGRectMake(0, 0, 300, 133);
     [self.alertShow setContainerView:self.ModifyView];
     
     [self.alertShow show];
 }
+
+/**
+ *  获取业务员列表
+ */
+- (void)GetBussMansList {
+    // 获取业务员的列表
+    // 获取网络数据
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBFindEmp];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"shopid=%@", [dictLogin objectForKey:@"shopid"]];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                // 解析数据
+                [_MuarrayType removeAllObjects];
+                [_MuarrayType addObject:@"无"];
+                [_MuarrayType addObjectsFromArray:[listData objectForKey:MESSAGE]];
+                
+                // 重新刷新数据
+                [self.pickerViewData reloadAllComponents];
+                
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
+}
+
 #pragma mark 补打小票
 -(void)btnPintNoteClick:(UIButton *)sender {
     self.lbCKViewTitle.text = @"补打小票";
     self.alertShow.tag = SECTION_TWO_CheckNamePwdView_tag;
-    
+    self.CheckNamePwdView.frame = CGRectMake(0, 0, 300, 123);
     [self.alertShow setContainerView:self.CheckNamePwdView];
     
     [self.alertShow show];
@@ -456,6 +538,7 @@ extern NSDictionary *dictSendLogin;
     self.lbCKViewTitle.text = @"单据作废";
     self.alertShow.tag = SECTION_TWO_CancelCheckNamePwdView;
     
+    self.CheckNamePwdView.frame = CGRectMake(0, 0, 300, 123);
     [self.alertShow setContainerView:self.CheckNamePwdView];
     [self.alertShow show];
 }
@@ -481,7 +564,39 @@ extern NSDictionary *dictSendLogin;
     } // 点击取消返回
     
     if(self.alertShow.tag == SECTION_TWO_ModifyView_Tag) { // 修改确认
-        NSLog(@"修改");
+        MyPrint(@"修改");
+        [MBProgressHUD showMessage:@""];
+        // 网络请求
+        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBUpRecord];
+        
+        NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@&rcid=%@&empids1=%@&empids2=%@&empmoneys1=%@&empmoneys2=%@", _strMid, [_dictOrder objectForKey:@"rcid"], self.tfMdViewBussMan1.accessibilityValue, self.tfMdViewBussMan2.accessibilityValue, self.tfMdViewBussMan1Money.text, self.tfMdViewBussMan2Money.text];
+        
+        [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+            [MBProgressHUD hideHUD];
+            if (data) { // 请求成功
+                NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+                NSString *strStatus = [listData objectForKey:statusCdoe];
+                // 获取数据失败
+                if(strStatus == nil){
+                    [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                    return;
+                }
+                
+                if ([strStatus intValue] == 200) { // 获取正确的数据
+                   [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                    // 刷新数据
+                    [self GetWebResponseData];
+                } else { // 数据有问题
+                    [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                }
+            } else { // 请求失败
+                [MBProgressHUD show:ConnectException icon:nil view:nil];
+            }
+            
+        }];
+        
+        // 退出pickerview
+        [self.alertShow close];
         return;
     }
     
@@ -497,14 +612,106 @@ extern NSDictionary *dictSendLogin;
     }
     
     if(self.alertShow.tag == SECTION_TWO_CheckNamePwdView_tag) { // 补打小票确认
-        NSLog(@"补打小票");
+        MyPrint(@"补打小票");
         
+        
+        
+        // 退出pickerview
+        [self.alertShow close];
+        return;
     }
     if(self.alertShow.tag == SECTION_TWO_CancelCheckNamePwdView) { // 作废确认
-        NSLog(@"作废");
+        MyPrint(@"作废");
         
+        // 退出pickerview
+        [self.alertShow close];
+        return;
     }
 }
+
+
+#pragma mark - textField的代理方法的实现
+#pragma mark 正在编辑时，实时调用
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    return YES;
+}
+
+#pragma mark 当完成编辑时调用该方法
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+
+}
+
+#pragma mark 当textfield开始编辑时调用
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    self.pickerViewData.tag = textField.tag;
+    
+    if (textField.tag == SECTION_TWO_ModifyView_BussineMan1_Tag || textField.tag == SECTION_TWO_ModifyView_BussineMan2_Tag) {
+        [self GetBussMansList];
+    }
+    
+    return YES;
+}
+
+
+#pragma mark - pickerView代理方法的实现
+#pragma mark 设置有多少个组件块
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+#pragma mark 设置每个组件中有多少个row
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return _MuarrayType.count;
+}
+
+#pragma mark 设置每个组件中的row的内容
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (row == 0) {
+        return _MuarrayType[row];
+    }
+    
+    return [_MuarrayType[row] objectForKey:@"empnickname"];
+}
+
+#pragma mark 当选中picker中的row时调用
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (_MuarrayType.count > 0) {
+        if (pickerView.tag == SECTION_TWO_ModifyView_BussineMan1_Tag) {
+            if(row == 0) self.tfMdViewBussMan1.text = _MuarrayType[row];
+            else{
+                self.tfMdViewBussMan1.text = [_MuarrayType[row] objectForKey:@"empnickname"];
+                self.tfMdViewBussMan1.accessibilityValue = [_MuarrayType[row] objectForKey:@"empid"];
+            }
+        }
+        
+        if (pickerView.tag == SECTION_TWO_ModifyView_BussineMan2_Tag) {
+            if(row == 0) self.tfMdViewBussMan2.text = _MuarrayType[row];
+            else {
+                self.tfMdViewBussMan2.accessibilityValue = [_MuarrayType[row] objectForKey:@"empid"];
+                self.tfMdViewBussMan2.text = [_MuarrayType[row] objectForKey:@"empnickname"];
+            }
+        }
+    }
+}
+
+
+#pragma mark 对pickerview中的控件进行修改
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel){
+        pickerLabel = [[UILabel alloc] init];
+        // Setup label properties - frame, font, colors etc
+        //adjustsFontSizeToFitWidth property to YES
+        pickerLabel.adjustsFontSizeToFitWidth = YES;
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:13]];
+    }
+    // Fill the label text here
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
+    return pickerLabel;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

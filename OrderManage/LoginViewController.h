@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "Global.h"
 #import "HttpRequest.h"
 
 #define loginSuccess @"登录成功"
 #define loginInfoErr @"用户名或密码不正确"
 
 @interface LoginViewController : UIViewController
+
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgIcon;
 @property (strong, nonatomic) IBOutlet UILabel *lbInfo;

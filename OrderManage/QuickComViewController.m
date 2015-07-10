@@ -67,7 +67,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         [MBProgressHUD show:@"请输入消费金额" icon:nil view:nil];
         return;
     }
-    NSLog(@"%.2f, %.2f", [self.lbRemain_time.text floatValue] , [self.tfCardcon.text floatValue]);
+    MyPrint(@"%.2f, %.2f", [self.lbRemain_time.text floatValue] , [self.tfCardcon.text floatValue]);
     if ([self.lbRemain_time.text floatValue] < [self.tfCardcon.text floatValue]) {
         [MBProgressHUD show:@"会员卡余额不足" icon:nil view:nil];
         return;
@@ -149,11 +149,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark 点击按钮时调用
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // 取消
-        NSLog(@"取消");
+        MyPrint(@"取消");
         return;
     }
     
-    NSLog(@"确认");
+    MyPrint(@"确认");
     // 判断输入密码是否正确
     UITextField *tfInputPwdTemp = [self.alertInputPwdView textFieldAtIndex:0];
     [self CheckPasswordIsValid:tfInputPwdTemp.text];

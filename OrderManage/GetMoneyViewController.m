@@ -8,6 +8,9 @@
 
 #import "GetMoneyViewController.h"
 #import "UMSCashierPlugin.h"
+#import "viewOtherDeal.h"
+#import "MBProgressHUD+MJ.h"
+#import "HttpRequest.h"
 
 #define TF_Guide1Tag 30
 #define TF_Guide2Tag 40
@@ -16,11 +19,11 @@
 #define TF_UnionpayTag 60
 #define TF_CouponsTag 70
 
+extern NSDictionary *dictLogin;   // 引用全局登录数据
+
 @interface GetMoneyViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     float _mainScreenWidth;
     float _mainScreenHeight;
-    
-    BOOL _guide1Flg;
     
     NSString *_strPaymoney;   // 应付的总钱数
     
@@ -46,17 +49,9 @@
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
     
     
-    // 解析数据
+    // 解析数据 -- 获取业务员列表
     _arrayGuidesDetail = [NSArray array];
     _MuarrayGuides = [[NSMutableArray alloc] init];
-    
-    if(self.ReceDict != nil) {
-        _arrayGuidesDetail = [self.ReceDict objectForKey:@"listemp"];
-        for (NSDictionary *tempDict in _arrayGuidesDetail) {
-            NSString *strGuideName = [tempDict objectForKey:@"empnickname"];
-            [_MuarrayGuides addObject:strGuideName];
-        }
-    }
     
     // 设置代理
     self.tfCashpay.delegate = self;
@@ -66,21 +61,23 @@
     self.tfGuide2.delegate = self;
     
     // 写初始化数据到界面中
-    _strPaymoney = [NSString stringWithString: [self.listDict objectForKey:@"selcardmoney"]];
-    self.tfCashpay.text = _strPaymoney;
-    self.tfUnionpay.text = @"0.00";
-    self.tfCoupons.text = @"0.00";
-    self.lbRecMoney.text = self.tfCashpay.text;
-    self.lbPaidMoney.text = self.tfCashpay.text;
-    self.lbGapMoney.text = @"0.00";
-    self.lbOriginMoney.text = self.tfCashpay.text;
-        // 设置导购一， 导购二
-    self.tfGuide1.text = @"无";
-    self.tfGuide2.text = @"无";
-    self.lbName.text = [self.listDict objectForKey:@"cuname"];
-    self.lbCard_discount.text = [self.listDict objectForKey:@"selcardtype"];
-    self.lbRemain_Times.text = @"￥0";
-    self.lbCredits.text = @"0";
+    if(self.listDict != nil) {
+        _strPaymoney = [NSString stringWithString: [self.listDict objectForKey:@"selcardmoney"]];
+        self.tfCashpay.text = _strPaymoney;
+        self.tfUnionpay.text = @"0.00";
+        self.tfCoupons.text = @"0.00";
+        self.lbRecMoney.text = self.tfCashpay.text;
+        self.lbPaidMoney.text = self.tfCashpay.text;
+        self.lbGapMoney.text = @"0.00";
+        self.lbOriginMoney.text = self.tfCashpay.text;
+            // 设置导购一， 导购二
+        self.tfGuide1.text = @"无";
+        self.tfGuide2.text = @"无";
+        self.lbName.text = [self.listDict objectForKey:@"cuname"];
+        self.lbCard_discount.text = [self.listDict objectForKey:@"selcardtype"];
+        self.lbRemain_Times.text = @"￥0";
+        self.lbCredits.text = @"0";
+    }
     
     
     // 设置毛玻璃的背景
@@ -96,28 +93,9 @@
     self.pickerViewCardType.dataSource = self;
     [self.visualEffectView addSubview:self.pickerViewCardType];
     
-    // 设置按钮，点击后退出 datePicker 或 pickerView 选择
-    UIButton *btnExitPicker = [[UIButton alloc] initWithFrame:CGRectMake(_mainScreenWidth - 60, 0, 50, 30)];
-    btnExitPicker.backgroundColor = ColorMainSystem;
-    [btnExitPicker setTitle:@"完成" forState:UIControlStateNormal];
-    [btnExitPicker setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnExitPicker addTarget:self action:@selector(btnExitPickerClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.visualEffectView addSubview:btnExitPicker];
-    
-    // 设置窗口提示信息栏
-    UILabel *lb_info = [[UILabel alloc] initWithFrame:CGRectMake(0, MenuAddNotificationHeight, _mainScreenWidth, 20)];
-    self.lbInfo = lb_info;
-    self.lbInfo.backgroundColor = ColorMainSystem;
-    self.lbInfo.textAlignment = NSTextAlignmentCenter;
-    self.lbInfo.textColor = [UIColor whiteColor];
-    self.lbInfo.font = [UIFont systemFontOfSize:12];
-    self.lbInfo.hidden = YES;
-    [self.view addSubview:self.lbInfo];
-    
-    [self.view addSubview:_visualEffectView];
-    
-    // 隐藏显示窗口
-    //[MBProgressHUD hideHUD];
+    // 设置键盘
+    self.tfGuide1.inputView = self.visualEffectView;
+    self.tfGuide2.inputView = self.visualEffectView;
 }
 
 
@@ -207,31 +185,10 @@
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGRect datepicFrame = self.visualEffectView.frame;
-
-    // 添加动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
+    self.pickerViewCardType.tag = textField.tag;
     
-    if (textField.tag == TF_Guide1Tag || textField.tag == TF_Guide2Tag) {
-        [self.view endEditing:YES];
-        
-        // 设置是否是 导购一点击的输入框
-        if (textField.tag == TF_Guide1Tag) _guide1Flg = YES;
-        else _guide1Flg = NO;
-        
-        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-    } else {
-        datepicFrame.origin.y = _mainScreenHeight;
-    }
+    if(textField.tag == TF_Guide1Tag || textField.tag == TF_Guide2Tag) [self GetBussMansList];
     
-    // 隐藏lbinfo提示窗口
-    self.lbInfo.hidden = YES;
-    
-    self.visualEffectView.frame = datepicFrame;
-    [UIView commitAnimations];
-    
-    if (textField.tag == TF_Guide1Tag || textField.tag == TF_Guide2Tag) return NO;
     return YES;
 }
 
@@ -250,14 +207,32 @@
 
 #pragma mark 设置每个组件中的row的内容
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (row == 0) {
+        return _MuarrayGuides[row];
+    }
     
-    return _MuarrayGuides[row];
+    return [_MuarrayGuides[row] objectForKey:@"empnickname"];
 }
 
 #pragma mark 当选中picker中的row时调用该方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (_guide1Flg) self.tfGuide1.text = _MuarrayGuides[row];
-    else self.tfGuide2.text = _MuarrayGuides[row];
+    if (_MuarrayGuides.count > 0) {
+        if (pickerView.tag == TF_Guide1Tag) {
+            if(row == 0) self.tfGuide1.text = _MuarrayGuides[row];
+            else{
+                self.tfGuide1.text = [_MuarrayGuides[row] objectForKey:@"empnickname"];
+                self.tfGuide1.accessibilityValue = [_MuarrayGuides[row] objectForKey:@"empid"];
+            }
+        }
+        
+        if (pickerView.tag == TF_Guide2Tag) {
+            if(row == 0) self.tfGuide2.text = _MuarrayGuides[row];
+            else {
+                self.tfGuide2.accessibilityValue = [_MuarrayGuides[row] objectForKey:@"empid"];
+                self.tfGuide2.text = [_MuarrayGuides[row] objectForKey:@"empnickname"];
+            }
+        }
+    }
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
@@ -297,9 +272,43 @@
     return GetMoneyViewPayStateSuccess;
 }
 
-#pragma mark 点击picker的完成按钮时调用该方法
-- (void)btnExitPickerClick:(UIButton *)sender {
-    [self textFieldShouldBeginEditing:self.tfCoupons];
+/**
+ *  获取业务员列表
+ */
+- (void)GetBussMansList {
+    // 获取业务员的列表
+    // 获取网络数据
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBFindEmp];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"shopid=%@", [dictLogin objectForKey:@"shopid"]];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                // 解析数据
+                [_MuarrayGuides removeAllObjects];
+                [_MuarrayGuides addObject:@"无"];
+                [_MuarrayGuides addObjectsFromArray:[listData objectForKey:MESSAGE]];
+                
+                // 重新刷新数据
+                [self.pickerViewCardType reloadAllComponents];
+                
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 

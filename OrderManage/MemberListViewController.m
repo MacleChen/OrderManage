@@ -220,8 +220,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         cell.backgroundColor = [UIColor colorWithRed:204/255.0 green:255/255.0 blue:230/255.0 alpha:1.0];
     }
     // 设置label
-    UILabel *lbShowcardID = [[UILabel alloc] initWithFrame:CGRectMake(200, 23, 150, 25)];
+    UILabel *lbShowcardID = [[UILabel alloc] initWithFrame:CGRectMake(cell.center.x - 50, cell.center.y, 150, 25)];
     lbShowcardID.text = [dictTempData objectForKey:@"cucardid"];         // 卡号
+    lbShowcardID.textAlignment = NSTextAlignmentRight;
     lbShowcardID.font = [UIFont systemFontOfSize:12];
     [cell addSubview:lbShowcardID];
     

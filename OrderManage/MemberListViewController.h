@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "Global.h"
 #import "PullTableView.h"
 
 @interface MemberListViewController : UITableViewController

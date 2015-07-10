@@ -66,6 +66,7 @@
 		04648E221B4033FD00A7C378 /* mebInitImg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E211B4033FD00A7C378 /* mebInitImg2.png */; };
 		046E733A1B1869CD00C57B2D /* HttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 046E73391B1869CD00C57B2D /* HttpRequest.m */; };
 		047D2F9C1B17FF28003095DB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 047D2F9B1B17FF28003095DB /* LoginViewController.m */; };
+		047F53181B4E0B9B008FE83C /* GetAllDataModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 047F53171B4E0B9B008FE83C /* GetAllDataModels.m */; };
 		0480ED951B2FE5370041A1FC /* yesImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED931B2FE5370041A1FC /* yesImg.png */; };
 		0480ED961B2FE5370041A1FC /* NOImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0480ED941B2FE5370041A1FC /* NOImg.png */; };
 		048397091B1D5735005D6BB9 /* viewOtherDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 048397081B1D5735005D6BB9 /* viewOtherDeal.m */; };
@@ -261,6 +262,9 @@
 		046E73391B1869CD00C57B2D /* HttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequest.m; sourceTree = "<group>"; };
 		047D2F9A1B17FF28003095DB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		047D2F9B1B17FF28003095DB /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		047F53161B4E0B9B008FE83C /* GetAllDataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllDataModels.h; sourceTree = "<group>"; };
+		047F53171B4E0B9B008FE83C /* GetAllDataModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAllDataModels.m; sourceTree = "<group>"; };
+		047F53191B4E18D4008FE83C /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		0480ED931B2FE5370041A1FC /* yesImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yesImg.png; sourceTree = "<group>"; };
 		0480ED941B2FE5370041A1FC /* NOImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NOImg.png; sourceTree = "<group>"; };
 		048397071B1D5735005D6BB9 /* viewOtherDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = viewOtherDeal.h; sourceTree = "<group>"; };
@@ -508,6 +512,8 @@
 				04413B241B22BE4400503425 /* MBProgressHUD */,
 				04413B2D1B22BE7C00503425 /* SDWebImage */,
 				048A29F91B280F2400C7140D /* Extensions */,
+				04413B5C1B22BEA200503425 /* Category */,
+				047D2FA11B183E21003095DB /* http-request */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -596,8 +602,8 @@
 		047D2F9F1B18020B003095DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				048397071B1D5735005D6BB9 /* viewOtherDeal.h */,
-				048397081B1D5735005D6BB9 /* viewOtherDeal.m */,
+				047F53161B4E0B9B008FE83C /* GetAllDataModels.h */,
+				047F53171B4E0B9B008FE83C /* GetAllDataModels.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -620,6 +626,15 @@
 				046E73391B1869CD00C57B2D /* HttpRequest.m */,
 			);
 			name = "http-request";
+			sourceTree = "<group>";
+		};
+		047F53151B4E0A6E008FE83C /* OtherDeal */ = {
+			isa = PBXGroup;
+			children = (
+				048397071B1D5735005D6BB9 /* viewOtherDeal.h */,
+				048397081B1D5735005D6BB9 /* viewOtherDeal.m */,
+			);
+			name = OtherDeal;
 			sourceTree = "<group>";
 		};
 		0480ED921B2FE4C50041A1FC /* HandOverImages */ = {
@@ -791,9 +806,8 @@
 			isa = PBXGroup;
 			children = (
 				0454F7551B2E6C3C00AA0EF3 /* Lib */,
-				04413B5C1B22BEA200503425 /* Category */,
-				047D2FA11B183E21003095DB /* http-request */,
 				047D2FA01B180229003095DB /* Delegates */,
+				047F53151B4E0A6E008FE83C /* OtherDeal */,
 				047D2F9F1B18020B003095DB /* Models */,
 				047D2F9E1B180202003095DB /* Views */,
 				047D2F9D1B1801ED003095DB /* Controllers */,
@@ -812,6 +826,7 @@
 				04B029D71B17203700D88D16 /* image_icon */,
 				04B029B01B171FB000D88D16 /* Info.plist */,
 				04B029B11B171FB000D88D16 /* main.m */,
+				047F53191B4E18D4008FE83C /* Global.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1208,6 +1223,7 @@
 				04413B571B22BE9400503425 /* UIImage+GIF.m in Sources */,
 				0454F7631B2E6CB900AA0EF3 /* MessageInterceptor.m in Sources */,
 				04BADA8A1B1C386500ABB52B /* AFSecurityPolicy.m in Sources */,
+				047F53181B4E0B9B008FE83C /* GetAllDataModels.m in Sources */,
 				0442F6571B26CAFC00C77AD4 /* MeterCardViewController.m in Sources */,
 				04BADA7D1B1C383A00ABB52B /* AFURLSessionManager.m in Sources */,
 				04BADAA01B1C389900ABB52B /* UIButton+AFNetworking.m in Sources */,
@@ -1346,7 +1362,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
+				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1389,7 +1405,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
+				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1401,7 +1417,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
 				INFOPLIST_FILE = OrderManage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1411,7 +1427,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
+				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
 			};
 			name = Debug;
 		};
@@ -1421,7 +1437,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: li wang (C4HEVAEJW8)";
 				INFOPLIST_FILE = OrderManage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1431,7 +1447,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cb7acc59-5636-4b90-9e1d-d2d559cdb67e";
+				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
 			};
 			name = Release;
 		};

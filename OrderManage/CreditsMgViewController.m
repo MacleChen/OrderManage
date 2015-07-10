@@ -38,7 +38,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
-    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
+    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + TOP_MENU_HEIGHT;
     
     // 设置代理
     self.tfSearch.delegate = self;
@@ -48,21 +48,18 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置毛玻璃的背景
     UIVisualEffectView *visEffView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.visualEffectView = visEffView;
-    self.visualEffectView.frame = CGRectMake(0, _mainScreenHeight, _mainScreenWidth, 220);
+    self.visualEffectView.frame = CGRectMake(0, _mainScreenHeight, _mainScreenWidth, INPUTVIEW_HEIGHT);
     self.visualEffectView.alpha = 1.0;
-    //    self.visualEffectView.layer.borderColor = [[UIColor grayColor] CGColor];
-    //    self.visualEffectView.layer.borderWidth = 0.5; // 设置border
-    [self.visualEffectView addSubview:_datePicker];
     
     // 设置pickerView
-    UIPickerView *pickerCardType = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, _mainScreenWidth, 220)];
+    UIPickerView *pickerCardType = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, _mainScreenWidth, INPUTVIEW_HEIGHT)];
     self.pickerViewCardType = pickerCardType;
     self.pickerViewCardType.delegate = self;
     self.pickerViewCardType.dataSource = self;
     [self.visualEffectView addSubview:self.pickerViewCardType];
     
-    // 将view添加到当前view中
-    [self.view addSubview:self.visualEffectView];
+    // 设置键盘类型
+    self.tfSelectCredits.inputView = self.visualEffectView;
 }
 
 
@@ -243,27 +240,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    CGRect datepicFrame = self.visualEffectView.frame;
-    
-    // 获取网络数据 -- 积分类型
-    if(textField.tag == TF_SELECT_CREDITS_TAG)  [self getWebDataCreditsType];
-    // 添加动画
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    if (textField.tag == TF_SELECT_CREDITS_TAG) {  // 开始编辑
-        [self.view endEditing:YES];
-        // 显示placeholder
-        self.tfSelectCredits.text = @"";
-        datepicFrame.origin.y = _mainScreenHeight - datepicFrame.size.height;
-        
-    } else {
-        datepicFrame.origin.y = _mainScreenHeight;
+    // 获取网络数据 -- 选择积分类型
+    if (textField.tag == TF_SELECT_CREDITS_TAG) {
+        [self getWebDataCreditsType];
     }
-    
-    self.visualEffectView.frame = datepicFrame;
-    [UIView commitAnimations];
-    
-    if (textField.tag == TF_SELECT_CREDITS_TAG) return NO;
     
     return YES;
 }
@@ -323,14 +303,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 获取网络数据 -- 积分类型
 - (void)getWebDataCreditsType {
-    [MBProgressHUD showMessage:@""]; // 加载显示
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerGetGifList];
     
     NSString *strHttpBody = [NSString stringWithFormat:@"shopid=%@", [dictLogin objectForKey:@"shopid"]];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
-        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];

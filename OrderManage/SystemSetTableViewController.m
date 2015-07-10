@@ -21,6 +21,9 @@
 @interface SystemSetTableViewController () <QCheckBoxDelegate> {
     NSArray *_arrayMenus;  // 菜单条目
     NSArray *_arrayHeaderTitle; // 菜单头部标题
+    
+    float _mainScreenWidth;
+    float _mainScreenHeight;
 }
 
 @end
@@ -30,6 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 获取屏幕的宽高
+    _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
+    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
+    
     // 初始化
     _arrayHeaderTitle = @[@"选择打印机", @"参数配置"];
     _arrayMenus = @[@[@"蓝牙打印机", @"网络打印机", @"易pos打印机"],
@@ -37,7 +44,7 @@
     
     // 设置Checkbox
     QCheckBox *check1 = [[QCheckBox alloc] initWithDelegate:self];
-    check1.frame = CGRectMake(250, 0, 80, CELL_HEIGHT);
+    check1.frame = CGRectMake(_mainScreenWidth*5/6, 0, 80, CELL_HEIGHT);
     [check1 setTitle:@"设置" forState:UIControlStateNormal];
     [check1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [check1 setTitleColor:ColorMainSystem forState:UIControlStateHighlighted];
@@ -49,7 +56,7 @@
     self.ckBluePrint = check1;
     
     QCheckBox *check2 = [[QCheckBox alloc] initWithDelegate:self];
-    check2.frame = CGRectMake(250, 0, 80, CELL_HEIGHT);
+    check2.frame = CGRectMake(_mainScreenWidth*5/6, 0, 80, CELL_HEIGHT);
     [check2 setTitle:@"设置" forState:UIControlStateNormal];
     [check2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [check2 setTitleColor:ColorMainSystem forState:UIControlStateHighlighted];
@@ -61,7 +68,7 @@
     self.ckWebPrint = check2;
     
     QCheckBox *check3 = [[QCheckBox alloc] initWithDelegate:self];
-    check3.frame = CGRectMake(250, 0, 80, CELL_HEIGHT);
+    check3.frame = CGRectMake(_mainScreenWidth*5/6, 0, 80, CELL_HEIGHT);
     [check3 setTitle:@"设置" forState:UIControlStateNormal];
     [check3 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [check3 setTitleColor:ColorMainSystem forState:UIControlStateHighlighted];
