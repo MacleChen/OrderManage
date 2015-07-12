@@ -14,7 +14,9 @@
 #import "PayBillViewController.h"
 #import "QRCodeViewController.h"
 
-#define CELL_HEIGHT 40
+#import "UIImageView+WebCache.h"
+
+#define CELL_HEIGHT 90
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
@@ -29,7 +31,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     NSMutableArray *_muArrayData; // 存储显示在界面上的数据
     NSArray *_arrayGetWebData;   // 获取网络数据
+    
+    NSString *_strSelectCard;  // 选中的计次卡的id
 }
+
+@property (strong, nonatomic) UIImageView *imgviewDownload;   // 下载的网络图片
 
 @end
 
@@ -46,6 +52,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 初始化信息
     self.dictSearchMebInfo = [NSDictionary dictionary];
     _MuarrayType = [NSMutableArray array];
+    _strSelectCard = [NSString string];
+    self.imgviewDownload = [[UIImageView alloc] init];
     self.itemSearch.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"credits_search2.png"] size:ITEM_IMAGE_CGSZE];
     
     // 设置代理
@@ -59,7 +67,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.pullTableView.pullTextColor = [UIColor blackColor];
     
     // 设置tableview 第一个cell距离导航栏的高度
-    self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65 + CELL_HEIGHT)];
+    self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65)];
     self.pullTableView.tableHeaderView.alpha = 0.0;
     
     // 设置alertView
@@ -145,14 +153,16 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  *  customIOS7dialogButtonTouchUpInside 方法
  */
 - (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.alertShow close];
     // 获取那个按钮点击
     if(buttonIndex == 0) {
-        [self.alertShow close] ;
         return;
     } // 点击取消返回
     
-    // 确认按钮点击处理
-    
+    // 获取计次卡的信息
+    [self GetMeterCardInfo];
+    // 获取计次卡对应消费的商品列表
+    [self GetMeterCdProductsList];
 }
 
 
@@ -216,17 +226,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark  设置有几个section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _pages;
+    return 1;
 }
 
 #pragma mark 设置每个section中有几个cell
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // 数据为空时
-    if([_muArrayData count] == 0) return 0;
-    NSArray *arraytemp = _muArrayData[section];
-    
-    return arraytemp.count;
+    return _MuarrayType.count;
 }
 
 #pragma mark 设置每个cell的内容
@@ -234,12 +240,22 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
-    NSDictionary *dictTempData = dictTempData = _muArrayData[indexPath.section][indexPath.row];
+    NSDictionary *dictTempData =  _MuarrayType[indexPath.row];
     
     // 设置背景色
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = ColorTableCell;
     }
+    // 获取网络图片
+    NSString *strURL = [dictTempData objectForKey:@"pic1"];
+    [self.imgviewDownload setImageWithURL:[NSURL URLWithString:strURL]];
+    
+    // 控制图片大小
+    cell.imageView.image = [viewOtherDeal scaleToSize:self.imgviewDownload.image size:CGSizeMake(75, 75)];
+    
+    // 设置名称和价格
+    cell.textLabel.text = [dictTempData objectForKey:@"prodname"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ / %@", [dictTempData objectForKey:@"prodmoney"], [dictTempData objectForKey:@"produnit"]];
     
     return cell;
 }
@@ -400,8 +416,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                     self.lbRegisteAddr.text = @"";
                     return;
                 }
+                
+                
                 // 设置显示信息
                 NSArray *arrayTemp = [[listData objectForKey: MESSAGE] objectForKey:@"listcount"];
+                _strSelectCard = [arrayTemp[0] objectForKey:@"cucardid"];  // 设置选中的计次卡的id
                 self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [arrayTemp[0] objectForKey:@"cardnum"], [arrayTemp[0] objectForKey:@"cdname"]];
                 self.lbRemainCount.text = [arrayTemp[0] objectForKey:@"cardcount"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
@@ -454,6 +473,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     if (_MuarrayType.count > 0) {
         NSDictionary *dicTemp = _MuarrayType[row];
         // 重新设置属性
+        _strSelectCard = [_MuarrayType[row] objectForKey:@"cucardid"];  // 设置选中的计次卡的id
         self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [_MuarrayType[row] objectForKey:@"cardnum"], [_MuarrayType[row] objectForKey:@"cdname"]];
         self.lbRemainCount.text = [dicTemp objectForKey:@"cardcount"];
     }
@@ -511,6 +531,50 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     return YES;
+}
+
+
+/**
+ *  获取计次卡的信息
+ */
+- (void)GetMeterCardInfo {
+
+}
+
+/**
+ *  获取计次卡对应消费的商品列表
+ */
+- (void)GetMeterCdProductsList {
+    
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCountSalePrdListAction];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@", _strSelectCard];
+    
+    //NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@&shopid=%@", _strSelectCard, [dictLogin objectForKey:@"shopid"]];
+    
+    [MBProgressHUD show:@"" icon:nil view:nil];
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                _MuarrayType = [listData objectForKey:MESSAGE];
+                
+                [self.pullTableView reloadData];  // 刷新整个表
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

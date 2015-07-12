@@ -12,6 +12,7 @@
 #import "QCheckBox.h"
 #import "CustomIOS7AlertView.h"
 
+
 #define VIEW_SEARCH_TAG 301             // 搜索界面
 #define BTN_SAOYISAO_TAG 3011           // 扫一扫
 #define BARSEARCH_TEXTFIELD_TAG 3012    // 搜索输入框
@@ -35,6 +36,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbSelectedCount;
 @property (weak, nonatomic) IBOutlet UILabel *lbCustemCount;
 
+@property (weak, nonatomic) IBOutlet UIImageView *imgViewCardIcon;
+@property (weak, nonatomic) IBOutlet UILabel *lbCardUserName;
+@property (weak, nonatomic) IBOutlet UILabel *lbSelectedRemainCount;
+
+
 
 @property (strong, nonatomic) CustomIOS7AlertView *alertShow;  // 对话窗口
 
@@ -54,6 +60,8 @@
 
 @property (weak, nonatomic) UIPickerView *pickerViewData;   //  数据滚轴
 @property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
+
+
 
 - (IBAction)itemBtnSearchClick:(UIBarButtonItem *)sender;
 

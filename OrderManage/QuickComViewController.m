@@ -195,32 +195,28 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 判断支付类型
     if ([self.tfCardcon.text intValue] != 0) { // 会员卡支付
        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSale];
-       NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&password=%@", [self.dictResponseData objectForKey:@"cuid"], @"10"];
+       NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&password=%@&unionpayno=%@&emp.empid=%@&cardsale=%@&moneysale=%@&banksale=%@", [self.dictResponseData objectForKey:@"cuid"], (UITextField *)[self.alertInputPwdView textFieldAtIndex:0].text, @"", [dictLogin objectForKey:@"empid"], self.tfCardcon.text, self.tfCashcon.text, self.tfUnioncon.text];
+    
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+                [self btnSearch:nil];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
         
-        // 错误假象
-        self.lbRemain_time.text = [NSString stringWithFormat:@"%.1f", [self.lbRemain_time.text floatValue] - [self.tfCardcon.text floatValue]];
-        return;
-        //strHttpBody = [NSString stringWithFormat:@"unionpayno=%@&emp.empid=%@&cardsale=%@&moneysale=%@&banksale=%@", ];
-        
-//        [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
-//            if (data) { // 请求成功
-//                NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//                NSString *strStatus = [listData objectForKey:statusCdoe];
-//                // 数据异常
-//                if(strStatus == nil){
-//                    [MBProgressHUD show:ConnectDataError icon:nil view:nil];
-//                    return;
-//                }
-//                if ([strStatus intValue] == 200) { // 获取正确的数据
-//                    [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
-//                } else { // 数据有问题
-//                    [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
-//                }
-//            } else { // 请求失败
-//                [MBProgressHUD show:ConnectException icon:nil view:nil];
-//            }
-//            
-//        }];
+    }];
     }
     if ([self.tfUnioncon.text intValue] != 0) { // 银联支付
         

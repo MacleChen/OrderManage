@@ -44,7 +44,7 @@
 #define SECTION_TWO_CheckNamePwdView_tag 206 // 第二个section中的弹出用户名，密码验证的view
 #define SECTION_TWO_CheckNamePwdView_Title_Tag 2061
 #define SECTION_TWO_CheckNamePwdView_TFName_Tag 2062
-#define SECTION_TWO_CheckNamePwdView_TFPwd_Tag 263
+#define SECTION_TWO_CheckNamePwdView_TFPwd_Tag 2063
 
 #define SECTION_TWO_CancelCheckNamePwdView 207
 

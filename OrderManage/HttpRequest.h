@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import "UIImageView+WebCache.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AFHTTPSessionManager.h"
 #import "AFNetworking.h"
 
 #define WEBBASEURL @"http://180.97.81.151/cshop/"           // 测试url
-#define WEBBASEURLTest @"http://180.97.69.100/cshop_jspay/"
+//#define WEBBASEURL @"http://180.97.69.100/cshop_jspay/" //外网测试服务
+
+
+
 
 // 登录
 #define WEBLoginAction @"emp!login.action?"                 // 验证登录信息
@@ -42,6 +47,7 @@
 #define WEBRecordDetailAction @"record!detail.action?"  // 消费明细》订单明细
 #define WEBFindEmp @"emp!findemp.action?"               // 订单明细 》 修改 》获取业务员列表
 #define WEBUpRecord @"record!uprecord.action?"          // 订单明细 》 确认修改
+#define WEBRecordDestroyAction @"record!destroy.action?"  // 订单明细 》作废
 
 // 快速消费
 #define WEBCustomerCheckPwd @"customer!checkpwd.action?"  // 检查输入密码
@@ -51,6 +57,9 @@
 #define WEBCustomerGetGifList @"customer!getGiftList.action?" // 获取礼品list
 #define WEBCustomerAddCredits @"customer!addinteg.action?"    // 增加积分
 #define WEBCustomerSubCredits @"customer!subinteg.action?"    // 扣除积分
+
+// 计次卡
+#define WEBCountSalePrdListAction @"countsale!prdlist.action?"  // 计次卡对应的商品列表
 
 #define statusCdoe @"statusCode"     // 数据包的标志
 #define MESSAGE    @"message"       // 数据包的数据
@@ -77,5 +86,6 @@ typedef void (^Donetask)(NSURLResponse *response, NSData *data, NSError *error);
 + (id)HttpAFNetworkingRequestWithURL_Two:(NSString *)strURL parameters:(id)param;
 
 + (void)HttpAFNetworkingRequestBlockWithURL:(NSString *)strURL strHttpBody:(NSString *)body Retype:(NSString *)type willDone:(Donetask)done;
+
 
 @end

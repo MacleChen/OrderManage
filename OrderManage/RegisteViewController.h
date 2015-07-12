@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 #import "Global.h"
 #import "viewOtherDeal.h"
 
-@interface RegisteViewController : UIViewController
+@interface RegisteViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *btnRegister;
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) UIPickerView *pickerViewCardType;   //  数据滚轴
 @property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
+@property (strong, nonatomic) CLLocationManager *locationManager;  // 地理位置管理
 
 - (IBAction)btnregisteClick:(UIButton *)sender;
 

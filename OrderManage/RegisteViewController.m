@@ -243,6 +243,19 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     self.tfbirthday.inputView = self.visualEffectView;
     self.tfaddress.inputView = self.visualEffectView;
     self.tfcardType.inputView = self.visualEffectView;
+    
+    // 设置手机定位功能
+    self.locationManager = [[CLLocationManager alloc] init];
+    // 设置定位精度
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest]; // 最高的精度
+    // 设置代理
+    self.locationManager.delegate = self;
+    [self.locationManager requestAlwaysAuthorization];
+    self.locationManager.distanceFilter = 10;   // 设置误差 单位：m
+    MyPrint(@"%i", [CLLocationManager authorizationStatus]);
+    
+    // 开始定位
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -564,5 +577,81 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
     NSString *strPlistPath = [[NSBundle mainBundle] pathForResource:@"ChinaProvincesAndCitys.plist" ofType:nil];
     _dictProvincesCitysData = [[NSDictionary alloc] initWithContentsOfFile:strPlistPath];
 }
+
+#pragma mark - CLLocationManagerDelegate 的代理方法的实现
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    MyPrint(@"%@", locations);
+    CLLocation *location = [locations firstObject];
+    CLLocationCoordinate2D coordinate = location.coordinate;
+    NSString *strTemp = [NSString stringWithFormat:@"精度：%f 纬度：%f",coordinate.latitude,coordinate.longitude];
+    
+    MyPrint(@"坐标:%@", strTemp);
+    
+    // 获取当前所在的城市名
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    
+    //根据经纬度反向地理编译出地址信息
+    
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *array, NSError *error)
+     
+     {
+         if (array.count > 0)
+         {
+             CLPlacemark *placemark = [array objectAtIndex:0];
+             
+             //将获得的所有信息显示到label上
+             MyPrint(@"%@",placemark.name);
+             
+             //获取城市
+             NSString *city = placemark.locality;
+             if (!city) {
+                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
+                 city = placemark.administrativeArea;
+             }
+             MyPrint(@"currentThread:%@", [NSThread currentThread]);
+             self.tfaddress.text = city;
+             
+         }
+         else if (error == nil && [array count] == 0)
+         {
+             MyPrint(@"No results were returned.");
+         }
+         else if (error != nil)
+         {
+             MyPrint(@"An error occurred = %@", error);
+         }
+     }];
+
+    //停止定位
+    [self.locationManager stopUpdatingLocation];
+}
+
+#pragma mark 获取用户位置信息失败调用
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    if ([error code] == kCLErrorDenied)
+    {
+        //访问被拒绝
+        MyPrint(@"访问被拒绝");
+    }
+    if ([error code] == kCLErrorLocationUnknown) {
+        //无法获取位置信息
+        MyPrint(@"无法获取当前位置信息");
+    }
+}
+
+#pragma mark 改变用户权限状态时调用
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                [self.locationManager requestAlwaysAuthorization];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 
 @end

@@ -566,14 +566,6 @@ extern NSDictionary *dictSendLogin;
     [self.alertShow show];
 }
 
-#pragma mark 判断登录的用户名，密码是否匹配
-- (BOOL)ChectUserNameAndPwd:(NSString *)userName password:(NSString *)userPwd {
-    if ([userName isEqual:[dictSendLogin objectForKey:@"userName"]] && [userPwd isEqual:[dictSendLogin objectForKey:@"userPwd"]]) {
-        return YES;
-    }
-    
-    return NO;
-}
 
 #pragma mark -  CustomIOS7AlertViewDelegate 的代理方法实现
 /**
@@ -624,29 +616,42 @@ extern NSDictionary *dictSendLogin;
     }
     
     // 判断是否为空
-    if ([self.tfCKViewName.text isEqual:@""] || [self.tfCKViewPassword.text isEqual:@""]) {
+    MyPrint(@"%@, %@", self.tfCKViewName.text, self.tfCKViewPassword.text);
+    if (self.tfCKViewName.text.length <= 0 || self.tfCKViewPassword.text.length <= 0) {
         [MBProgressHUD show:@"输入不能为空" icon:nil view:nil];
         return;
     }
     
-    if (![self ChectUserNameAndPwd:self.tfCKViewName.text password:self.tfCKViewPassword.text]) {
-        [MBProgressHUD show:@"名称或密码不正确" icon:nil view:nil];
-        return;
-    }
     if(self.alertShow.tag == SECTION_TWO_CheckNamePwdView_tag) { // 补打小票确认
         MyPrint(@"补打小票");
+        // 网络请求
+        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordDestroyAction];
         
+        NSString *strHttpBody = [NSString stringWithFormat:@"rcid=%@&emp.empname=%@&emp.emppwd=%@", [self.dictData objectForKey:@"rcid"], self.tfCKViewName.text, self.tfCKViewPassword.text];
+        NSDictionary *listDict = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURL parameters:strHttpBody];
         
-        
-        // 退出pickerview
-        [self.alertShow close];
+        if ([(NSString *)[listDict objectForKey:statusCdoe] intValue] == WebDataIsRight) { // 正确
+            [MBProgressHUD show:@"该订单已作废" icon:nil view:nil];
+            [self.alertShow close];
+            return;
+        }
+        [MBProgressHUD show:[listDict objectForKey:MESSAGE] icon:nil view:nil];
         return;
     }
     if(self.alertShow.tag == SECTION_TWO_CancelCheckNamePwdView) { // 作废确认
         MyPrint(@"作废");
+        // 网络请求
+        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordDestroyAction];
         
-        // 退出pickerview
-        [self.alertShow close];
+        NSString *strHttpBody = [NSString stringWithFormat:@"rcid=%@&emp.empname=%@&emp.emppwd=%@", [self.dictData objectForKey:@"rcid"], self.tfCKViewName.text, self.tfCKViewPassword.text];
+        NSDictionary *listDict = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURL parameters:strHttpBody];
+        
+        if ([(NSString *)[listDict objectForKey:statusCdoe] intValue] == WebDataIsRight) { // 正确
+            [MBProgressHUD show:@"该订单已作废" icon:nil view:nil];
+            [self.alertShow close];
+            return;
+        }
+        [MBProgressHUD show:[listDict objectForKey:MESSAGE] icon:nil view:nil];
         return;
     }
 }
