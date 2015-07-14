@@ -10,10 +10,14 @@
 #import "viewOtherDeal.h"
 #import "HttpRequest.h"
 #import "MBProgressHUD+MJ.h"
+#import "Global.h"
+#import "PrintDeviceSet.h"
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface HandOverViewController ()
+@interface HandOverViewController () <GCDAsyncSocketDelegate> {
+    NSString *_stringPrintInfo;   // 需要打印的信息
+}
 
 @end
 
@@ -23,6 +27,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // 初始化
+    self.asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
     // 网路数据请求
     [self GetWebResponseData];
     
@@ -31,12 +38,28 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 // 确认
 - (IBAction)btnSureClick:(UIButton *)sender {
-    [self SubmitWebResponseData];  // 提交数据
+   [self SubmitWebResponseData];  // 提交数据
     
+    // 判断打印机是否可用
     if (self.swPrint.on) {
+        // 设置需要打印的数据
+        _stringPrintInfo = [NSString stringWithFormat:@"\
+                  收银员交接班\n\
+        收银员:                %@\n\
+        总单数:                %@\n\
+        总销售额:              %@\n\
+        现金:                  %@\n\
+        银联卡:                %@\n\
+        储值卡:                %@\n\
+        商场收银:              %@\n\
+        会员充值:              %@\n\
+        赠送金:                %@\n", self.lbCashName.text, self.lbAllBillCount.text, self.lbAllSellMoney.text, self.lbCurrMoney.text, self.lbUnionCard.text, self.lbSavCard.text, self.lbMarketCash.text, self.lbMebRechange.text, self.lbFreeMoney.text];
+        
         // 打印单据
+        [self PrintInfoWithString:_stringPrintInfo];
     } else {
         // 不打印单据
+        [MBProgressHUD show:@"未打印信息" icon:nil view:nil];
     }
     
     // 返回上一个界面
@@ -88,6 +111,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 // 发送网络请求数据
 - (void)SubmitWebResponseData {
+    
+    
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBTurnOVerAddAction];
     NSString *strHttpBody = [NSString stringWithFormat:@"tov.groupid=%@&tov.shopid=%@&empid=%@&tov.recordcount=%@&tov.total=%@&tov.cash=%@&tov.market=%@&tov.cardsale=%@&tov.topup=%@&tov.given=%@&tov.unionpay=%@", [dictLogin objectForKey:@"groupid"], [dictLogin objectForKey:@"shopid"], [dictLogin objectForKey:@"empid"], self.lbAllBillCount.text, self.lbAllSellMoney.text, self.lbCurrMoney.text, self.lbMarketCash.text, self.lbSavCard.text, self.lbMebRechange.text, self.lbFreeMoney.text, self.lbUnionCard.text];
@@ -113,6 +138,47 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }];
 }
 
+/**
+ *  打印机打印数据
+ */
+- (void)PrintInfoWithString:(NSString *)stringInfo {
+    NSError *error;
+    // 连接对应的IP和端口
+    if (![self.asyncSocket connectToHost:WEBPRINT_IP onPort:WEBPRINT_PORT error:&error]) {
+        MyPrint(@"error:%@", error);
+    }
+}
+
+
+#pragma mark - GCDAsyncSocketDelegate 代理方法的实现
+#pragma mark 已连接上网络设备之后调用的方法
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    MyPrint(@"已连接： host:%@, port:%i", host, port);
+    
+    // 打印机初始化
+    [PrintDeviceSet PrintDeviceInitWithSocket:self.asyncSocket];
+    
+    // 写数据  -- 中文编码 GBK
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSData *writeData = [_stringPrintInfo dataUsingEncoding:encoding];
+    
+    [self.asyncSocket writeData:writeData withTimeout:5 tag:TAG_FIXED_LENGTH_HEADER];
+    
+    // 打印机结束处理
+    [PrintDeviceSet PrintDeviceEndDealWithSocket:self.asyncSocket];
+    
+    [self.asyncSocket disconnect]; // 断开连接
+}
+
+#pragma mark 发送TCP/IP数据包
+- (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {
+    MyPrint(@"thread(%@),onSocket:%p didWriteDataWithTag:%ld",[[NSThread currentThread] name], self.asyncSocket, tag);
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
+    MyPrint(@"连接失败：%@", err);
+    [self.asyncSocket disconnect]; // 断开连接
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

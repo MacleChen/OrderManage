@@ -15,8 +15,11 @@
 #import "QRCodeViewController.h"
 
 #import "UIImageView+WebCache.h"
+#import "UIImage+GIF.h"
 
-#define CELL_HEIGHT 90
+#define CELL_HEIGHT 90   // tableviewcell的高度
+#define VIEW_IN_CELL_INIT_TAG 10  // cell中的Labelview最小的tag值
+//#define Stepper_VIEW_IN_CELL_INIT_TAG 20  // cell中的Labelview最小的tag值
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
@@ -69,6 +72,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置tableview 第一个cell距离导航栏的高度
     self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65)];
     self.pullTableView.tableHeaderView.alpha = 0.0;
+    //self.pullTableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"imgTableViewBG.jpg"]];
     
     // 设置alertView
     self.alertShow = [[CustomIOS7AlertView alloc] init];
@@ -239,7 +243,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone; // 设置不可点击
     NSDictionary *dictTempData =  _MuarrayType[indexPath.row];
     
     // 设置背景色
@@ -247,8 +251,15 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         cell.backgroundColor = ColorTableCell;
     }
     // 获取网络图片
-    NSString *strURL = [dictTempData objectForKey:@"pic1"];
-    [self.imgviewDownload setImageWithURL:[NSURL URLWithString:strURL]];
+    NSURL *URLPath = [NSURL URLWithString:[dictTempData objectForKey:@"pic1"]];
+    
+    //图片缓存的基本代码，就是这么简单
+    // 加载动态图
+    NSString  *name = @"reload001.gif";
+    //[self.imgviewDownload sd_setImageWithURL:URLPath placeholderImage:[UIImage sd_animatedGIFWithData:imageData]];
+    [self.imgviewDownload sd_setImageWithURL:URLPath placeholderImage:[UIImage sd_animatedGIFNamed:name] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        cell.imageView.image = [viewOtherDeal scaleToSize:image size:CGSizeMake(75, 75)];
+    }];
     
     // 控制图片大小
     cell.imageView.image = [viewOtherDeal scaleToSize:self.imgviewDownload.image size:CGSizeMake(75, 75)];
@@ -256,6 +267,40 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置名称和价格
     cell.textLabel.text = [dictTempData objectForKey:@"prodname"];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ / %@", [dictTempData objectForKey:@"prodmoney"], [dictTempData objectForKey:@"produnit"]];
+    
+    cell.detailTextLabel.textColor = [UIColor redColor];
+    
+    // 设置cell中的商品个数加减
+    UILabel *lbshowProductTitle;
+    if (lbshowProductTitle == nil) {
+        lbshowProductTitle = [[UILabel alloc] initWithFrame:CGRectMake(_mainScreenWidth*2/3 - 20, cell.center.y, 75, 30)];
+    }
+    lbshowProductTitle.text = @"已选取(件):";
+    lbshowProductTitle.font = [UIFont systemFontOfSize:14.0];
+    lbshowProductTitle.textColor = [UIColor grayColor];
+    UITextField *tfShowProductCount;
+    if (tfShowProductCount == nil) {
+        tfShowProductCount = [[UITextField alloc] initWithFrame:CGRectMake(lbshowProductTitle.frame.origin.x + lbshowProductTitle.frame.size.width, cell.center.y, 40, 30)];
+    }
+    tfShowProductCount.text = @"0";
+    tfShowProductCount.delegate = self;
+    tfShowProductCount.keyboardType = UIKeyboardTypeNumberPad;
+    tfShowProductCount.borderStyle = UITextBorderStyleNone;
+    tfShowProductCount.font = [UIFont systemFontOfSize:14.0];
+    tfShowProductCount.textColor = [UIColor orangeColor];
+    tfShowProductCount.tag = indexPath.row + VIEW_IN_CELL_INIT_TAG;
+    
+    UIStepper *stepper;
+    if (stepper == nil) {
+        stepper = [[UIStepper alloc] initWithFrame:CGRectMake(_mainScreenWidth*2/3, cell.center.y +tfShowProductCount.frame.size.height, 80, 30)];
+    }
+    stepper.tag = indexPath.row + VIEW_IN_CELL_INIT_TAG;
+    
+    [stepper addTarget:self action:@selector(stepperClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell addSubview:lbshowProductTitle];
+    [cell addSubview:tfShowProductCount];
+    [cell addSubview:stepper];
     
     return cell;
 }
@@ -289,6 +334,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 //    OrderDetailTableViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"OrderDetail"];
 //    viewControl.dictData = _muArrayData[indexPath.section][indexPath.row];  // 传入数据
 //    [self.navigationController pushViewController:viewControl animated:YES];
+    
+    MyPrint(@"选中了：%li", (long)indexPath.row);
 }
 
 #pragma mark - PullTableViewDelegate
@@ -506,7 +553,27 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当完成编辑时调用该方法
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    // 设置已选商品和消费次数
+    // 1. 获取所有的cell
+    NSMutableArray *muArrayCells = [NSMutableArray array];
+    for (NSInteger i = 0; i < [self.pullTableView numberOfRowsInSection:0]; i++) {
+        NSIndexPath *indexTemp = [NSIndexPath indexPathForRow:i inSection:0];
+        [muArrayCells addObject:[self.pullTableView cellForRowAtIndexPath:indexTemp]];
+    };
+    // 2. 获取所有cell中已选的商品个数总和
+    NSInteger AllSelectCount = 0;
+    for (UITableViewCell *cellTemp in muArrayCells) {
+        NSArray *arraySubviews =  [cellTemp subviews];
+        for (UITextField *tfSlectedCount in arraySubviews) {
+            if (tfSlectedCount.tag == textField.tag) {
+                AllSelectCount += [tfSlectedCount.text integerValue];
+                break;
+            }
+        }
+    }
     
+    self.lbSelectedCount.text = [NSString stringWithFormat:@"%li件", (long)AllSelectCount];
+    self.lbCustemCount.text = [NSString stringWithFormat:@"%li次", (long)AllSelectCount];
 }
 
 #pragma mark 当textfield开始编辑时调用
@@ -538,7 +605,26 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  *  获取计次卡的信息
  */
 - (void)GetMeterCardInfo {
-
+    NSDictionary *dictSelectCard = [[NSDictionary alloc] init];
+    // 根据计次卡的id获取对应的数据
+    NSArray *arrayMeterCards =  [self.dictSearchMebInfo objectForKey:@"listcount"];
+    for (dictSelectCard in arrayMeterCards) {
+        if ([_strSelectCard isEqual:[dictSelectCard objectForKey:@"cucardid"]]) break;
+    }
+    
+    // 获取计次卡的头标
+    NSString *strImgPath = [dictSelectCard objectForKey:@"cdpic"];
+    strImgPath = [NSString stringWithFormat:@"%@%@", WEBBASEURL, [strImgPath substringFromIndex:3]];
+    //[NSString stringWithFormat:@"%@%@", WEBBASEURL, [dictSelectCard objectForKey:@"cdpic"]];
+    [self.imgViewCardIcon sd_setImageWithURL:[NSURL URLWithString:strImgPath] placeholderImage:[UIImage imageNamed:@"initCardimg.gif"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        MyPrint(@"图片加载完成");
+    }];
+    
+    // 获取计次卡所属姓名
+    self.lbCardUserName.text = self.lbName.text;
+    
+    // 获取计次卡的剩余次数
+    self.lbSelectedRemainCount.text = [NSString stringWithFormat:@"剩余次数: %@",[dictSelectCard objectForKey:@"cardcount"]];
 }
 
 /**
@@ -575,6 +661,44 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         }
         
     }];
+}
+
+
+#pragma mark cell中的stepper点击响应方法
+- (void)stepperClick:(UIStepper *)sender {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag - VIEW_IN_CELL_INIT_TAG inSection:0];
+    UITableViewCell *cellDeal =  [self.pullTableView cellForRowAtIndexPath:indexPath];
+    
+    // 获取当前cell的子view
+    NSArray *arraySubviews =  [cellDeal subviews];
+    for (UITextField *tfSlectedCount in arraySubviews) {
+        if (tfSlectedCount.tag == sender.tag) {
+            tfSlectedCount.text = [NSString stringWithFormat:@"%.0f", sender.value];
+            break;
+        }
+    }
+    
+    // 设置已选商品和消费次数
+        // 1. 获取所有的cell
+    NSMutableArray *muArrayCells = [NSMutableArray array];
+    for (NSInteger i = 0; i < [self.pullTableView numberOfRowsInSection:0]; i++) {
+        NSIndexPath *indexTemp = [NSIndexPath indexPathForRow:i inSection:0];
+        [muArrayCells addObject:[self.pullTableView cellForRowAtIndexPath:indexTemp]];
+    };
+        // 2. 获取所有cell中已选的商品个数总和
+    NSInteger AllSelectCount = 0;
+    for (UITableViewCell *cellTemp in muArrayCells) {
+        NSArray *arraySubviews =  [cellTemp subviews];
+        for (UITextField *tfSlectedCount in arraySubviews) {
+            if (tfSlectedCount.tag == sender.tag) {
+                AllSelectCount += [tfSlectedCount.text integerValue];
+                break;
+            }
+        }
+    }
+    
+    self.lbSelectedCount.text = [NSString stringWithFormat:@"%li件", (long)AllSelectCount];
+    self.lbCustemCount.text = [NSString stringWithFormat:@"%li次", (long)AllSelectCount];
 }
 
 - (void)didReceiveMemoryWarning {

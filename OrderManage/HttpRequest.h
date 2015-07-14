@@ -16,6 +16,8 @@
 #define WEBBASEURL @"http://180.97.81.151/cshop/"           // 测试url
 //#define WEBBASEURL @"http://180.97.69.100/cshop_jspay/" //外网测试服务
 
+#define WEBPRINT_IP @"192.168.1.201"             // 网络打印机ip
+#define WEBPRINT_PORT 9100                              // 网络打印机端口
 
 
 

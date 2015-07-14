@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "viewOtherDeal.h"
 
-#define SECTION_PAGE_COUNT 2  // 页数
+#define SECTION_PAGE_COUNT 1  // 页数
 #define CELL_IN_SECTION_COUNT 9 // 每页显示的cell数
 
 @interface MainViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout> {
@@ -60,6 +60,7 @@
     self.collectionview.alwaysBounceHorizontal= YES;
     self.collectionview.showsHorizontalScrollIndicator = NO;
     self.collectionview.showsVerticalScrollIndicator = NO;
+    self.collectionview.scrollEnabled = NO;  // 禁止滚动
     [self.collectionview setBackgroundColor:[UIColor whiteColor]];
     
     //注册Cell，必须要有
@@ -77,6 +78,7 @@
     _pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     _pageControl.currentPageIndicatorTintColor = ColorMainSystem;
     _pageControl.enabled = NO; //取消其默认的点击行为
+    _pageControl.hidden = YES;  // 隐藏翻页
     [self.view addSubview:_pageControl];
     
     // 存储数据源
@@ -142,11 +144,12 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 获取对应的cell
-//    UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     //临时改变个颜色，看好，只是临时改变的。如果要永久改变，可以先改数据源，然后在cellForItemAtIndexPath中控制。（和UITableView差不多吧！O(∩_∩)O~）
-//    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
-//    imageview.backgroundColor = [UIColor lightGrayColor];
-//    cell.selectedBackgroundView = imageview;
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
+    imageview.backgroundColor = [UIColor grayColor];
+    cell.selectedBackgroundView = imageview;
+    cell.selectedBackgroundView.alpha = 0.5;
     //切换到下一个界面  --- push
     NSString *strIdentifier = [NSString stringWithFormat:@"mainViewCell_%ld_%ld", (long)indexPath.section, (long)indexPath.row + 1];
     UIViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:strIdentifier];
@@ -159,6 +162,9 @@
     return YES;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.collectionview reloadData];
+}
 
 #pragma mark - scrollview 代理方法的实现
 #pragma mark 当scrollview移动时，实时调用

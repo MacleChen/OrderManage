@@ -32,13 +32,13 @@
 
 @property (strong, nonatomic) NSDictionary *dictSearchMebInfo;  // 查询到的会员信息
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *itemSearch;
-@property (weak, nonatomic) IBOutlet UILabel *lbSelectedCount;
-@property (weak, nonatomic) IBOutlet UILabel *lbCustemCount;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *itemSearch;   // 搜索按钮属性
+@property (weak, nonatomic) IBOutlet UILabel *lbSelectedCount;      // 已选商品个数
+@property (weak, nonatomic) IBOutlet UILabel *lbCustemCount;        // 消费次数
 
-@property (weak, nonatomic) IBOutlet UIImageView *imgViewCardIcon;
-@property (weak, nonatomic) IBOutlet UILabel *lbCardUserName;
-@property (weak, nonatomic) IBOutlet UILabel *lbSelectedRemainCount;
+@property (weak, nonatomic) IBOutlet UIImageView *imgViewCardIcon;  // 计次卡图标
+@property (weak, nonatomic) IBOutlet UILabel *lbCardUserName;       // 计次卡所属用户名
+@property (weak, nonatomic) IBOutlet UILabel *lbSelectedRemainCount;// 计次卡剩余次数
 
 
 

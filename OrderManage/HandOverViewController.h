@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCDAsyncSocket.h"
 
 @interface HandOverViewController : UIViewController
 
@@ -22,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbMebRechange;    // 会员充值
 @property (weak, nonatomic) IBOutlet UILabel *lbFreeMoney;      // 赠送金
 @property (weak, nonatomic) IBOutlet UISwitch *swPrint;     // 打印单据
+
+@property (strong, nonatomic) GCDAsyncSocket *asyncSocket;   // 网络连接打印机
 
 - (IBAction)btnSureClick:(UIButton *)sender;
 
