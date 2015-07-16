@@ -12,15 +12,17 @@
 
 @interface POSDeviceViewController : UIViewController <UMSCashierPluginDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *tfuserID;
-@property (weak, nonatomic) IBOutlet UITextField *tfuserTerminalID;
-@property (weak, nonatomic) IBOutlet UITextField *tfPOSType;
+@property (weak, nonatomic) IBOutlet UITextField *tfuserID;                 // 商户号
+@property (weak, nonatomic) IBOutlet UITextField *tfuserTerminalID;         // 商户终端号
+@property (weak, nonatomic) IBOutlet UITextField *tfPOSType;                // POS类型
 
-@property (weak, nonatomic) QCheckBox *ckProduct;
-@property (weak, nonatomic) QCheckBox *cktest;
+@property (weak, nonatomic) QCheckBox *ckProduct;                           // 生产
+@property (weak, nonatomic) QCheckBox *cktest;                              // 测试
 
-- (IBAction)barBtnSyncClick:(UIBarButtonItem *)sender;
-- (IBAction)btnSetInfoClick:(UIButton *)sender;
+@property (weak, nonatomic) UIPickerView *pickerView;   //  数据滚轴
+@property (strong, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
 
+- (IBAction)barBtnSyncClick:(UIBarButtonItem *)sender;      // 同步获取到服务器的数据
+- (IBAction)btnSetInfoClick:(UIButton *)sender;             // 保存到本地
 
 @end

@@ -28,10 +28,12 @@
 #define WEBFindCardAction @"newcard!findcard.action?"       // 查找卡的类型
 #define WEBNewCardNumAction @"newcard!cardnum.action?"      // 获取最新的卡号
 #define WEBCustomerAddAction @"customer!add.action?"        // 增加用户信息
+#define WEBPayMentAction @"payment.action?"                 // 付款 》 确认按钮支付
 
 // 会员管理
 #define WEBCustomerGetAction @"customer!get.action?"                // 获取用户信息
 #define WEBTopupActiveAction @"topup!active.action?"                // 会员卡的充值
+#define WEBTopupPaymentAction @"topup!payment.action?"              // 会员卡充值确认
 #define WEBCustomerLockCardAction @"customer!lockcard.action?"      // 会员卡的挂失处理
 #define WEBNewCardUpCardAction @"newcard!upcard.action?"            // 新赠卡
 #define WEBCustomerChangePwdAction @"customer!changepwd.action?"    // 修改密码
@@ -54,6 +56,10 @@
 // 快速消费
 #define WEBCustomerCheckPwd @"customer!checkpwd.action?"  // 检查输入密码
 #define WEBSaleFastSale @"sale!fastsale.action?"          // 确认支付
+
+
+// 系统设置
+#define WEBEmpDetailsAction @"emp!details.action?"   // 系统设置 》 易POS设备中的同步获取商户信息
 
 // 积分管理
 #define WEBCustomerGetGifList @"customer!getGiftList.action?" // 获取礼品list

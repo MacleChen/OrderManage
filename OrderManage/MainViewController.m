@@ -147,9 +147,9 @@
     UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     //临时改变个颜色，看好，只是临时改变的。如果要永久改变，可以先改数据源，然后在cellForItemAtIndexPath中控制。（和UITableView差不多吧！O(∩_∩)O~）
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
-    imageview.backgroundColor = [UIColor grayColor];
+    imageview.backgroundColor = [UIColor blackColor];
     cell.selectedBackgroundView = imageview;
-    cell.selectedBackgroundView.alpha = 0.5;
+    cell.selectedBackgroundView.alpha = 0.3;
     //切换到下一个界面  --- push
     NSString *strIdentifier = [NSString stringWithFormat:@"mainViewCell_%ld_%ld", (long)indexPath.section, (long)indexPath.row + 1];
     UIViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:strIdentifier];

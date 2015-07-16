@@ -644,8 +644,17 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark 当选中picker中的row时调用该方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     switch (pickerView.tag) {
-        case RECHANGE_VIEW_TAG:
+        case RECHANGE_VIEW_TAG: {
             self.tfReChange_Type.text = _MuarrayType[row];
+            if(row == 0){
+                self.tfReChange_Money.text = @"";
+                self.tfReChange_GiveMoney.text = @"";
+                break;
+            }
+            NSDictionary *dictTemp = _arrayTypeData[row - 1];
+            self.tfReChange_Money.text = [dictTemp objectForKey:@"realmoney"];
+            self.tfReChange_GiveMoney.text = [dictTemp objectForKey:@"freemoney"];
+        }
             break;
         case ADDCARD_VIEW_TAG: {
             self.tfAddCard_Type.text = _MuarrayType[row];
@@ -727,14 +736,40 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                                @"selcardmoney": [NSString stringWithFormat:@"%.2f", [self.tfReChange_Money.text floatValue] + [self.tfReChange_GiveMoney.text floatValue]],
                                @"selcardtype": [NSString stringWithFormat:@"%@%@", [self.dictSearchMebInfo objectForKey:@"cardname"], [self.dictSearchMebInfo objectForKey:@"cdpec"]]};
     
-    // 跳转到付款页面
-    //切换到下一个界面  --- push
-    GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
-    viewControl.listDict = sendDict;
-    viewControl.ReceDict = nil;
-    [self.navigationController pushViewController:viewControl animated:YES];
+     float totalMoney = [self.tfReChange_Money.text floatValue] + [self.tfReChange_GiveMoney.text floatValue];
+    // 网络请求
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBTopupPaymentAction];
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&emp.empid=%@&totalmoney=%@&paymoney=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [dictLogin objectForKey:@"empid"], [NSString stringWithFormat:@"%.2f", totalMoney], self.tfReChange_Money.text];
     
-    
+    [MBProgressHUD showMessage:@""];
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 获取数据失败
+            if(strStatus == nil){
+                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                // 解析数据
+                NSDictionary *dictTemp = [listData objectForKey:MESSAGE];
+                
+                // 跳转到付款页面
+                //切换到下一个界面  --- push
+                GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+                viewControl.listDict = sendDict;
+                viewControl.ReceDict = dictTemp;
+                [self.navigationController pushViewController:viewControl animated:YES];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 #pragma mark 挂失处理
@@ -813,13 +848,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 return;
             }
             if ([strStatus intValue] == WebDataIsRight) { // 获取正确的数据
-                //NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
                 [MBProgressHUD show:@"新增卡成功！" icon:nil view:nil];
                 // 跳转到付款页面
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
                 viewControl.listDict = sendDict;
-                viewControl.ReceDict = nil;
+                viewControl.ReceDict = dictTempData;
                 [self.navigationController pushViewController:viewControl animated:YES];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];

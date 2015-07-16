@@ -19,7 +19,7 @@ enum {
 @interface GetMoneyViewController : UIViewController
 
 @property (strong, nonatomic) NSDictionary *listDict;   // 注册页面数据
-@property (strong, nonatomic) NSDictionary *ReceDict;   // 根据注册页面请求到的数据
+@property (strong, nonatomic) NSDictionary *ReceDict;   // 根据其它页面请求到的数据
 
 @property (weak, nonatomic) IBOutlet UITextField *tfCashpay;        // 现金支付
 @property (weak, nonatomic) IBOutlet UITextField *tfUnionpay;       // 银联支付

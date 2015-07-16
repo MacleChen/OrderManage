@@ -36,6 +36,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSArray *_arrayGetWebData;   // 获取网络数据
     
     NSString *_strSelectCard;  // 选中的计次卡的id
+    
+    BOOL _edtedFlag; // 是否编辑输入过
 }
 
 @property (strong, nonatomic) UIImageView *imgviewDownload;   // 下载的网络图片
@@ -53,6 +55,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + TOP_MENU_HEIGHT;
     
     // 初始化信息
+    _edtedFlag = NO;
     self.dictSearchMebInfo = [NSDictionary dictionary];
     _MuarrayType = [NSMutableArray array];
     _strSelectCard = [NSString string];
@@ -104,8 +107,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSArray *viewsMemberMg = [[NSBundle mainBundle] loadNibNamed:@"MeterCardSearchView" owner:nil options:nil];
     
     // 寻找view -- 获取对应的view
-    if(viewsMemberMg.count > 0)
-        self.viewSearch = viewsMemberMg[0];
+    for (UIView *viewTemp in viewsMemberMg) {
+        if (viewTemp.tag == VIEW_SEARCH_TAG) {
+            self.viewSearch = viewTemp;
+        }
+    }
     
     // 获取viewSearch的控件
     NSArray *viewsInviewSearch = [self.viewSearch subviews];
@@ -145,9 +151,23 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 结算按钮
 - (IBAction)btnPayBillClick:(UIButton *)sender {
+    // 判断是否有商品
+    if (_MuarrayType.count <= 0) {
+        [MBProgressHUD show:@"请查询您计次卡对应的商品" icon:nil view:nil];
+        return;
+    }
+    
+    // 判断是否选择了商品的个数
+    if ([self.lbSelectedCount.text integerValue] <= 0) {
+        [MBProgressHUD show:@"请选择商品个数" icon:nil view:nil];
+        return;
+    }
+    
     //切换到下一个界面  --- push
     PayBillViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"PayBillView"];
-    //viewControl.dictData = _muArrayData[indexPath.section][indexPath.row];  // 传入数据
+    // 打包数据
+    viewControl.arrayRecData = _MuarrayType;
+    
     [self.navigationController pushViewController:viewControl animated:YES];
 }
 
@@ -157,16 +177,25 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  *  customIOS7dialogButtonTouchUpInside 方法
  */
 - (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [self.alertShow close];
+    
     // 获取那个按钮点击
     if(buttonIndex == 0) {
+        [self.alertShow close];
         return;
     } // 点击取消返回
+    
+    // 判断，是否有查询内容
+    if ([self.seaBarInput.text isEqual:@""] || [self.lbMeterCardID.text isEqual:@""]) {
+        [MBProgressHUD show:@"请输入查询内容" icon:nil view:nil];
+        return;
+    }
     
     // 获取计次卡的信息
     [self GetMeterCardInfo];
     // 获取计次卡对应消费的商品列表
     [self GetMeterCdProductsList];
+    
+    [self.alertShow close];
 }
 
 
@@ -280,7 +309,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     lbshowProductTitle.textColor = [UIColor grayColor];
     UITextField *tfShowProductCount;
     if (tfShowProductCount == nil) {
-        tfShowProductCount = [[UITextField alloc] initWithFrame:CGRectMake(lbshowProductTitle.frame.origin.x + lbshowProductTitle.frame.size.width, cell.center.y, 40, 30)];
+        tfShowProductCount = [[UITextField alloc] initWithFrame:CGRectMake(lbshowProductTitle.frame.origin.x + lbshowProductTitle.frame.size.width, cell.center.y, 40, 29)];
     }
     tfShowProductCount.text = @"0";
     tfShowProductCount.delegate = self;
@@ -294,6 +323,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     if (stepper == nil) {
         stepper = [[UIStepper alloc] initWithFrame:CGRectMake(_mainScreenWidth*2/3, cell.center.y +tfShowProductCount.frame.size.height, 80, 30)];
     }
+    stepper.maximumValue = 1000.0;
     stepper.tag = indexPath.row + VIEW_IN_CELL_INIT_TAG;
     
     [stepper addTarget:self action:@selector(stepperClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -553,6 +583,18 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当完成编辑时调用该方法
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    _edtedFlag = YES;
+    NSInteger integerRow = textField.tag - VIEW_IN_CELL_INIT_TAG;  // 获取对应的cell行号
+    
+    NSMutableDictionary *muDictTemp = [NSMutableDictionary dictionaryWithDictionary:_MuarrayType[integerRow]];
+    //[muDictTemp setObject:[NSString stringWithFormat:@"%.0f", sender.value] forKey:@"SelectedCount"];
+    [muDictTemp setValue:textField.text forKey:@"SelectedCount"];
+    
+    NSMutableArray *muArrayTemp = [NSMutableArray arrayWithArray:_MuarrayType];
+    
+    [muArrayTemp setObject:muDictTemp atIndexedSubscript:integerRow];
+    _MuarrayType = muArrayTemp;
+    
     // 设置已选商品和消费次数
     // 1. 获取所有的cell
     NSMutableArray *muArrayCells = [NSMutableArray array];
@@ -666,13 +708,28 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark cell中的stepper点击响应方法
 - (void)stepperClick:(UIStepper *)sender {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:sender.tag - VIEW_IN_CELL_INIT_TAG inSection:0];
+    NSInteger integerRow = sender.tag - VIEW_IN_CELL_INIT_TAG;  // 获取对应的cell行号
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:integerRow inSection:0];
     UITableViewCell *cellDeal =  [self.pullTableView cellForRowAtIndexPath:indexPath];
     
+    NSMutableDictionary *muDictTemp = [NSMutableDictionary dictionaryWithDictionary:_MuarrayType[integerRow]];
+    //[muDictTemp setObject:[NSString stringWithFormat:@"%.0f", sender.value] forKey:@"SelectedCount"];
+    [muDictTemp setValue:[NSString stringWithFormat:@"%.0f", sender.value] forKey:@"SelectedCount"];
+    
+    NSMutableArray *muArrayTemp = [NSMutableArray arrayWithArray:_MuarrayType];
+    
+    [muArrayTemp setObject:muDictTemp atIndexedSubscript:integerRow];
+    _MuarrayType = muArrayTemp;
     // 获取当前cell的子view
     NSArray *arraySubviews =  [cellDeal subviews];
-    for (UITextField *tfSlectedCount in arraySubviews) {
+    for (int i = 0; i < arraySubviews.count ; i++) {
+        UITextField *tfSlectedCount =  arraySubviews[i];
         if (tfSlectedCount.tag == sender.tag) {
+            if(_edtedFlag) { // 是否编辑输入过
+                sender.value = [tfSlectedCount.text floatValue];
+                _edtedFlag = NO;
+            }
             tfSlectedCount.text = [NSString stringWithFormat:@"%.0f", sender.value];
             break;
         }

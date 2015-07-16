@@ -469,6 +469,12 @@ extern NSDictionary *dictSendLogin;
 #pragma  mark - 订单信息上按钮的响应方法
 #pragma mark 修改
 -(void)btnModifyClick:(UIButton *)sender {
+    NSDictionary *dictTemp = [self.dictSaveOrderInfo objectForKey:@"record"];
+    
+    if ([(NSString *)[dictTemp objectForKey:@"stname"] isEqual:@"未付"]) {
+        [MBProgressHUD show:@"该订单未付款，不能修改" icon:nil view:nil];
+        return;
+    }
     self.alertShow.tag = SECTION_TWO_ModifyView_Tag;
     
     self.ModifyView.frame = CGRectMake(0, 0, 300, 133);
@@ -546,13 +552,14 @@ extern NSDictionary *dictSendLogin;
     NSString *strcdType = [NSString stringWithFormat:@"%@/%@", [dictCardTypeTemp objectForKey:@"cdname"], [dictCardTypeTemp objectForKey:@"cdpec"]];
     
     getmoney.strCardid = [dictCardTypeTemp objectForKey:@"cdid"];
-    getmoney.strSelcardMoney = [dictCardTypeTemp objectForKey:@"cdmoney"];
+    NSDictionary *dictRecord = [self.dictSaveOrderInfo objectForKey:@"record"];
+    getmoney.strSelcardMoney = [dictRecord objectForKey:@"lostmoney"];
     getmoney.strSelcardType = strcdType;
     NSDictionary *dictRegisteData = [getmoney getDictionaryPackBag];
     MyPrint(@"%@", dictRegisteData);
     
     viewControl.listDict = dictRegisteData;
-    
+    viewControl.ReceDict = _dictSaveOrderInfo;
     [self.navigationController pushViewController:viewControl animated:YES];
 
 }

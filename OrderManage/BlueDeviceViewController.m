@@ -35,6 +35,7 @@
     // 初始化
     self.cbCenterMg = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     self.peripheralArray = [NSMutableArray array];
+    _MuarrayScanBluethDevices = [NSMutableArray array];
     _sectionCount = 2;   // 默认为 1;
     
     // 设置代理
@@ -50,7 +51,7 @@
     self.atiview.frame = CGRectMake(_mainScreenWidth*4/5, 0, 50, self.tableview.sectionHeaderHeight);
     
     // 设置定时器
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(tableviewReloadData) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(tableviewReloadData) userInfo:nil repeats:YES];
     [self.timer setFireDate:[NSDate distantFuture]];  // 不开启定时器
 }
 
@@ -72,7 +73,7 @@
 #pragma mark 设置每个cell的内容
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     
     
     // 设置checkbox
@@ -93,7 +94,7 @@
     if (indexPath.section == 1 && _MuarrayScanBluethDevices.count > 0) {
         CBPeripheral *peripheral = _MuarrayScanBluethDevices[indexPath.row];
         cell.textLabel.text = peripheral.name;
-        cell.detailTextLabel.text = peripheral.state == CBPeripheralStateConnected ? @"已连接" : @"未连接";
+        cell.detailTextLabel.text = (peripheral.state == CBPeripheralStateConnected ? @"已连接" : @"");
         cell.accessoryType = UITableViewCellAccessoryDetailButton;
     }
     
@@ -199,7 +200,16 @@
     MyPrint(@"发现蓝牙设备");
     NSString *str = [NSString stringWithFormat:@"Did discover peripheral. peripheral: %@ rssi: %@, advertisementData: %@ ", peripheral, RSSI, advertisementData];
     MyPrint(@"%@",str);
+    
     [_MuarrayScanBluethDevices addObject:peripheral];
+    MyPrint(@"count = %ld", (long)_MuarrayScanBluethDevices.count);
+    for (int i = 0; i < _MuarrayScanBluethDevices.count; i++) {
+        CBPeripheral *peri = _MuarrayScanBluethDevices[i];
+        if ([peri.identifier isEqual:peripheral.identifier] && _MuarrayScanBluethDevices.count > 1) {  // 不是同一个蓝牙设备时，加入
+            [_MuarrayScanBluethDevices removeLastObject];
+        }
+    }
+    
 }
 
 #pragma mark 连接上蓝牙设备成功时

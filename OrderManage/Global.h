@@ -13,4 +13,6 @@
 
 #define INPUTVIEW_HEIGHT 220      // 自定义输入view的高度
 
+#define FONTSIZE_IPHONE                16
+
 #endif

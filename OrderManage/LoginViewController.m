@@ -208,7 +208,9 @@ NSDictionary *dictSendLogin = nil;
 }
 
 
-//保存数据到NSUserDefaults
+/**
+ *  保存数据到NSUserDefaults
+ */ 
 -(void)saveNSUserDefaults
 {
     // 将登录数据保存到nsuserDefaults中
@@ -223,7 +225,9 @@ NSDictionary *dictSendLogin = nil;
     [userDef synchronize];
 }
 
-//从NSUserDefaults中读取数据
+/**
+ *  从NSUserDefaults中读取数据
+ */ 
 -(void)readNSUserDefaults
 {
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
