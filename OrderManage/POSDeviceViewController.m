@@ -82,7 +82,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfuserID.keyboardType = UIKeyboardTypeNamePhonePad;
     self.tfuserTerminalID.keyboardType = UIKeyboardTypeNamePhonePad;
     self.tfPOSType.inputView = self.visualEffectView;
-    
 }
 
 

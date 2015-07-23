@@ -12,6 +12,8 @@
 #import "MBProgressHUD+MJ.h"
 #import "HttpRequest.h"
 #import "Global.h"
+#import "QCheckBox.h"
+#import "PrintDeviceSet.h"
 
 #define TF_Guide1Tag 30
 #define TF_Guide2Tag 40
@@ -22,7 +24,7 @@
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
-@interface GetMoneyViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UMSCashierPluginDelegate> {
+@interface GetMoneyViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UMSCashierPluginDelegate, CustomIOS7AlertViewDelegate> {
     float _mainScreenWidth;
     float _mainScreenHeight;
     
@@ -36,6 +38,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSString *_userTerminalID;  // 商户终端ID
     NSString *_POSType;         // POS机类型
     BOOL _ckProduct;            // 环境：（是否生产）
+    
+    int _DetailpayMentStyle;  // 支付类型更细的判断
+    
+    NSString *_stringPrintInfo;   // 需要打印的信息
+    
+    NSDictionary *_dictSavePaySuccessResult;  // 保存支付成功后返回的数据包
 }
 
 @end
@@ -45,6 +53,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // 初始化
+    self.asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    _dictSavePaySuccessResult = [NSDictionary dictionary];
     
     // 设置view的手势识别器
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(HandleBackgroundTap:)];
@@ -103,6 +115,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置键盘
     self.tfGuide1.inputView = self.visualEffectView;
     self.tfGuide2.inputView = self.visualEffectView;
+    
+    self.alertShow = [[CustomIOS7AlertView alloc] init];
+    [self.alertShow setButtonTitles:[NSArray arrayWithObjects:@"取消", @"确定", nil]];
+    self.alertShow.useMotionEffects = YES;
+    self.alertShow.delegate = self;
 }
 
 
@@ -142,6 +159,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             [MBProgressHUD show:@"现金支付失败" icon:nil view:nil];
             return;
         };
+        _DetailpayMentStyle = payMentStyleCash;
+        [self PostPayMentDataWithStyle:payMentStyleCash];
     }
     
     if([self.tfUnionpay.text floatValue] > 0.0) { // 银联付款
@@ -163,14 +182,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             [MBProgressHUD show:@"优惠券支付失败" icon:nil view:nil];
             return;
         };
+        _DetailpayMentStyle = payMentStyleCoupons;
+        [self PostPayMentDataWithStyle:payMentStyleCoupons];
     }
-    
-    // 确认支付数据提交到服务器 -- 现金支付 或 优惠券支付
-    if([self.tfCashpay.text floatValue] > 0.0 || [self.tfCoupons.text floatValue] != 0.0) {
-        [self PostPayMentData];
-    }
-    
-    // 连接打印机打印
 }
 
 #pragma  mark - textField的代理方法的实现
@@ -288,6 +302,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSDictionary *dictTemp = [self.ReceDict objectForKey:@"record"];
     
    // 1. 下单
+    MyPrint(@"userID:%@, TerminalID:%@", _userID, _userTerminalID);
     NSString *strPrice = [NSString stringWithFormat:@"%li", (long)[self.tfUnionpay.text integerValue]];
     [UMSCashierPlugin bookOrder:strPrice MerorderId:[dictTemp objectForKey:@"rccode"] MerOrderDesc:@"新增卡" BillsMID:_userID BillsTID:_userTerminalID operator:[dictLogin objectForKey:@"empid"] Delegate:self ProductModel:_ckProduct];
     
@@ -405,7 +420,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         self.tfCashpay.text = @"0.0";
         self.tfCoupons.text = @"0.0";
         
-        [self PostPayMentData];
+        [self PostPayMentDataWithStyle:payMentStyleUnion];
     }
     
     switch (payStatus) {
@@ -432,13 +447,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         default:
             [result stringByAppendingString:@"\n打印机无纸"];
         break; }
-    for(NSString * key in dict)
-    {
-        result=[result stringByAppendingFormat:@"\n%@", [dict objectForKey:key]];
-    }
+//    for(NSString * key in dict)
+//    {
+//        result=[result stringByAppendingFormat:@"\n%@", [dict objectForKey:key]];
+//    }
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"支付结果" message:result delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark 订单查询回调
@@ -506,7 +522,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 }
 
 #pragma mark 提交支付订单
-- (void)PostPayMentData {
+- (void)PostPayMentDataWithStyle:(payMentStyle)payStyle {
     // 获取支付额
     float payMoney = [self.tfCashpay.text floatValue] + [self.tfUnionpay.text floatValue] + [self.tfCoupons.text floatValue];
     
@@ -546,10 +562,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
-                [MBProgressHUD show:@"支付成功" icon:nil view:nil];
-                // 返回到主界面
-                [self.navigationController popToRootViewControllerAnimated:YES];
+                _dictSavePaySuccessResult = [listData objectForKey:MESSAGE];
                 
+                if (payStyle == payMentStyleCash || payStyle == payMentStyleCoupons) {
+                    self.paySuccessViewInAlert = [self GetPaySuccessAlertView];
+                    [self.alertShow setContainerView:self.paySuccessViewInAlert];
+                    [self.alertShow show];
+                }
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }
@@ -558,6 +577,30 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         }
         
     }];
+}
+
+#pragma mark 获取现金，优惠券支付的成功后的小窗口
+- (UIView *)GetPaySuccessAlertView {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 80)];
+    
+    UILabel *lbTitle = [[UILabel alloc] initWithFrame:CGRectMake((view.frame.size.width - 100)/2, 5, 100, 30)];
+    lbTitle.text = @"支付成功";
+    lbTitle.font = [UIFont boldSystemFontOfSize:16.0];
+    lbTitle.textColor = [UIColor blackColor];
+    lbTitle.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:lbTitle];
+    
+    QCheckBox *_checkPrint = [[QCheckBox alloc] initWithDelegate:self];     // 储值卡会员消费
+    _checkPrint.frame = CGRectMake((view.frame.size.width - 100)/2, 55, 100, 30);
+    _checkPrint.center = CGPointMake(view.frame.size.width/2, 55);
+    [_checkPrint setTitle:@"打印单据" forState:UIControlStateNormal];
+    [_checkPrint setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [_checkPrint.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    self.ckPrintList = _checkPrint;
+    self.ckPrintList.checked = YES;
+    [view addSubview:_checkPrint];
+    
+    return view;
 }
 
 #pragma mark 当视图出现时，调用
@@ -588,6 +631,105 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     UIGraphicsEndImageContext();
     
     return image;
+}
+
+#pragma mark - QCheckBoxDelegate
+- (void)didSelectedCheckBox:(QCheckBox *)checkbox checked:(BOOL)checked {
+    
+}
+
+#pragma mark 点击弹出窗口上的按钮调用的方法
+- (void)customIOS7dialogButtonTouchUpInside:(id)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // 获取那个按钮点击
+    if(buttonIndex == 0) {   // 点击取消返回
+        [self.alertShow close];
+        [MBProgressHUD show:@"取消打印单据" icon:nil view:nil];
+        return;
+    }
+    
+    NSDictionary *dictRecord = [_dictSavePaySuccessResult objectForKey:@"record"];
+    if (self.ckPrintList.checked) {
+        // 设置打印数据
+        if (_DetailpayMentStyle == payMentStyleCash) {  // 现金支付后打印
+            // 设置需要打印的数据
+            _stringPrintInfo = [NSString stringWithFormat:@"\
+                    现金支付\n\
+    --------------------------------------\n\n\
+    用户名:                %@\n\
+    订单号:                %@\n\
+    订单类型:              %@\n\
+    支付金额:              %@\n\
+    生成日期:              %@\n\
+    支付状态:              已支付\n", [dictRecord objectForKey:@"cuname"], [dictRecord objectForKey:@"rccode"], [dictRecord objectForKey:@"typename"], [dictRecord objectForKey:@"lostmoney"], [dictRecord objectForKey:@"rcdate"]];
+            
+        }
+        if (_DetailpayMentStyle == payMentStyleCoupons) {  // 优惠券支付后打印
+            // 设置需要打印的数据
+            _stringPrintInfo = [NSString stringWithFormat:@"\
+                    优惠券支付\n\
+    --------------------------------------\n\n\
+    用户名:                %@\n\
+    订单号:                %@\n\
+    订单类型:              %@\n\
+    支付金额:              %@\n\
+    生成日期:              %@\n\
+    支付状态:              已支付\n", [dictRecord objectForKey:@"cuname"], [dictRecord objectForKey:@"rccode"], [dictRecord objectForKey:@"typename"], [dictRecord objectForKey:@"lostmoney"], [dictRecord objectForKey:@"rcdate"]];
+            
+            
+
+        }
+        // 打印单据
+        [self PrintInfoWithString:_stringPrintInfo];
+        [MBProgressHUD show:@"打印成功" icon:nil view:nil];
+    } else {
+        [MBProgressHUD show:@"未打印单据" icon:nil view:nil];
+    }
+    
+    [self.alertShow close];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+/**
+ *  打印机打印数据
+ */
+- (void)PrintInfoWithString:(NSString *)stringInfo {
+    NSError *error;
+    // 连接对应的IP和端口
+    if (![self.asyncSocket connectToHost:WEBPRINT_IP onPort:WEBPRINT_PORT error:&error]) {
+        MyPrint(@"error:%@", error);
+    }
+}
+
+
+#pragma mark - GCDAsyncSocketDelegate 代理方法的实现
+#pragma mark 已连接上网络设备之后调用的方法
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    MyPrint(@"已连接： host:%@, port:%i", host, port);
+    
+    // 打印机初始化
+    [PrintDeviceSet PrintDeviceInitWithSocket:self.asyncSocket];
+    
+    // 写数据  -- 中文编码 GBK
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSData *writeData = [_stringPrintInfo dataUsingEncoding:encoding];
+    
+    [self.asyncSocket writeData:writeData withTimeout:5 tag:TAG_FIXED_LENGTH_HEADER];
+    
+    // 打印机结束处理
+    [PrintDeviceSet PrintDeviceEndDealWithSocket:self.asyncSocket];
+    
+    [self.asyncSocket disconnect]; // 断开连接
+}
+
+#pragma mark 发送TCP/IP数据包
+- (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag {
+    MyPrint(@"thread(%@),onSocket:%p didWriteDataWithTag:%ld",[[NSThread currentThread] name], self.asyncSocket, tag);
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
+    MyPrint(@"连接失败：%@", err);
+    [self.asyncSocket disconnect]; // 断开连接
 }
 
 #pragma mark 点击背景时，退出键盘

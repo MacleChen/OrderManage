@@ -36,6 +36,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSArray *_arrayGetWebData;   // 获取网络数据
     
     NSString *_strSelectCard;  // 选中的计次卡的id
+    NSDictionary *_dictSelectMeterCard; // 选中的计次卡信息
+    
     
     BOOL _edtedFlag; // 是否编辑输入过
 }
@@ -59,8 +61,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.dictSearchMebInfo = [NSDictionary dictionary];
     _MuarrayType = [NSMutableArray array];
     _strSelectCard = [NSString string];
+    _dictSelectMeterCard = [NSDictionary dictionary];
     self.imgviewDownload = [[UIImageView alloc] init];
-    self.itemSearch.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"credits_search2.png"] size:ITEM_IMAGE_CGSZE];
     
     // 设置代理
     self.pullTableView.delegate = self;
@@ -135,6 +137,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置键盘类型
     self.tfMeterCardIDSelects.inputView = self.visualEffectView;
     
+    // 设置背景图片
+    [self.btnSaoyiSao setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"saoyisao6.png"] size:CGSizeMake(30, 25)] forState:UIControlStateNormal];
+    [self.btnAlertSearch setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"searchBtnImg2.png"] size:CGSizeMake(45, 30)] forState:UIControlStateNormal];
+    
     // 设置响应方法
     [self.btnSaoyiSao addTarget:self action:@selector(btnQRCodeClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.btnAlertSearch addTarget:self action:@selector(btnSearchAlertInClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -167,7 +173,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     PayBillViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"PayBillView"];
     // 打包数据
     viewControl.arrayRecData = _MuarrayType;
-    
+    viewControl.dictSelectMeterCard = _dictSelectMeterCard;
+    viewControl.dictSearchMebInfo = self.dictSearchMebInfo;
     [self.navigationController pushViewController:viewControl animated:YES];
 }
 
@@ -498,6 +505,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 // 设置显示信息
                 NSArray *arrayTemp = [[listData objectForKey: MESSAGE] objectForKey:@"listcount"];
                 _strSelectCard = [arrayTemp[0] objectForKey:@"cucardid"];  // 设置选中的计次卡的id
+                _dictSelectMeterCard = arrayTemp[0];
                 self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [arrayTemp[0] objectForKey:@"cardnum"], [arrayTemp[0] objectForKey:@"cdname"]];
                 self.lbRemainCount.text = [arrayTemp[0] objectForKey:@"cardcount"];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
@@ -551,6 +559,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         NSDictionary *dicTemp = _MuarrayType[row];
         // 重新设置属性
         _strSelectCard = [_MuarrayType[row] objectForKey:@"cucardid"];  // 设置选中的计次卡的id
+        _dictSelectMeterCard = _MuarrayType[row];
         self.lbMeterCardID.text = [NSString stringWithFormat:@"%@ | %@", [_MuarrayType[row] objectForKey:@"cardnum"], [_MuarrayType[row] objectForKey:@"cdname"]];
         self.lbRemainCount.text = [dicTemp objectForKey:@"cardcount"];
     }
@@ -583,6 +592,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当完成编辑时调用该方法
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.tag == BARSEARCH_TEXTFIELD_TAG || textField.tag == TF_METERCARDID_SELECTS_TAG) return;
+    
     _edtedFlag = YES;
     NSInteger integerRow = textField.tag - VIEW_IN_CELL_INIT_TAG;  // 获取对应的cell行号
     
@@ -604,18 +615,20 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     };
     // 2. 获取所有cell中已选的商品个数总和
     NSInteger AllSelectCount = 0;
+    double AllSelectMoney = 0.0;
     for (UITableViewCell *cellTemp in muArrayCells) {
         NSArray *arraySubviews =  [cellTemp subviews];
         for (UITextField *tfSlectedCount in arraySubviews) {
             if (tfSlectedCount.tag == textField.tag) {
                 AllSelectCount += [tfSlectedCount.text integerValue];
+                AllSelectMoney += [cellTemp.detailTextLabel.text floatValue] * [tfSlectedCount.text integerValue];
                 break;
             }
         }
     }
     
     self.lbSelectedCount.text = [NSString stringWithFormat:@"%li件", (long)AllSelectCount];
-    self.lbCustemCount.text = [NSString stringWithFormat:@"%li次", (long)AllSelectCount];
+    self.lbCustemCount.text = [NSString stringWithFormat:@"%0.2lf", AllSelectMoney];
 }
 
 #pragma mark 当textfield开始编辑时调用
@@ -744,18 +757,20 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     };
         // 2. 获取所有cell中已选的商品个数总和
     NSInteger AllSelectCount = 0;
+    double AllSelectMoney = 0;
     for (UITableViewCell *cellTemp in muArrayCells) {
         NSArray *arraySubviews =  [cellTemp subviews];
         for (UITextField *tfSlectedCount in arraySubviews) {
             if (tfSlectedCount.tag == sender.tag) {
                 AllSelectCount += [tfSlectedCount.text integerValue];
+                AllSelectMoney += [cellTemp.detailTextLabel.text floatValue] * [tfSlectedCount.text integerValue];
                 break;
             }
         }
     }
     
     self.lbSelectedCount.text = [NSString stringWithFormat:@"%li件", (long)AllSelectCount];
-    self.lbCustemCount.text = [NSString stringWithFormat:@"%li次", (long)AllSelectCount];
+    self.lbCustemCount.text = [NSString stringWithFormat:@"%.2lf", AllSelectMoney];
 }
 
 - (void)didReceiveMemoryWarning {

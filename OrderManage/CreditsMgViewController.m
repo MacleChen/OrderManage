@@ -36,6 +36,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     _MuarrayType = [[NSMutableArray alloc] init];
     _arrayTypeData = [[NSArray alloc] init];
     
+    // 设置背景图片
+    [self.btnSaoyisao setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"saoyisao6.png"] size:CGSizeMake(30, 25)] forState:UIControlStateNormal];
+    [self.btnSearch setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"searchBtnImg2.png"] size:CGSizeMake(45, 30)] forState:UIControlStateNormal];
+    
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + TOP_MENU_HEIGHT;

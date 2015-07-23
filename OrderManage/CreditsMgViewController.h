@@ -19,6 +19,10 @@
 
 @property (strong, nonatomic) NSDictionary *dictSearchMebInfo;  // 查询到的会员信息
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSaoyisao;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnSearch;
+
 
 @property (weak, nonatomic) IBOutlet UITextField *tfInputCredits;   // 输入积分
 @property (weak, nonatomic) IBOutlet UITextField *tfSelectCredits;  // 选择积分

@@ -66,6 +66,9 @@
 @interface MebManageViewController : UIViewController <CustomIOS7AlertViewDelegate, UITextFieldDelegate>
 
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSaoyisao;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnSearch;
 @property (strong, nonatomic) IBOutlet UISearchBar *tfSearch;
 @property (strong, nonatomic) NSDictionary *ReceDict; // 接收其它界面的传递数据
 

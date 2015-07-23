@@ -64,6 +64,12 @@
 		0454F7731B2E6CC600AA0EF3 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */; };
 		0454F7741B2E6CC600AA0EF3 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */; };
 		0454F7761B2E6D0500AA0EF3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */; };
+		0455BB221B5DDC8200AEBD7C /* saoyisao4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB211B5DDC8200AEBD7C /* saoyisao4.png */; };
+		0455BB241B5DDCAD00AEBD7C /* searchBtnImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB231B5DDCAD00AEBD7C /* searchBtnImg.png */; };
+		0455BB261B5DDEC900AEBD7C /* searchImg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB251B5DDEC900AEBD7C /* searchImg2.png */; };
+		0455BB281B5DEE4D00AEBD7C /* saoyisao5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB271B5DEE4D00AEBD7C /* saoyisao5.png */; };
+		0455BB2A1B5DEE6300AEBD7C /* searchBtnImg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB291B5DEE6300AEBD7C /* searchBtnImg2.png */; };
+		0455BB2C1B5DF20B00AEBD7C /* saoyisao6.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455BB2B1B5DF20B00AEBD7C /* saoyisao6.png */; };
 		045ABB881B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 045ABB871B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist */; };
 		045C9BC21B3E95240066AD49 /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C9BC11B3E95240066AD49 /* QRCodeViewController.m */; };
 		04648E201B4033A500A7C378 /* mebInitImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 04648E1F1B4033A500A7C378 /* mebInitImg.png */; };
@@ -87,6 +93,7 @@
 		04862A841B3E400800E5E6ED /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04862A831B3E400800E5E6ED /* CoreData.framework */; };
 		048A29F81B27DB6700C7140D /* MebManageShowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 048A29F71B27DB6700C7140D /* MebManageShowView.xib */; };
 		048A29FF1B281C0300C7140D /* CustomIOS7AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */; };
+		048F8EFC1B5F9813000DDDC3 /* QRCodeBgImg.png in Resources */ = {isa = PBXBuildFile; fileRef = 048F8EFB1B5F9813000DDDC3 /* QRCodeBgImg.png */; };
 		049670B31B207F7700430237 /* GetMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049670B21B207F7700430237 /* GetMoneyViewController.m */; };
 		04A096C51B442C6F005E8BD1 /* AlbumQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A096C41B442C6F005E8BD1 /* AlbumQRCodeViewController.m */; };
 		04A17C2F1B50B57600316C1A /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 04A17C1D1B50B57600316C1A /* bitstream.c */; };
@@ -277,6 +284,12 @@
 		0454F76B1B2E6CC600AA0EF3 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		0454F76C1B2E6CC600AA0EF3 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		0454F7751B2E6D0500AA0EF3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0455BB211B5DDC8200AEBD7C /* saoyisao4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao4.png; sourceTree = "<group>"; };
+		0455BB231B5DDCAD00AEBD7C /* searchBtnImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchBtnImg.png; sourceTree = "<group>"; };
+		0455BB251B5DDEC900AEBD7C /* searchImg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchImg2.png; sourceTree = "<group>"; };
+		0455BB271B5DEE4D00AEBD7C /* saoyisao5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao5.png; sourceTree = "<group>"; };
+		0455BB291B5DEE6300AEBD7C /* searchBtnImg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchBtnImg2.png; sourceTree = "<group>"; };
+		0455BB2B1B5DF20B00AEBD7C /* saoyisao6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saoyisao6.png; sourceTree = "<group>"; };
 		045ABB871B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ChinaProvincesAndCitys.plist; sourceTree = "<group>"; };
 		045C9BC01B3E95240066AD49 /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
 		045C9BC11B3E95240066AD49 /* QRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
@@ -311,6 +324,7 @@
 		048A29F71B27DB6700C7140D /* MebManageShowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MebManageShowView.xib; sourceTree = "<group>"; };
 		048A29FD1B281C0300C7140D /* CustomIOS7AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOS7AlertView.h; sourceTree = "<group>"; };
 		048A29FE1B281C0300C7140D /* CustomIOS7AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOS7AlertView.m; sourceTree = "<group>"; };
+		048F8EFB1B5F9813000DDDC3 /* QRCodeBgImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QRCodeBgImg.png; sourceTree = "<group>"; };
 		049670B11B207F7700430237 /* GetMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetMoneyViewController.h; sourceTree = "<group>"; };
 		049670B21B207F7700430237 /* GetMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMoneyViewController.m; sourceTree = "<group>"; };
 		04A096C31B442C6F005E8BD1 /* AlbumQRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumQRCodeViewController.h; sourceTree = "<group>"; };
@@ -970,6 +984,13 @@
 			children = (
 				04A17C381B50F73500316C1A /* MeterCardImages */,
 				04D08B6C1B4285D100E7345D /* saoyisao3.png */,
+				0455BB211B5DDC8200AEBD7C /* saoyisao4.png */,
+				0455BB271B5DEE4D00AEBD7C /* saoyisao5.png */,
+				0455BB2B1B5DF20B00AEBD7C /* saoyisao6.png */,
+				0455BB231B5DDCAD00AEBD7C /* searchBtnImg.png */,
+				0455BB251B5DDEC900AEBD7C /* searchImg2.png */,
+				0455BB291B5DEE6300AEBD7C /* searchBtnImg2.png */,
+				048F8EFB1B5F9813000DDDC3 /* QRCodeBgImg.png */,
 				0484CCDB1B36CB4D00102224 /* CreditsMgImages */,
 				0480ED921B2FE4C50041A1FC /* HandOverImages */,
 				04E1A3721B2BF8A200251D76 /* memberImages */,
@@ -1243,6 +1264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0455BB2A1B5DEE6300AEBD7C /* searchBtnImg2.png in Resources */,
 				04B02A051B17220600D88D16 /* mainViewCell_0_7.png in Resources */,
 				04B02A021B17220600D88D16 /* 密码.png in Resources */,
 				04B02A031B17220600D88D16 /* mainViewCell_1_2.png in Resources */,
@@ -1260,6 +1282,7 @@
 				0454F76E1B2E6CC600AA0EF3 /* blackArrow@2x.png in Resources */,
 				04B029E21B17210100D88D16 /* iPhone_iOS_57@2x.png in Resources */,
 				0454F76F1B2E6CC600AA0EF3 /* blueArrow.png in Resources */,
+				0455BB281B5DEE4D00AEBD7C /* saoyisao5.png in Resources */,
 				0423C2D11B1EEEF4000DCE8B /* imgaddress.png in Resources */,
 				04B02A0C1B1722A400D88D16 /* Main.storyboard in Resources */,
 				04D08B6D1B4285D100E7345D /* saoyisao3.png in Resources */,
@@ -1270,6 +1293,7 @@
 				04BEE3631B319FE4003D4061 /* checkbox1_unchecked.png in Resources */,
 				04B02A041B17220600D88D16 /* 头像.png in Resources */,
 				04BEE36E1B31A3A5003D4061 /* uncheck_icon@2x.png in Resources */,
+				0455BB261B5DDEC900AEBD7C /* searchImg2.png in Resources */,
 				04413B2B1B22BE6300503425 /* MBProgressHUD.bundle in Resources */,
 				0423C2D31B1EEEF4000DCE8B /* imgcardID.png in Resources */,
 				04B02A0A1B17220600D88D16 /* 账号.png in Resources */,
@@ -1279,6 +1303,7 @@
 				04BEE36D1B31A3A5003D4061 /* uncheck_icon.png in Resources */,
 				046E05B31B535B4A0029160D /* imgTableViewBG.jpg in Resources */,
 				0454F7731B2E6CC600AA0EF3 /* whiteArrow.png in Resources */,
+				0455BB221B5DDC8200AEBD7C /* saoyisao4.png in Resources */,
 				0423C2DB1B1EFA24000DCE8B /* registeButton.png in Resources */,
 				04BEE3641B319FE4003D4061 /* checkbox1_unchecked@2x.png in Resources */,
 				04B029F91B17220600D88D16 /* 登陆按钮A.png in Resources */,
@@ -1288,7 +1313,9 @@
 				04BEE36C1B31A3A5003D4061 /* check_icon@2x.png in Resources */,
 				0428B76C1B52164C00E42AE8 /* reload001.gif in Resources */,
 				0454F7721B2E6CC600AA0EF3 /* grayArrow@2x.png in Resources */,
+				0455BB241B5DDCAD00AEBD7C /* searchBtnImg.png in Resources */,
 				04B02A071B17220600D88D16 /* mainViewCell_1_3.png in Resources */,
+				0455BB2C1B5DF20B00AEBD7C /* saoyisao6.png in Resources */,
 				04B029E31B17210100D88D16 /* iPhone_iOS_60@2x.png in Resources */,
 				0454F76D1B2E6CC600AA0EF3 /* blackArrow.png in Resources */,
 				0484CCDD1B36CB6C00102224 /* credits_search.png in Resources */,
@@ -1310,6 +1337,7 @@
 				045ABB881B4FBD1400B08D0D /* ChinaProvincesAndCitys.plist in Resources */,
 				04B029FE1B17220600D88D16 /* mainViewCell_0_9.png in Resources */,
 				04B02A001B17220600D88D16 /* mainViewCell_1_1.png in Resources */,
+				048F8EFC1B5F9813000DDDC3 /* QRCodeBgImg.png in Resources */,
 				04B029DE1B17210100D88D16 /* iPhone_iOS_29.png in Resources */,
 				0454F7711B2E6CC600AA0EF3 /* grayArrow.png in Resources */,
 				04A88C7C1B31324D0016B18B /* OrderDetailShowCellView.xib in Resources */,
@@ -1488,7 +1516,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
+				PROVISIONING_PROFILE = "127a11eb-ab9a-4bba-afec-68156bb9005d";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1531,7 +1559,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
+				PROVISIONING_PROFILE = "127a11eb-ab9a-4bba-afec-68156bb9005d";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1553,7 +1581,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
+				PROVISIONING_PROFILE = "127a11eb-ab9a-4bba-afec-68156bb9005d";
 			};
 			name = Debug;
 		};
@@ -1573,7 +1601,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4972e4c2-31cf-40bf-9c59-a1d9ebc91c5e";
+				PROVISIONING_PROFILE = "127a11eb-ab9a-4bba-afec-68156bb9005d";
 			};
 			name = Release;
 		};

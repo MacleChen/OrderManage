@@ -29,6 +29,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 初始化
     _dictRecordData = [NSDictionary dictionary];
     
+    // 设置背景图片
+    [self.btnSaoyisao setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"saoyisao6.png"] size:CGSizeMake(30, 25)] forState:UIControlStateNormal];
+    [self.btnSearch setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"searchBtnImg2.png"] size:CGSizeMake(45, 30)] forState:UIControlStateNormal];
+    
     // 设置代理
     self.tfSearchbar.delegate = self;
     
@@ -63,7 +67,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     // 判断输入金额是否为空
-    if ([self.tfCardcon.text intValue] == 0 && [self.tfUnioncon.text intValue] == 0 &&[self.tfCashcon.text intValue] == 0 ) {
+    if ([self.tfCardcon.text floatValue] == 0 && [self.tfUnioncon.text floatValue] == 0 &&[self.tfCashcon.text floatValue] == 0 ) {
         [MBProgressHUD show:@"请输入消费金额" icon:nil view:nil];
         return;
     }
@@ -145,7 +149,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
 }
 
-#pragma mark - uialertView 的代理方法的实现
+#pragma mark - alertView 的代理方法的实现
 #pragma mark 点击按钮时调用
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // 取消
@@ -157,8 +161,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 判断输入密码是否正确
     UITextField *tfInputPwdTemp = [self.alertInputPwdView textFieldAtIndex:0];
     [self CheckPasswordIsValid:tfInputPwdTemp.text];
-    
-    // 密码正确后处理
 }
 
 #pragma mark 判断输入密码是否正确
@@ -179,6 +181,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 //[MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
                 // 输入密码正确
+                // 数据提交并支付
                 [self SubmitWebResponseData];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
@@ -190,10 +193,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }];
 }
 
-// 点击确认后，并且输入密码正确后，调用网络数据请求
+// 点击确认后，并且输入密码正确后，调用网络数据请求 并进行支付功能
 - (void)SubmitWebResponseData {
-    // 判断支付类型
-    if ([self.tfCardcon.text intValue] != 0) { // 会员卡支付
+    // 支付 --  会员卡支付， 银联支付，  现金支付
+    if ([self.tfCardcon.text floatValue] > 0.0 || [self.tfUnioncon.text floatValue] > 0.0 || [self.tfCashcon.text floatValue] > 0.0) {
        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBSaleFastSale];
        NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&password=%@&unionpayno=%@&emp.empid=%@&cardsale=%@&moneysale=%@&banksale=%@", [self.dictResponseData objectForKey:@"cuid"], (UITextField *)[self.alertInputPwdView textFieldAtIndex:0].text, @"", [dictLogin objectForKey:@"empid"], self.tfCardcon.text, self.tfCashcon.text, self.tfUnioncon.text];
     
@@ -218,13 +221,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         
     }];
     }
-    if ([self.tfUnioncon.text intValue] != 0) { // 银联支付
-        
-    }
-    if ([self.tfCashcon.text intValue] != 0) { // 现金支付
-        
-    }
-    
 }
 
 #pragma mark QRCodeviewdelegate

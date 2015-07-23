@@ -44,6 +44,8 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
     
+    self.barBtnItemQRcode.image = [viewOtherDeal scaleToSize:[UIImage imageNamed:@"saoyisao6.png"] size:CGSizeMake(28, 24)];
+    
     // 设置代理
     self.pullTableView.delegate = self;
     self.pullTableView.dataSource = self;

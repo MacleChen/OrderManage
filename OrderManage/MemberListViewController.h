@@ -14,6 +14,8 @@
 @interface MemberListViewController : UITableViewController
 
 @property (strong, nonatomic) UISearchBar *Searchbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *barBtnItemQRcode;
+
 @property (strong, nonatomic) IBOutlet PullTableView *pullTableView;
 
 @property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图

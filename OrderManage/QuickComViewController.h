@@ -13,6 +13,10 @@
 
 @property (strong, nonatomic) NSDictionary *dictResponseData;  // 请求到的网络数据
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSaoyisao;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnSearch;
+
 @property (weak, nonatomic) IBOutlet UISearchBar *tfSearchbar;      // 搜索栏
 @property (weak, nonatomic) IBOutlet UITextField *tfCardcon;        // 会员卡消费
 @property (weak, nonatomic) IBOutlet UITextField *tfCashcon;        // 现金消费

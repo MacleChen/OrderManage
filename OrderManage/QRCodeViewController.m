@@ -28,7 +28,8 @@
     
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
-    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
+    _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + TOP_MENU_HEIGHT;
+    self.viewPreview.frame = CGRectMake(0, 0, _mainScreenWidth, _mainScreenHeight - MenuBottomToolHeight);
     
     // 设置闪光灯按钮
     QCheckBox *ckLightTemp = [[QCheckBox alloc] initWithDelegate:self];
@@ -105,12 +106,15 @@
     
     //10.1.扫描框
     _boxView = [[UIView alloc] initWithFrame:CGRectMake(40 , _mainScreenHeight * (3 - 1) / 3 / 2, _mainScreenWidth - 40*2, _mainScreenHeight / 3)];
-//    _boxView = [[UIView alloc] initWithFrame:CGRectMake(_mainScreenWidth * (2 - 1) / 2 / 2, _mainScreenHeight * (4 - 1) / 4 / 2, _mainScreenWidth / 2, _mainScreenHeight / 4)];
-    //CGRectMake(self.view.bounds.size.width * 0.2f, self.view.bounds.size.height * 0.2f, self.view.bounds.size.width - self.view.bounds.size.width * 0.4f, self.view.bounds.size.height - self.view.bounds.size.height * 0.4f)
-    _boxView.layer.borderColor = [UIColor greenColor].CGColor;
-    _boxView.layer.borderWidth = 1.5f;
-    
+//    _boxView.layer.borderColor = [UIColor greenColor].CGColor;
+//    _boxView.layer.borderWidth = 1.5f;
+
     [self.view addSubview:_boxView];
+    
+    // 设置蒙版图片
+    UIImageView *imgBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QRCodeBgImg.png"]];
+    imgBackground.frame = CGRectMake(0, 0, _mainScreenWidth, _mainScreenHeight);
+    [self.view addSubview:imgBackground];
     
     //10.2.扫描线
     _scanLayer = [[CALayer alloc] init];

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomIOS7AlertView.h"
+#import "GCDAsyncSocket.h"
 
 #import "Global.h"
 // 付款
@@ -16,7 +18,16 @@ enum {
     GetMoneyViewPayStateSuccess = 1,
 };
 
-@interface GetMoneyViewController : UIViewController
+// 支付类型
+typedef enum {
+    payMentStyleCash,
+    payMentStyleUnion,
+    payMentStyleCoupons,
+}payMentStyle;
+
+@class QCheckBox;
+
+@interface GetMoneyViewController : UIViewController <GCDAsyncSocketDelegate>
 
 @property (strong, nonatomic) NSDictionary *listDict;   // 注册页面数据
 @property (strong, nonatomic) NSDictionary *ReceDict;   // 根据其它页面请求到的数据
@@ -40,6 +51,12 @@ enum {
 
 @property (weak, nonatomic) UIPickerView *pickerViewCardType;   //  数据滚轴
 @property (weak, nonatomic) UIVisualEffectView * visualEffectView;   // 毛玻璃色视图
+
+@property (strong, nonatomic) CustomIOS7AlertView *alertShow;
+@property (strong, nonatomic) UIView *paySuccessViewInAlert;   // 支付成功后是否打印单据
+@property (weak, nonatomic) QCheckBox *ckPrintList;         // 打印单据
+
+@property (strong, nonatomic) GCDAsyncSocket *asyncSocket;   // 网络连接打印机
 
 
 - (IBAction)btnCashPay:(UIButton *)sender;          // 现金支付点击

@@ -12,11 +12,12 @@
 #import "MBProgressHUD+MJ.h"
 #import "GetMoneyViewController.h"
 #import "GetAllDataModels.h"
+#import "UMSCashierPlugin.h"
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 extern NSDictionary *dictSendLogin;
 
-@interface OrderDetailTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface OrderDetailTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UMSCashierPluginDelegate> {
     NSArray *_arrayHeaderTitle; // 菜单头部标题
     NSArray *_arrayShowData;   // 显示所有消费明细
     
@@ -32,6 +33,12 @@ extern NSDictionary *dictSendLogin;
     NSDictionary *_dictOrder;
     // 会员信息
     NSDictionary *_dictMember;
+    
+    // POS设备信息
+    NSString *_userID;          // 商户ID
+    NSString *_userTerminalID;  // 商户终端ID
+    NSString *_POSType;         // POS机类型
+    BOOL _ckProduct;            // 环境：（是否生产）
 }
 
 @end
@@ -79,6 +86,9 @@ extern NSDictionary *dictSendLogin;
     self.alertShow.useMotionEffects = YES;
     // 设置代理
     self.alertShow.delegate = self;
+    
+    // 获取商户信息
+    [self readNSUserDefaults];
 }
 
 #pragma mark - pulltableview 的代理方法实现
@@ -629,22 +639,17 @@ extern NSDictionary *dictSendLogin;
         return;
     }
     
+    // 补打小票
     if(self.alertShow.tag == SECTION_TWO_CheckNamePwdView_tag) { // 补打小票确认
         MyPrint(@"补打小票");
-        // 网络请求
-        NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBRecordDestroyAction];
         
-        NSString *strHttpBody = [NSString stringWithFormat:@"rcid=%@&emp.empname=%@&emp.emppwd=%@", [self.dictData objectForKey:@"rcid"], self.tfCKViewName.text, self.tfCKViewPassword.text];
-        NSDictionary *listDict = [HttpRequest HttpAFNetworkingRequestWithURL_Two:strURL parameters:strHttpBody];
-        
-        if ([(NSString *)[listDict objectForKey:statusCdoe] intValue] == WebDataIsRight) { // 正确
-            [MBProgressHUD show:@"该订单已作废" icon:nil view:nil];
-            [self.alertShow close];
-            return;
-        }
-        [MBProgressHUD show:[listDict objectForKey:MESSAGE] icon:nil view:nil];
+        // 4. 设备激活
+        [UMSCashierPlugin setupDevice:_userID BillsTID:_userTerminalID WithViewController:self Delegate:self ProductModel:_ckProduct];
+        [self.alertShow close];
         return;
     }
+    
+    // 作废
     if(self.alertShow.tag == SECTION_TWO_CancelCheckNamePwdView) { // 作废确认
         MyPrint(@"作废");
         // 网络请求
@@ -659,6 +664,8 @@ extern NSDictionary *dictSendLogin;
             return;
         }
         [MBProgressHUD show:[listDict objectForKey:MESSAGE] icon:nil view:nil];
+        
+        [self.alertShow close];
         return;
     }
 }
@@ -767,6 +774,95 @@ extern NSDictionary *dictSendLogin;
     }
     
     return nil;
+}
+
+
+#pragma mark - UMSCashierPluginDelegate的代理方法的实现
+#pragma mark 打印小票结果回调
+- (void)onUMSPrint:(PaperResult)status {
+    NSString *result = nil;
+    
+    switch (status) {
+        case PaperResult_OK:
+            result = @"小票打印成功";
+            break;
+        
+        case PaperResult_FAIL:
+            result = @"小票打印失败";
+            break;
+        case PaperResult_NO_PAPER:
+            result = @"缺纸";
+            break;
+        default:
+            break;
+    }
+    
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"打印结果" message:result delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+#pragma mark 设备激活回调
+- (void)onUMSSetupDevice:(BOOL)resultStatus resultInfo:(NSString *)resultInfo withDeviceId:(NSString *)deviceId {
+    if (resultStatus) {
+        MyPrint(@"设备绑定成功");
+        NSString *message = [NSString stringWithFormat:@"!hz l\r\n!asc sl\r\n!yspace 4\r\n*feedline 4\r\n*image c 384*68 #ums\r\n*feedline 1\r\n*line\r\n*text l 测试测试(TERMINAL NO.):\r\n*text l   00011003140000579059\r\n*text l 操作员号(OPERATOR NO.): \r\n*text l 发卡行号(ISSUER NO.):\r\n*text l   \r\n*text l 收单行号(ACQUIRER NO.):\r\n*text l   \r\n*text l 有效期(EXP.DATE):\r\n*text l   \r\n*text l 卡号(CARD NO.):\r\n*text l   6225000000000014\r\n*text l 交易类型(TRANS TYPE):\r\n*text l   消费\r\n*text l 批次号(BATCH NO.):\r\n*text l   000001\r\n*text l 凭证号(VOUCHEE NO.):\r\n*text l   942740\r\n*text l 授权码(AUTH NO.):\r\n*text l   \r\n*text l 参考号(REFER NO.):\r\n*text l   163248942740\r\n*text l 日期时间(DATE/TIME):\r\n*text l   2014-06-11 16:32:48\r\n*text l 金额(AMOUNT):\r\n!gray 10\r\n!asc l\r\n*text l   RMB:0.70\r\n!gray 5\r\n!asc sl\r\n*text l 备注(REFERENCE):\r\n*feedline 2\r\n*text l 账单号:1\r\n*text l 业务类型:账单号支付\r\n*feedline 1\r\n*line\r\n!hz s\r\n!asc s\r\n*text l 服务热线：95534\r\n*text l PAX-P80-311002 持卡人存根CARDHOLDER COPY\r\n*feedline 4"];
+        
+        [UMSCashierPlugin print:message BillsMID:_userID BillsTID:_userTerminalID WithViewController:self Delegate:self ProductModel:_ckProduct];
+    } else {
+        MyPrint(@"设备绑定失败");
+    }
+}
+
+/**
+ *  从NSUserDefaults中读取数据
+ */
+-(BOOL)readNSUserDefaults
+{
+    NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
+    
+    // 读取数据到登录界面
+    _userID = [userDef objectForKey:@"POS_userID"];
+    _userTerminalID = [userDef objectForKey:@"POS_userTerminalID"];
+    _POSType = [userDef objectForKey:@"POS_POSType"];
+    _ckProduct = [userDef boolForKey:@"POS_Product"];
+    
+    // 判断获取的是否有数据
+    if (_userID == nil || _userTerminalID == nil || _POSType == nil) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark 当视图出现时，调用
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    
+    NSDictionary *titleTextDic;
+    titleTextDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:FONTSIZE_IPHONE], NSForegroundColorAttributeName:[UIColor blackColor]};
+    //self.navigationController.navigationBar.translucent=YES;
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
+    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = ColorMainSystem;
+}
+
+- (UIImage *)imageWithColor:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (void)didReceiveMemoryWarning {

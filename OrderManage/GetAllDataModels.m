@@ -62,6 +62,43 @@
                            @"cubdate": self.strcubDate,
                            @"selcardmoney": self.strSelcardMoney,
                            @"selcardtype": self.strSelcardType};
+    return dict;
+}
+
+@end
+
+
+
+/*
+ * 获取到付款页面的model
+ */
+@implementation GetPayBillViewModel
+
+/**
+ * 初始化解数组数据包
+ */
+- (instancetype)initWithArrayPackBag:(NSArray *)arrayData {
+    GetPayBillViewModel *getpay = [[GetPayBillViewModel alloc] init];
+    
+    
+    return getpay;
+}
+
+/**
+ * 初始化解字典数据包
+ */
+- (instancetype)initWithDictionaryPackBag:(NSDictionary *)dictData {
+    GetPayBillViewModel *getpay = [[GetPayBillViewModel alloc] init];
+    
+    
+    return getpay;
+}
+
+/**
+ *  打包数据
+ */
+- (NSDictionary *)getDictionaryPackBag {
+    NSDictionary *dict = [[NSDictionary alloc] init];
     
     return dict;
 }

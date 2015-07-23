@@ -40,11 +40,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (IBAction)btnSureClick:(UIButton *)sender {
    [self SubmitWebResponseData];  // 提交数据
     
-    // 判断打印机是否可用
+    // 判断是否打印单据
     if (self.swPrint.on) {
         // 设置需要打印的数据
         _stringPrintInfo = [NSString stringWithFormat:@"\
                   收银员交接班\n\
+        -----------------------------\n\n\
         收银员:                %@\n\
         总单数:                %@\n\
         总销售额:              %@\n\

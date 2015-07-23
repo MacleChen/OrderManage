@@ -13,7 +13,7 @@
 #import "AFHTTPSessionManager.h"
 #import "AFNetworking.h"
 
-#define WEBBASEURL @"http://180.97.81.151/cshop/"           // 测试url
+#define WEBBASEURL @"http://180.97.81.151/cshop/"           // 正式运营
 //#define WEBBASEURL @"http://180.97.69.100/cshop_jspay/" //外网测试服务
 
 #define WEBPRINT_IP @"192.168.1.201"             // 网络打印机ip
@@ -68,6 +68,7 @@
 
 // 计次卡
 #define WEBCountSalePrdListAction @"countsale!prdlist.action?"  // 计次卡对应的商品列表
+#define WEBCountSalePayMentAction @"countsale!payment.action?"  // 结算支付
 
 #define statusCdoe @"statusCode"     // 数据包的标志
 #define MESSAGE    @"message"       // 数据包的数据

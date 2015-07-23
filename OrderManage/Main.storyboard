@@ -22,20 +22,21 @@
                                     <navigationItem title="会员管理" id="8aZ-af-UdE"/>
                                 </items>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qde-hx-WtZ">
+                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qde-hx-WtZ">
                                 <rect key="frame" x="11" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="扫一扫">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="btnQRCode:" destination="N5h-un-n3Z" eventType="touchUpInside" id="OuB-Vg-NCw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvx-SJ-ZHK">
+                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jvx-SJ-ZHK">
                                 <rect key="frame" x="269" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="查询">
+                                <state key="normal" title="查询" backgroundImage="searchImg.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -345,6 +346,8 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnSaoyisao" destination="qde-hx-WtZ" id="EQD-uw-7A8"/>
+                        <outlet property="btnSearch" destination="Jvx-SJ-ZHK" id="XFS-dk-3mT"/>
                         <outlet property="lbAddress" destination="37r-C4-UsZ" id="TOD-oK-0EV"/>
                         <outlet property="lbBirday" destination="ihq-86-6Ku" id="L00-7G-LyX"/>
                         <outlet property="lbCardID" destination="4uv-nq-Xyl" id="lw9-S9-iqJ"/>
@@ -694,7 +697,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="会员列表" id="jtW-wG-4mv">
-                        <barButtonItem key="rightBarButtonItem" title="扫一扫" id="Sep-9D-ajs">
+                        <barButtonItem key="rightBarButtonItem" image="saoyisao4.png" id="Sep-9D-ajs">
                             <connections>
                                 <action selector="btnQRcode:" destination="S4h-R5-WuD" id="i8l-Ay-fhy"/>
                             </connections>
@@ -703,6 +706,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="barBtnItemQRcode" destination="Sep-9D-ajs" id="aGv-ja-zN3"/>
                         <outlet property="pullTableView" destination="UVf-vS-c6D" id="dcd-Uw-p1u"/>
                         <outlet property="tableView" destination="UVf-vS-c6D" id="apU-ss-gBz"/>
                     </connections>
@@ -1332,10 +1336,10 @@
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwi-o2-DQJ">
+                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwi-o2-DQJ">
                                 <rect key="frame" x="11" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="扫一扫">
+                                <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1346,6 +1350,7 @@
                                 <rect key="frame" x="269" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="查询">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1432,6 +1437,8 @@
                     <navigationItem key="navigationItem" title="快速消费" id="P9e-f5-eUE"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnSaoyisao" destination="iwi-o2-DQJ" id="6ia-6I-GL6"/>
+                        <outlet property="btnSearch" destination="xgN-h1-jNB" id="s9z-aN-YsA"/>
                         <outlet property="lbAddress" destination="lTZ-xO-fMD" id="ZVH-9F-LGY"/>
                         <outlet property="lbCardid" destination="oe6-Eb-fHR" id="QaN-Jd-PXc"/>
                         <outlet property="lbCdType_discount" destination="oMj-r8-LxN" id="Uwx-g9-MdA"/>
@@ -1755,7 +1762,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="消费明细" id="6OQ-Nx-3eS">
-                        <barButtonItem key="rightBarButtonItem" title="详细搜" id="5U5-Jt-Di0">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="5U5-Jt-Di0" userLabel="Bar Button Item">
                             <connections>
                                 <action selector="BarBtnDetailSearch:" destination="OQe-xy-Ztm" id="ewR-7W-wF6"/>
                             </connections>
@@ -1860,7 +1867,7 @@
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnH-0H-Rpw">
                                 <rect key="frame" x="11" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <state key="normal" title="扫一扫">
+                                <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1871,6 +1878,7 @@
                                 <rect key="frame" x="269" y="72" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="查询">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2034,6 +2042,8 @@
                     <navigationItem key="navigationItem" title="积分管理" id="rTa-CT-8Jg"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnSaoyisao" destination="xnH-0H-Rpw" id="PZp-UM-MCS"/>
+                        <outlet property="btnSearch" destination="frR-BM-0Ze" id="a8P-fa-ChY"/>
                         <outlet property="lbBirday" destination="Kpm-fc-gMM" id="Keh-0u-nds"/>
                         <outlet property="lbCardID" destination="Aa4-le-yOM" id="j7P-D1-QlQ"/>
                         <outlet property="lbCard_discount" destination="kXc-2z-cZa" id="pI4-ep-9bN"/>
@@ -2087,13 +2097,13 @@
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0次" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jd-VE-Def">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jd-VE-Def">
                                             <rect key="frame" x="237" y="95" width="70" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="消费次数：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUS-Cm-SC5">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="消费金额：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUS-Cm-SC5">
                                             <rect key="frame" x="172" y="95" width="71" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -2174,7 +2184,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="计次卡消费" id="XWF-AU-2Xh">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="9cH-lc-X2v">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="9cH-lc-X2v">
                             <connections>
                                 <action selector="itemBtnSearchClick:" destination="qaf-u5-Zm9" id="5Zj-ib-fY9"/>
                             </connections>
@@ -2488,15 +2498,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xl4-P2-87J">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xl4-P2-87J">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p1u-Wx-Wn3">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p1u-Wx-Wn3">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="HQw-hX-4BL"/>
+                                </constraints>
                                 <items/>
                             </toolbar>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Xl4-P2-87J" firstAttribute="top" secondItem="Dm9-j4-oOc" secondAttribute="top" id="Pkh-I1-Bgj"/>
+                            <constraint firstAttribute="trailing" secondItem="Xl4-P2-87J" secondAttribute="trailing" id="QdH-Jj-1B9"/>
+                            <constraint firstAttribute="trailing" secondItem="p1u-Wx-Wn3" secondAttribute="trailing" id="R1O-HR-mhK"/>
+                            <constraint firstItem="Xl4-P2-87J" firstAttribute="leading" secondItem="Dm9-j4-oOc" secondAttribute="leading" id="c1f-gZ-ZxL"/>
+                            <constraint firstAttribute="bottom" secondItem="p1u-Wx-Wn3" secondAttribute="bottom" id="cqZ-ts-FPd"/>
+                            <constraint firstAttribute="bottom" secondItem="Xl4-P2-87J" secondAttribute="bottom" id="rC3-GQ-sre"/>
+                            <constraint firstItem="p1u-Wx-Wn3" firstAttribute="leading" secondItem="Dm9-j4-oOc" secondAttribute="leading" id="zdF-aE-UAp"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="二维码/条码" id="ZQn-1f-Sqg">
                         <barButtonItem key="rightBarButtonItem" title="相册" id="puw-Bd-eD3">
@@ -2575,6 +2597,8 @@
     </scenes>
     <resources>
         <image name="initCardimg.gif" width="128" height="128"/>
+        <image name="saoyisao4.png" width="51" height="44"/>
+        <image name="searchImg.png" width="84" height="52"/>
         <image name="头像.png" width="102" height="102"/>
         <image name="密码.png" width="24" height="32"/>
         <image name="登陆按钮A.png" width="520" height="71"/>
