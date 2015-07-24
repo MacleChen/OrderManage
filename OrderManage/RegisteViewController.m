@@ -517,7 +517,7 @@ extern NSDictionary *dictSendLogin;  // 引用发送登录数据
                 MyPrint(@"%@", dictRegisteData);
                 
                 viewControl.listDict = dictRegisteData;
-                
+                viewControl.ReceDict = [listData objectForKey:MESSAGE];
                 [self.navigationController pushViewController:viewControl animated:YES];
             } else { // 数据有问题
                 self.lbInfo.hidden = NO;

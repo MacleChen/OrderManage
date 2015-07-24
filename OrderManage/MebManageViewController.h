@@ -27,6 +27,10 @@
 // 挂失
 #define LOSS_VIEW_TAG 102
 #define LOSS_VIEW_Content_TAG 1021
+#define LOSSCARD_LOSS_STATUS 18     // 挂失状态
+#define LOSSCARD_UNLOSS_STATUS 16   // 未挂失状态
+#define CARD_TYPE_NORMAL_FLAG 1     // 普通卡
+#define CARD_TYPE_METER_FLAG  2     // 计次卡
 
 // 新增卡
 #define ADDCARD_VIEW_TAG 103
@@ -86,6 +90,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbAddress;            // 地址
 
 @property (weak, nonatomic) IBOutlet UIButton *makeup;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnCardLoss_pro;  // 卡的挂失
 
 
 @property (weak, nonatomic) UIDatePicker *datePicker;           //  时间滚轴

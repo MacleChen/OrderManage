@@ -20,6 +20,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSArray *_arrayTypeData;   // 接收到的所有类型数据
     
     NSMutableArray *_MUarrayAllCards;  // 每个会员所对应的所有卡的详细
+    int CardTypeFlag;    // 卡的类型状态
+    int CardCKLOSS_STATUS;  // 卡的挂失状态
+    NSString *_StrDiscount; // 折扣
+    NSString *_SelectCuCardID;  // 选中的cucardid
 }
 
 @end
@@ -135,6 +139,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  * 充值
  */
 - (IBAction)btnRechange:(UIButton *)sender {
+    if ([self.lbCardID.text isEqual:@"无"]) {
+        [MBProgressHUD show:@"没有会员卡，请新增会员卡" icon:nil view:nil];
+        return;
+    }
+    
     [self showAlertViewWith:RECHANGE_VIEW_TAG];
     
     // 设置pickerview 对应的业务TAG
@@ -233,6 +242,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  * 挂失卡
  */
 - (IBAction)btnLoss:(UIButton *)sender {
+    if ([self.lbCardID.text isEqual:@"无"]) {
+        [MBProgressHUD show:@"没有会员卡，请新增会员卡" icon:nil view:nil];
+        return;
+    }
+    
     [self showAlertViewWith:LOSS_VIEW_TAG];
     
     // 设置pickerview 对应的业务TAG
@@ -248,7 +262,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     // 初始化内容
-    self.lbLoss_Content.text = [NSString stringWithFormat:@"确定挂失？\n卡号：%@", self.lbCardID.text];
+    if(CardCKLOSS_STATUS == LOSSCARD_UNLOSS_STATUS) {
+        self.lbLoss_Content.text = [NSString stringWithFormat:@"确定挂失？\n卡号：%@", self.lbCardID.text];
+    } else {
+        self.lbLoss_Content.text = [NSString stringWithFormat:@"确定解除挂失？\n卡号：%@", self.lbCardID.text];
+    }
+    
 }
 
 /**
@@ -306,6 +325,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  *  退卡
  */
 - (IBAction)btnCancelCard:(UIButton *)sender {
+    if ([self.lbCardID.text isEqual:@"无"]) {
+        [MBProgressHUD show:@"没有会员卡，请新增会员卡" icon:nil view:nil];
+        return;
+    }
+    
     [self showAlertViewWith:CANCELCARD_VIEW_TAG];
     // 设置pickerview 对应的业务TAG
     self.pickerViewCardType.tag = CANCELCARD_VIEW_TAG;
@@ -459,33 +483,54 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                NSArray *ArrayTempListCounts = [dictTempData objectForKey:@"listcount"];
                 dictTempData = [dictTempData objectForKey:@"cus"];
                 // copy 查询到的会员信息
                 self.dictSearchMebInfo = dictTempData;
+                _StrDiscount = [dictTempData objectForKey:@"cdpec"];  // 获取折扣
                 
-                // 表示该该卡已被退卡
+                // 表示该卡已被退卡,然后显示计次卡
                 if([[dictTempData objectForKey:@"cucardid"] isEqual:@"无"]) {
-                    [MBProgressHUD show:@"该手机号未绑定会员卡" icon:nil view:nil];
-                    // 清空显示信息
-                    self.lbCardID.text = @"";
-                    self.lbRemain_Times.text = @"";
-                    self.lbCredits.text = @"";
-                    self.lbCard_discount.text = @"";
-                    self.lbName.text = @"";
-                    self.lbphoneNUM.text = @"";
-                    self.lbBirday.text = @"";
-                    self.lbAddress.text = @"";
-                    return;
+                    if (ArrayTempListCounts.count == 0) {
+                        [MBProgressHUD show:@"该手机号未绑定会员卡" icon:nil view:nil];
+                        self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
+                        self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictTempData objectForKey:@"cumoney"]];
+                        self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
+                        self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], _StrDiscount];
+                    } else {  // 计次卡
+                        NSDictionary *dictList = ArrayTempListCounts[0];
+                        // 清空显示信息
+                        _SelectCuCardID = [dictList objectForKey:@"cucardid"];
+                        self.lbCardID.text = [dictList objectForKey:@"cardnum"];
+                        self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictList objectForKey:@"cardcount"]];
+                        self.lbCredits.text = @"0";
+                        self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictList objectForKey:@"cdname"], _StrDiscount];
+                        CardCKLOSS_STATUS = [(NSString *)[dictList objectForKey:@"st"] intValue];
+                    }
+                } else {  // 储值卡
+                    // 设置显示信息
+                    _SelectCuCardID = @"-1";
+                    self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
+                    self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictTempData objectForKey:@"cumoney"]];
+                    self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
+                    self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], _StrDiscount];
+                    CardCKLOSS_STATUS = [(NSString *)[dictTempData objectForKey:@"st"] intValue];
                 }
-                // 设置显示信息
-                self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
-                self.lbRemain_Times.text = [dictTempData objectForKey:@"cumoney"];
-                self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
-                self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
                 self.lbName.text = [dictTempData objectForKey:@"cuname"];
                 self.lbphoneNUM.text = [dictTempData objectForKey:@"cumb"];
                 self.lbBirday.text = [dictTempData objectForKey:@"cubdate_str"];
                 self.lbAddress.text = [dictTempData objectForKey:@"cuaddress"];
+                
+                if ( CardCKLOSS_STATUS == LOSSCARD_LOSS_STATUS) { // 挂失
+                    [self.btnCardLoss_pro setTitle:@"解除挂失" forState:UIControlStateNormal];
+                } else {        // 未挂失
+                    [self.btnCardLoss_pro setTitle:@"挂失" forState:UIControlStateNormal];
+                }
+                if([(NSString *)[dictTempData objectForKey:@"cardtypeid"] intValue] > 0)
+                    CardTypeFlag = CARD_TYPE_NORMAL_FLAG; // 普通卡
+                else
+                    CardTypeFlag = CARD_TYPE_METER_FLAG;  // 计次卡
+                
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }
@@ -649,8 +694,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当选中picker中的row时调用该方法
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    
+    if (_MuarrayType.count == 0 || _MuarrayType == nil) return;
+    
     switch (pickerView.tag) {
-        case RECHANGE_VIEW_TAG: {
+        case RECHANGE_VIEW_TAG: {  // 充值
             self.tfReChange_Type.text = _MuarrayType[row];
             if(row == 0){
                 self.tfReChange_Money.text = @"";
@@ -662,25 +710,39 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             self.tfReChange_GiveMoney.text = [dictTemp objectForKey:@"freemoney"];
         }
             break;
-        case ADDCARD_VIEW_TAG: {
+        case ADDCARD_VIEW_TAG: {   // 新增卡
             self.tfAddCard_Type.text = _MuarrayType[row];
             self.tfAddCard_Money.text = [_arrayTypeData[row] objectForKey:@"cdmoney"];
         }
             break;
-        case TF_CARDID_TAG:{
+        case TF_CARDID_TAG:{     // 选择卡
             NSDictionary *dictTempData = _MUarrayAllCards[row];
-            if (row == 0) {
+            if (row == 0) {  // 储值卡
                 // 设置显示信息
+                _SelectCuCardID = @"-1";
                 self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
-                self.lbRemain_Times.text = [dictTempData objectForKey:@"lostmoney"];
+                self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictTempData objectForKey:@"cumoney"]];
                 self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
-                self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], [dictTempData objectForKey:@"cdpec"]];
+                self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], _StrDiscount];
+                
+                if([(NSString *)[dictTempData objectForKey:@"cardtypeid"] intValue] > 0)
+                    CardTypeFlag = CARD_TYPE_NORMAL_FLAG; // 普通卡
+                else
+                    CardTypeFlag = CARD_TYPE_METER_FLAG;  // 计次卡
             }
-            if (_arrayTypeData.count > 0 && row > 0) {
+            if (_arrayTypeData.count > 0 && row > 0) {  // 计次卡
+                _SelectCuCardID = [dictTempData objectForKey:@"cucardid"];
                 self.lbCardID.text = [dictTempData objectForKey:@"cardnum"];
-                self.lbRemain_Times.text = [dictTempData objectForKey:@"cardcount"];
+                self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictTempData objectForKey:@"cardcount"]];
                 //self.lbCredits.text = [dictTempData objectForKey:@""];
-                self.lbCard_discount.text = [dictTempData objectForKey:@"cdname"];
+                self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cdname"], _StrDiscount];
+                CardTypeFlag = CARD_TYPE_METER_FLAG;  // 计次卡
+            }
+            CardCKLOSS_STATUS = [(NSString *)[dictTempData objectForKey:@"st"] intValue];
+            if ([(NSString *)[dictTempData objectForKey:@"st"] intValue] == LOSSCARD_LOSS_STATUS) { // 挂失
+                [self.btnCardLoss_pro setTitle:@"解除挂失" forState:UIControlStateNormal];
+            } else {        // 未挂失
+                [self.btnCardLoss_pro setTitle:@"挂失" forState:UIControlStateNormal];
             }
         }
             break;
@@ -778,18 +840,26 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }];
 }
 
-#pragma mark 挂失处理
+#pragma mark 挂失处理 / 解挂处理
 - (void)LossCardDeal {
     [self.view endEditing:YES];
     [self textFieldShouldBeginEditing:nil]; // 退出picker
     [self.alertShow close];
     
     // 网络请求   --   获取查询数据
-    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerLockCardAction];
+    NSString *strURL = @"";
     
-    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&keyword=%@&keyword1=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], self.lbCard_discount.text, self.lbCardID.text];
+    if (CardCKLOSS_STATUS == LOSSCARD_UNLOSS_STATUS) {
+        strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerLockCardAction];
+    } else {
+        strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerFreeCardAction];
+    }
     
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&keyword=%@&keyword1=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [NSString stringWithFormat:@"%i", CardTypeFlag], self.lbCardID.text];
+    [MBProgressHUD showMessage:@""];
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -798,11 +868,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 [MBProgressHUD show:ConnectDataError icon:nil view:nil];
                 return;
             }
-            if ([strStatus intValue] == 200) { // 获取正确的数据
-                [MBProgressHUD show:@"挂失成功" icon:nil view:nil];
-                //NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
-            } else { // 数据有问题
-                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            if ([strStatus intValue] == WebDataIsRight) {
+                [self searchBarSearchButtonClicked:nil];
             }
         } else { // 请求失败
             [MBProgressHUD show:ConnectException icon:nil view:nil];
@@ -844,7 +912,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&emp.empid=%@&keyword=%@&keyword1=%@&totalmoney=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [dictLogin objectForKey:@"empid"], self.tfAddCard_CardID.text, [dictSelectedCardType objectForKey:@"cdid"], self.tfAddCard_Money.text];
     
+    [MBProgressHUD showMessage:@""];
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -856,6 +926,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             if ([strStatus intValue] == WebDataIsRight) { // 获取正确的数据
                 NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
                 [MBProgressHUD show:@"新增卡成功！" icon:nil view:nil];
+//                
+//                [self searchBarSearchButtonClicked:nil];   // 刷新
+//                if([self.tfAddCard_Money.text floatValue] == 0.0) return;
+                
                 // 跳转到付款页面
                 //切换到下一个界面  --- push
                 GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
@@ -967,14 +1041,16 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [self.alertShow close];
     
     // 获取卡的类型对应-----   -1：储值卡   1：计次卡
-    NSString *StrcardtypeId = [self.dictSearchMebInfo objectForKey:@"cardtypeid"];
-    NSString *strFlag = [StrcardtypeId intValue] > 0 ? @"-1" : @"1";
+    //NSString *StrcardtypeId = [self.dictSearchMebInfo objectForKey:@"cardtypeid"];
+    //NSString *strFlag = [StrcardtypeId intValue] > 0 ? @"-1" : @"1";
     
     // 网络请求   --   获取查询数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBNewCardReturnAction];
-    NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@&keyword1=%@&keyword2=%@&emp.empid=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], strFlag, self.lbRemain_Times.text, [dictLogin objectForKey:@"empid"]];
+    NSString *strHttpBody = [NSString stringWithFormat:@"keyword=%@&keyword1=%@&keyword2=%@&emp.empid=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], _SelectCuCardID, self.lbCancelCard_ReMoney.text, [dictLogin objectForKey:@"empid"]];
     
+    [MBProgressHUD showMessage:@""];
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
         if (data) { // 请求成功
             NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
             NSString *strStatus = [listData objectForKey:statusCdoe];
@@ -984,9 +1060,9 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD show:[listData objectForKey: MESSAGE] icon:nil view:nil];
                 // 刷新查询数据
                 [self btnSearchInfo:nil];
-                [MBProgressHUD show:[listData objectForKey: MESSAGE] icon:nil view:nil];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }

@@ -154,7 +154,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (IBAction)btnSureClick:(UIButton *)sender {
 
     // 付款
-    if([self.tfCashpay.text floatValue] > 0.0) { // 现金付款
+    if([self.tfCashpay.text floatValue] > 0.0 || ([self.tfCashpay.text floatValue] == 0.0 && [self.tfUnionpay.text floatValue] == 0.0 && [self.tfCoupons.text floatValue] == 0.0)) { // 现金付款
         if([self funcCashPay] != GetMoneyViewPayStateSuccess) {
             [MBProgressHUD show:@"现金支付失败" icon:nil view:nil];
             return;
@@ -607,15 +607,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    
+    // 设置navigationBar初始化样式
     NSDictionary *titleTextDic;
     titleTextDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:FONTSIZE_IPHONE], NSForegroundColorAttributeName:[UIColor blackColor]};
-    //self.navigationController.navigationBar.translucent=YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
-    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = ColorMainSystem;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color

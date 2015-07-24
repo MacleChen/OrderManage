@@ -32,7 +32,7 @@ NSDictionary *dictSendLogin = nil;
     // Do any additional setup after loading the view.
     
     // 沉睡一会儿
-    //[NSThread sleepForTimeInterval:3.0];
+    [NSThread sleepForTimeInterval:3.0];
     
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;

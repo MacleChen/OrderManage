@@ -346,6 +346,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="btnCardLoss_pro" destination="Wr6-fn-u3C" id="eXd-1a-STq"/>
                         <outlet property="btnSaoyisao" destination="qde-hx-WtZ" id="EQD-uw-7A8"/>
                         <outlet property="btnSearch" destination="Jvx-SJ-ZHK" id="XFS-dk-3mT"/>
                         <outlet property="lbAddress" destination="37r-C4-UsZ" id="TOD-oK-0EV"/>
@@ -640,12 +641,19 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cds-XV-6As"/>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="版本号" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UG4-Zb-l2r">
+                                <rect key="frame" x="193" y="535" width="111" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eKq-nC-ix7" firstAttribute="leading" secondItem="a5p-fe-IrX" secondAttribute="leading" id="5w8-M7-VYJ"/>
                             <constraint firstAttribute="bottom" secondItem="xCD-fB-18B" secondAttribute="bottom" constant="44" id="L6k-U3-DNx"/>
                             <constraint firstAttribute="bottom" secondItem="eKq-nC-ix7" secondAttribute="bottom" id="aRk-dD-aLJ"/>
+                            <constraint firstAttribute="trailing" secondItem="UG4-Zb-l2r" secondAttribute="trailing" constant="16" id="fCz-h0-SoF"/>
                             <constraint firstAttribute="trailing" secondItem="eKq-nC-ix7" secondAttribute="trailing" id="nBy-Xb-lrb"/>
                         </constraints>
                     </view>
@@ -654,6 +662,7 @@
                     <connections>
                         <outlet property="barBtnItem" destination="kpV-Ac-HmN" id="MGW-2Z-PO2"/>
                         <outlet property="collectionview" destination="xCD-fB-18B" id="rn8-U6-JO3"/>
+                        <outlet property="lbVersionshow" destination="UG4-Zb-l2r" id="V3U-Fi-u1y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnP-am-fPS" sceneMemberID="firstResponder"/>
@@ -1889,12 +1898,12 @@
                                 <rect key="frame" x="56" y="65" width="213" height="44"/>
                                 <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="search"/>
                             </searchBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入积分" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-OD-nzD">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="输入积分" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-OD-nzD">
                                 <rect key="frame" x="52" y="119" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" tag="30" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="积分类型" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WNm-tg-3fg">
+                            <textField opaque="NO" clipsSubviews="YES" tag="30" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="积分类型" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WNm-tg-3fg">
                                 <rect key="frame" x="175" y="119" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>

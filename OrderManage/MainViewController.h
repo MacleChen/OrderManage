@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *barBtnItem;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionview;
 
+@property (weak, nonatomic) IBOutlet UILabel *lbVersionshow; // 版本号
 
 
 - (IBAction)barBtnClick:(id)sender;

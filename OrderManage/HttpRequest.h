@@ -35,6 +35,7 @@
 #define WEBTopupActiveAction @"topup!active.action?"                // 会员卡的充值
 #define WEBTopupPaymentAction @"topup!payment.action?"              // 会员卡充值确认
 #define WEBCustomerLockCardAction @"customer!lockcard.action?"      // 会员卡的挂失处理
+#define WEBCustomerFreeCardAction @"customer!freecard.action?"      // 会员卡的解挂处理
 #define WEBNewCardUpCardAction @"newcard!upcard.action?"            // 新赠卡
 #define WEBCustomerChangePwdAction @"customer!changepwd.action?"    // 修改密码
 #define WEBCustomerUpdateAction @"customer!update.action?"          // 修改资料

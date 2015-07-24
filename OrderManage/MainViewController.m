@@ -32,13 +32,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // 获取手机版本号
+    NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
+    MyPrint(@"%@", infoDict);
+    NSString* versionNum =[infoDict objectForKey:@"CFBundleShortVersionString"];
+    self.lbVersionshow.text = [NSString stringWithFormat:@"知云 %@", versionNum];
+    
     self.barBtnItem = [[UIBarButtonItem alloc] init];
 //    self.barBtnItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(barBtnItemClick:)];
     
     // 获取屏幕的宽高
     _mainScreenWidth = [UIScreen mainScreen].applicationFrame.size.width;
     _mainScreenHeight = [UIScreen mainScreen].applicationFrame.size.height + 20;
-    
     // 设置cell的大小和间距
     _RowIncellCount = 3;
     _cellGapX = 10;

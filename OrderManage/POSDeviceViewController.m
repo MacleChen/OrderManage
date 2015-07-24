@@ -48,6 +48,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [_checkProduct.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     self.ckProduct = _checkProduct;
     self.ckProduct.tag = CHECK_BOX_PRODUCT;
+    [self.ckProduct setChecked:YES];
     [self.view addSubview:_checkProduct];
     
     QCheckBox *_checkTest = [[QCheckBox alloc] initWithDelegate:self];     // 快速消费
@@ -57,7 +58,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     [_checkTest.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     self.cktest = _checkTest;
     self.cktest.tag = CHECK_BOX_TEST;
-    [self.cktest setChecked:YES];
     [self.view addSubview:_checkTest];
     
     // 设置代理

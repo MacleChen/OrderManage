@@ -544,7 +544,7 @@ extern NSDictionary *dictSendLogin;
 #pragma mark 补缴款
 -(void)btnSecondPayClick:(UIButton *)sender {
     // 判断订单是否有欠款
-    if ([self.lbDebtMoney.text intValue] <= 0) {
+    if ([self.lbDebtMoney.text intValue] < 0) {
         [MBProgressHUD show:@"该订单为没有欠款" icon:nil view:nil];
         return;
     }
@@ -839,15 +839,12 @@ extern NSDictionary *dictSendLogin;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    
+    // 设置navigationBar初始化样式
     NSDictionary *titleTextDic;
     titleTextDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:FONTSIZE_IPHONE], NSForegroundColorAttributeName:[UIColor blackColor]};
-    //self.navigationController.navigationBar.translucent=YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
-    [self.navigationController.navigationBar setBackgroundImage:[self imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.tintColor = ColorMainSystem;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color
