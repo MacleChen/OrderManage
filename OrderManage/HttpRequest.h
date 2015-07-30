@@ -40,6 +40,9 @@
 #define WEBCustomerChangePwdAction @"customer!changepwd.action?"    // 修改密码
 #define WEBCustomerUpdateAction @"customer!update.action?"          // 修改资料
 #define WEBNewCardReturnAction @"newcard!returncard.action?"        // 退卡
+#define WEBCustomerUpCardActin @"customer!upcard.action?"           // 补卡
+#define WEBNewCardUpGradeAction @"newcard!upgrade.action?"          // 卡升级
+
 
 // 会员列表--网络请求
 #define WEBCustomerListAction @"customer!list.action?"              // 获取会员列表信息
@@ -76,6 +79,7 @@
 
 // 系统提示
 #define ConnectDataError @"获取失败！"
+#define ConnectData2Error @"输入不正确"
 #define ConnectException @"网络繁忙，请稍后重试！"
 #define EmptyINPUTERROR @"输入不能为空"
 

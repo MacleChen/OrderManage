@@ -24,6 +24,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     int CardCKLOSS_STATUS;  // 卡的挂失状态
     NSString *_StrDiscount; // 折扣
     NSString *_SelectCuCardID;  // 选中的cucardid
+    NSDictionary *_SelectCuCardType;  // 所选中卡的类型数据
 }
 
 @end
@@ -39,6 +40,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     _MuarrayType = [[NSMutableArray alloc] init];
     _arrayTypeData = [[NSArray alloc] init];
     _MUarrayAllCards = [[NSMutableArray alloc] init];
+    _SelectCuCardType = [NSDictionary dictionary];
     
     // 设置背景图片
     [self.btnSaoyisao setBackgroundImage:[viewOtherDeal scaleToSize:[UIImage imageNamed:@"saoyisao6.png"] size:CGSizeMake(30, 25)] forState:UIControlStateNormal];
@@ -274,19 +276,36 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
  * 补卡
  */
 - (IBAction)btnMakeupCard:(UIButton *)sender {
+    // 判断会员卡是否已挂失
+    if ( CardCKLOSS_STATUS == LOSSCARD_UNLOSS_STATUS) { // 挂失
+        [MBProgressHUD show:@"该会员未挂失，请先挂失" icon:nil view:nil];
+        return;
+    }
+    
     [self showAlertViewWith:MAKEUPCARD_VIEW_TAG];
     
     // 设置pickerview 对应的业务TAG
     self.pickerViewCardType.tag = MAKEUPCARD_VIEW_TAG;
-//    UIView *viewTempInAlert = [self.alertShow containerView];
+    UIView *viewTempInAlert = [self.alertShow containerView];
     
-    // 获取内部view中的控件
-//    NSArray *arrayViews = [viewTempInAlert subviews];
-//    for (UILabel *temp in arrayViews) {
-//        if(temp.tag == LOSS_VIEW_Content_TAG) self.lbLoss_Content = temp;
-//    }
+     // 获取内部view中的控件
+    NSArray *arrayViews = [viewTempInAlert subviews];
+    for (UITextField *temp in arrayViews) {
+        if(temp.tag == MAKEUPCARD_VIEW_CardID_TAG) self.tfMakeupCard_CardId = temp;
+        if(temp.tag == MAKEUPCARD_VIEW_CardMoney_TAG) self.tfMakeupCard_CardMoney = temp;
+    }
+    
+    // 设置代理
+    
+    // 设置键盘类型
+    self.tfMakeupCard_CardId.keyboardType = UIKeyboardTypeNamePhonePad;
+    self.tfMakeupCard_CardId.keyboardType = UIKeyboardTypeNumberPad;
     
     // 初始化内容
+    
+    
+    // 获取最新会员卡号
+    [self GetCardNumString];
 }
 
 /**
@@ -398,7 +417,22 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfUpdateCard_NewCID.delegate = self;
     self.tfUpdateCard_Money.delegate = self;
     
+    // 设置输入框为不可输入
+    self.tfUpdateCard_Money.enabled = NO;
+    self.tfUpdateCard_OldCID.enabled = NO;
+    
+    // 设置键盘类型
+    self.tfUpdateCard_Type.inputView = self.visualEffectView;
+    
     // 初始化内容
+    self.tfUpdateCard_OldCID.text = [NSString stringWithFormat:@"%@(%@%@)", self.lbCardID.text, self.lbRemainTitle.text, self.lbRemain_Times.text];
+    
+    // 初始化内容
+    // 获取卡的网络类型数据
+    [self GetCardTypeAllData];
+    // 获取会员卡号
+    [self GetCardNumString];
+    
 }
 
 #pragma mark -  CustomIOS7AlertViewDelegate 的代理方法实现
@@ -478,7 +512,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 获取数据失败
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"该手机号或会员卡号不存在" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -498,6 +532,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                         self.lbCredits.text = [dictTempData objectForKey:@"cuinter"];
                         self.lbCard_discount.text = [NSString stringWithFormat:@"%@/%@", [dictTempData objectForKey:@"cardname"], _StrDiscount];
                     } else {  // 计次卡
+                        // 修改字段前面的标题
+                        self.lbCardIDTitle.text = @"计次卡号：";
+                        self.lbRemainTitle.text = @"余次：";
+                        
                         NSDictionary *dictList = ArrayTempListCounts[0];
                         // 清空显示信息
                         _SelectCuCardID = [dictList objectForKey:@"cucardid"];
@@ -508,6 +546,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                         CardCKLOSS_STATUS = [(NSString *)[dictList objectForKey:@"st"] intValue];
                     }
                 } else {  // 储值卡
+                    // 修改字段前面的标题
+                    self.lbCardIDTitle.text = @"储值卡号：";
+                    self.lbRemainTitle.text = @"余额：";
+                    
                     // 设置显示信息
                     _SelectCuCardID = @"-1";
                     self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
@@ -602,7 +644,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 当textfield开始编辑时调用
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == MODIFYINFO_VIEW_birday_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG) {
+    if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == MODIFYINFO_VIEW_birday_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG || textField.tag == UPGRADECARD_VIEW_Type_TAG) {
         //
         // 添加对应的picker
         if (textField.tag == MODIFYINFO_VIEW_birday_TAG) {  // 显示 datePicker
@@ -610,7 +652,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             self.pickerViewCardType.hidden = YES;
         }
         
-        if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG) {   // 显示数据 picker
+        if (textField.tag == RECHANGE_VIEW_Type_TAG || textField.tag == ADDCARD_VIEW_Type_TAG || textField.tag == TF_CARDID_TAG || textField.tag == UPGRADECARD_VIEW_Type_TAG) {   // 显示数据 picker
             
             self.datePicker.hidden = YES;
             self.pickerViewCardType.hidden = NO;
@@ -718,6 +760,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         case TF_CARDID_TAG:{     // 选择卡
             NSDictionary *dictTempData = _MUarrayAllCards[row];
             if (row == 0) {  // 储值卡
+                // 修改字段前面的标题
+                self.lbCardIDTitle.text = @"储值卡号：";
+                self.lbRemainTitle.text = @"余额：";
+                
                 // 设置显示信息
                 _SelectCuCardID = @"-1";
                 self.lbCardID.text = [dictTempData objectForKey:@"cucardid"];
@@ -731,6 +777,10 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                     CardTypeFlag = CARD_TYPE_METER_FLAG;  // 计次卡
             }
             if (_arrayTypeData.count > 0 && row > 0) {  // 计次卡
+                // 修改字段前面的标题
+                self.lbCardIDTitle.text = @"计次卡号：";
+                self.lbRemainTitle.text = @"余次：";
+                
                 _SelectCuCardID = [dictTempData objectForKey:@"cucardid"];
                 self.lbCardID.text = [dictTempData objectForKey:@"cardnum"];
                 self.lbRemain_Times.text = [NSString stringWithFormat:@"%@", [dictTempData objectForKey:@"cardcount"]];
@@ -744,6 +794,17 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             } else {        // 未挂失
                 [self.btnCardLoss_pro setTitle:@"挂失" forState:UIControlStateNormal];
             }
+        }
+            break;
+        case UPGRADECARD_VIEW_TAG: { // 卡升级
+            self.tfUpdateCard_Type.text = _MuarrayType[row];
+            _SelectCuCardType = _arrayTypeData[row];
+            if (CardTypeFlag == CARD_TYPE_NORMAL_FLAG) { // 普通卡
+                self.tfUpdateCard_Money.text = [_arrayTypeData[row] objectForKey:@"cdmoney"];
+            } else {    // 计次卡
+                self.tfUpdateCard_Money.text = [NSString stringWithFormat:@"%@(次数: %@)", [_arrayTypeData[row] objectForKey:@"cdmoney"], [_arrayTypeData[row] objectForKey:@"cdcount"]];
+            }
+            
         }
             break;
         default:
@@ -817,7 +878,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 获取数据失败
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"充值失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -865,7 +926,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"挂失或解除挂失失败" icon:nil view:nil];
                 return;
             }
             [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
@@ -920,15 +981,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"新赠卡失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == WebDataIsRight) { // 获取正确的数据
                 NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
                 [MBProgressHUD show:@"新增卡成功！" icon:nil view:nil];
-//                
-//                [self searchBarSearchButtonClicked:nil];   // 刷新
-//                if([self.tfAddCard_Money.text floatValue] == 0.0) return;
                 
                 // 跳转到付款页面
                 //切换到下一个界面  --- push
@@ -975,7 +1033,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"修改密码失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -1012,7 +1070,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"修改资料失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -1031,7 +1089,42 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 补卡处理
 - (void)MakeupCardDeal {
+    if([self.tfMakeupCard_CardId.text isEqual:@""] || [self.tfMakeupCard_CardMoney.text isEqual:@""]) {
+        [MBProgressHUD show:EmptyINPUTERROR icon:nil view:nil];
+        return;
+    }
     
+    [self.view endEditing:YES];
+    [self textFieldShouldBeginEditing:nil]; // 退出picker
+    [self.alertShow close];
+    
+    // 网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBCustomerUpCardActin];
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&keyword=%@&keyword1=%@&emp.empid=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], self.tfMakeupCard_CardId.text, self.tfMakeupCard_CardMoney.text, [dictLogin objectForKey:@"empid"]];
+    
+    [MBProgressHUD showMessage:@""];
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:@"补卡失败，可能输入不正确" icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == 200) { // 获取正确的数据
+                [MBProgressHUD show:[listData objectForKey: MESSAGE] icon:nil view:nil];
+                // 刷新查询数据
+                [self btnSearchInfo:nil];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 #pragma mark 退卡处理
@@ -1056,7 +1149,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"退卡失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -1075,7 +1168,59 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 卡升级处理
 - (void)UpgradeCardDeal {
-
+    if([self.tfUpdateCard_Type.text isEqual:@""] || [self.tfUpdateCard_NewCID.text isEqual:@""]) {
+        [MBProgressHUD show:EmptyINPUTERROR icon:nil view:nil];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+    [self.alertShow close];
+    
+    NSDictionary *sendDict = @{@"cuaddress": [self.dictSearchMebInfo objectForKey:@"cuaddress"],
+                               @"cubdate" : [self.dictSearchMebInfo objectForKey:@"cubdate_str"],
+                               @"cucardid":  [self.dictSearchMebInfo objectForKey:@"cucardid"],
+                               @"cucardno": [self.dictSearchMebInfo objectForKey:@"cucardno"],
+                               @"cuemail" : [self.dictSearchMebInfo objectForKey:@"cuemail"],
+                               @"cuname" : [self.dictSearchMebInfo objectForKey:@"cuname"],
+                               @"cuphone":  [self.dictSearchMebInfo objectForKey:@"cumb"],
+                               @"cupwd": [self.dictSearchMebInfo objectForKey:@"cupwd"],
+                               @"selcardmoney": [NSString stringWithFormat:@"%.2f", [self.tfUpdateCard_Money.text floatValue]],
+                               @"selcardtype": [NSString stringWithFormat:@"%@%@", [_SelectCuCardType  objectForKey:@"typename"], [_SelectCuCardType objectForKey:@"cdpec"]]};
+    
+    // 网络请求   --   获取查询数据
+    NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBNewCardUpGradeAction];
+    
+    NSString *strHttpBody = [NSString stringWithFormat:@"cus.cuid=%@&emp.empid=%@&keyword=%@&&keyword1=%@&&keyword2=%@&&keyword3=%@&totalmoney=%@", [self.dictSearchMebInfo objectForKey:@"cuid"], [dictLogin objectForKey:@"empid"], self.tfUpdateCard_NewCID.text, [_SelectCuCardType objectForKey:@"cdid"], _SelectCuCardID, [_SelectCuCardType objectForKey:@"cdcount"], [_SelectCuCardType objectForKey:@"cdmoney"]];
+    
+    [MBProgressHUD showMessage:@""];
+    [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [MBProgressHUD hideHUD];
+        if (data) { // 请求成功
+            NSDictionary *listData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSString *strStatus = [listData objectForKey:statusCdoe];
+            // 数据异常
+            if(strStatus == nil){
+                [MBProgressHUD show:@"退卡失败" icon:nil view:nil];
+                return;
+            }
+            if ([strStatus intValue] == WebDataIsRight) { // 获取正确的数据
+                NSDictionary *dictTempData = [listData objectForKey: MESSAGE];
+                [MBProgressHUD show:@"卡升级成功！" icon:nil view:nil];
+                
+                // 跳转到付款页面
+                //切换到下一个界面  --- push
+                GetMoneyViewController *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"GetMoney"];
+                viewControl.listDict = sendDict;
+                viewControl.ReceDict = dictTempData;
+                [self.navigationController pushViewController:viewControl animated:YES];
+            } else { // 数据有问题
+                [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
+            }
+        } else { // 请求失败
+            [MBProgressHUD show:ConnectException icon:nil view:nil];
+        }
+        
+    }];
 }
 
 
@@ -1091,12 +1236,18 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"获取卡类型数据失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 _arrayTypeData = [NSArray arrayWithObject:[listData objectForKey:MESSAGE]];
                 _arrayTypeData = _arrayTypeData[0];
+                
+                
+                if (self.pickerViewCardType.tag == UPGRADECARD_VIEW_TAG) { // 卡升级
+                    // 判断是否是卡升级
+                    _arrayTypeData = [self CardTypeForArrayCardTypeData:_arrayTypeData];
+                }
                 
                 // 清空picker中的数据，重新导入数据
                 [_MuarrayType removeAllObjects];
@@ -1127,11 +1278,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"获取新卡号失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
                 self.tfAddCard_CardID.text = [listData objectForKey: MESSAGE];
+                self.tfMakeupCard_CardId.text = [listData objectForKey:MESSAGE];
+                self.tfUpdateCard_NewCID.text = [listData objectForKey:MESSAGE];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }
@@ -1139,6 +1292,26 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             [MBProgressHUD show:ConnectException icon:nil view:nil];
         }
     }];
+}
+
+
+#pragma mark 精简卡的类型数据（for update Card）
+- (NSArray *)CardTypeForArrayCardTypeData:(NSArray *)arrayData {
+    NSString *strCardTypeName = @"";
+    if(CardTypeFlag == CARD_TYPE_NORMAL_FLAG) { // 打折卡
+        strCardTypeName = @"打折卡";
+    } else {    // 计次卡
+        strCardTypeName = @"计次卡";
+    }
+    NSMutableArray *muArrayTemp = [NSMutableArray array];
+    for (NSDictionary *dict in arrayData) {
+        if ([(NSString *)[dict objectForKey:@"typename"] isEqual:strCardTypeName]) {
+            [muArrayTemp addObject:dict];
+        }
+    }
+    arrayData = [muArrayTemp mutableCopy];
+    
+    return arrayData;
 }
 
 #pragma mark QRCodeviewdelegate

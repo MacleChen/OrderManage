@@ -54,6 +54,8 @@
 
 // 补卡
 #define MAKEUPCARD_VIEW_TAG 106
+#define MAKEUPCARD_VIEW_CardID_TAG 1061
+#define MAKEUPCARD_VIEW_CardMoney_TAG 1062
 
 // 退卡
 #define CANCELCARD_VIEW_TAG 107
@@ -66,6 +68,10 @@
 #define UPGRADECARD_VIEW_Type_TAG 1082
 #define UPGRADECARD_VIEW_NewCID_TAG 1083
 #define UPGRADECARD_VIEW_Money_TAG 1084
+
+// 卡的类型区分
+#define CARDTYPE_STORY 1   // 储值卡
+#define CARDTYPE_METER 2   // 计次卡
 
 @interface MebManageViewController : UIViewController <CustomIOS7AlertViewDelegate, UITextFieldDelegate>
 
@@ -80,6 +86,9 @@
 
 
 @property (weak, nonatomic) IBOutlet UITextField *tfCardID;         // 显示选择卡
+
+@property (weak, nonatomic) IBOutlet UILabel *lbCardIDTitle;    // 卡号的前面的显示标题
+@property (weak, nonatomic) IBOutlet UILabel *lbRemainTitle;    // 卡号的前面的显示
 @property (weak, nonatomic) IBOutlet UILabel *lbCardID;             // 储值卡号
 @property (weak, nonatomic) IBOutlet UILabel *lbName;               // 会员姓名
 @property (weak, nonatomic) IBOutlet UILabel *lbCard_discount;      // 卡类/折扣
@@ -128,6 +137,8 @@
 @property (weak, nonatomic) UITextField *tfModifyInfo_Birday;
 
 // 补卡
+@property (weak, nonatomic) UITextField *tfMakeupCard_CardId;
+@property (weak, nonatomic) UITextField *tfMakeupCard_CardMoney;
 
 // 退卡
 @property (weak, nonatomic) UILabel *lbCancelCard_CardID;

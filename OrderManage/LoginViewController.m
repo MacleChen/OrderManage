@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "viewOtherDeal.h"
+#import "NSString+Hash.h"
 
 #define loginSecUrl @"emp!login.action?"//emp.empname=gzcy&emp.emppwd=123456"
 
@@ -91,7 +92,6 @@ NSDictionary *dictSendLogin = nil;
 }
 
 - (IBAction)btnClick:(UIButton *)sender {
-    
     // 网络数据请求 --- 登录数据包
     NSString *strUrl = [[NSString alloc] initWithFormat:@"%@emp!login.action?emp.empname=%@&emp.emppwd=%@", WEBBASEURL, self.edtName.text, self.edtPwd.text];
     
@@ -151,6 +151,11 @@ NSDictionary *dictSendLogin = nil;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.lbInfo.text = @"";
     
+    // 判断输入是否为空
+    if ([self.edtName.text isEqual:@""] && [self.edtPwd.text isEqual:@""]) {
+        self.btnLogin.enabled = NO;
+    }
+    
     return YES;
 }
 
@@ -158,8 +163,12 @@ NSDictionary *dictSendLogin = nil;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     NSString *strTemp = [viewOtherDeal NowInTextFiledText:textField NowStrChar:string];
-    if([strTemp isEqual:@""]) self.btnLogin.enabled = NO;
-    else self.btnLogin.enabled = YES;
+    if([strTemp isEqual:@""])
+        self.btnLogin.enabled = NO;
+    else {
+        
+        if(![self.edtName.text isEqual:@""] && ![self.edtPwd.text isEqual:@""]) self.btnLogin.enabled = YES;
+    }
     
     return YES;
 }
@@ -247,5 +256,6 @@ NSDictionary *dictSendLogin = nil;
         [self.view endEditing:YES];
     }
 }
+
 
 @end

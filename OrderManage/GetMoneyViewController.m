@@ -412,7 +412,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 #pragma mark 订单支付结果回调
 - (void)onPayResult:(PayStatus)payStatus PrintStatus:(PrintStatus)printStatus withInfo:(NSDictionary *)dict {
-    NSString *result=@"";
+    NSString *result= [[NSString alloc] init];
     MyPrint(@"%@", [NSThread currentThread]);
     if (payStatus == PayStatus_PAYSUCCESS) { // 银联支付成功
         MyPrint(@"银联支付成功处理");
@@ -439,13 +439,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         break; }
     switch (printStatus) {
         case PrintStatus_PRINTSUCCESS:
-            [result stringByAppendingString:@"\n打印成功"];
+            result = [result stringByAppendingString:@"\n打印成功"];
             break;
         case PrintStatus_PRINTFAIL:
-            [result stringByAppendingString:@"\n打印失败"];
+            result = [result stringByAppendingString:@"\n打印失败"];
             break;
         default:
-            [result stringByAppendingString:@"\n打印机无纸"];
+            result = [result stringByAppendingString:@"\n打印机无纸"];
         break; }
 //    for(NSString * key in dict)
 //    {
@@ -454,7 +454,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"支付结果" message:result delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark 订单查询回调
@@ -558,7 +558,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 获取数据失败
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"支付失败" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -613,11 +613,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
     self.navigationController.navigationBar.tintColor = ColorMainSystem;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color
 {
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    CGRect rect = CGRectMake(0.0f, 0.0f, _mainScreenWidth, 64);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     

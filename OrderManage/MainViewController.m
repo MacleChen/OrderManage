@@ -169,7 +169,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self.collectionview reloadData];
+    // 设置navigationBar初始化样式
+    NSDictionary *titleTextDic;
+    titleTextDic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:FONTSIZE_IPHONE], NSForegroundColorAttributeName:[UIColor blackColor]};
+    self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
+    self.navigationController.navigationBar.tintColor = ColorMainSystem;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
 
 #pragma mark - scrollview 代理方法的实现

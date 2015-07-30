@@ -845,6 +845,7 @@ extern NSDictionary *dictSendLogin;
     self.navigationController.navigationBar.titleTextAttributes = titleTextDic;
     self.navigationController.navigationBar.tintColor = ColorMainSystem;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color

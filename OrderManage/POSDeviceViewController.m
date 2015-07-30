@@ -129,10 +129,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
                 // 重新刷新数据
                 self.tfuserID.text = [dictTemp objectForKey:@"mernum"];
                 self.tfuserTerminalID.text = [dictTemp objectForKey:@"ternum"];
-                int posTypeRow = [(NSString *)[dictTemp objectForKey:@"posid"] intValue];
+                int posTypeRow = 0;//[(NSString *)[dictTemp objectForKey:@"posid"] intValue];
                 self.tfPOSType.text = _arrayType[posTypeRow];
+                if ([self.tfuserID.text isEqual:@""] || [self.tfuserTerminalID isEqual:@""]) {
+                    [MBProgressHUD show:@"同步失败, 对应信息不存在" icon:nil view:nil];
+                } else {
+                    [MBProgressHUD show:@"同步成功" icon:nil view:nil];
+                }
                 
-                [MBProgressHUD show:@"同步成功" icon:nil view:nil];
             } else { // 数据有问题
                 [MBProgressHUD show:[listData objectForKey:MESSAGE] icon:nil view:nil];
             }
