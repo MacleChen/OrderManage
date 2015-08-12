@@ -59,7 +59,6 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 初始化信息
     _edtedFlag = NO;
     self.dictSearchMebInfo = [NSDictionary dictionary];
-    _MuarrayType = [NSMutableArray array];
     _strSelectCard = [NSString string];
     _dictSelectMeterCard = [NSDictionary dictionary];
     self.imgviewDownload = [[UIImageView alloc] init];
@@ -77,7 +76,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 设置tableview 第一个cell距离导航栏的高度
     self.pullTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 65)];
     self.pullTableView.tableHeaderView.alpha = 0.0;
-    //self.pullTableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"imgTableViewBG.jpg"]];
+    self.pullTableView.tableFooterView = [[UIView alloc] init];
     
     // 设置alertView
     self.alertShow = [[CustomIOS7AlertView alloc] init];
@@ -147,7 +146,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     
     // 设置view的手势识别器
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(HandleBackgroundTap:)];
-    tapGesture.cancelsTouchesInView = NO;
+    tapGesture.cancelsTouchesInView = YES;
     [self.alertShow addGestureRecognizer:tapGesture];
     
     // 将view显示在alertview中
@@ -172,7 +171,14 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     //切换到下一个界面  --- push
     PayBillViewController  *viewControl = [self.storyboard instantiateViewControllerWithIdentifier:@"PayBillView"];
     // 打包数据
-    viewControl.arrayRecData = _MuarrayType;
+    NSMutableArray *arrayTemp = [NSMutableArray array];
+    for (NSDictionary *dictData in _MuarrayType) {
+        if ([(NSString *)[dictData objectForKey:@"SelectedCount"] intValue] > 0) {
+            [arrayTemp addObject:dictData];
+        }
+    }
+    
+    viewControl.arrayRecData = [NSArray arrayWithArray:arrayTemp];
     viewControl.dictSelectMeterCard = _dictSelectMeterCard;
     viewControl.dictSearchMebInfo = self.dictSearchMebInfo;
     [self.navigationController pushViewController:viewControl animated:YES];
@@ -278,47 +284,52 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 #pragma mark 设置每个cell的内容
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+    
+    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; // 设置不可点击
     NSDictionary *dictTempData =  _MuarrayType[indexPath.row];
-    
-    // 设置背景色
-    if (indexPath.row % 2 == 0) {
-        cell.backgroundColor = ColorTableCell;
-    }
+
+    int gapX = 10, imgWith = 90, imgHeight = 75, lbWith = 100, lbHeith = 30;
+    UIImageView *imageIconView = [[UIImageView alloc] initWithFrame:CGRectMake(gapX, (CELL_HEIGHT - imgHeight)/2, imgWith, imgHeight)];
     // 获取网络图片
     NSURL *URLPath = [NSURL URLWithString:[dictTempData objectForKey:@"pic1"]];
-    
     //图片缓存的基本代码，就是这么简单
     // 加载动态图
-    NSString  *name = @"reload001.gif";
-    //[self.imgviewDownload sd_setImageWithURL:URLPath placeholderImage:[UIImage sd_animatedGIFWithData:imageData]];
+    NSString  *name = @"reload001";
     [self.imgviewDownload sd_setImageWithURL:URLPath placeholderImage:[UIImage sd_animatedGIFNamed:name] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        cell.imageView.image = [viewOtherDeal scaleToSize:image size:CGSizeMake(75, 75)];
+        imageIconView.image = image;
     }];
     
-    // 控制图片大小
-    cell.imageView.image = [viewOtherDeal scaleToSize:self.imgviewDownload.image size:CGSizeMake(75, 75)];
+    imageIconView.image = self.imgviewDownload.image;
+    [cell addSubview:imageIconView];
     
     // 设置名称和价格
-    cell.textLabel.text = [dictTempData objectForKey:@"prodname"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ / %@", [dictTempData objectForKey:@"prodmoney"], [dictTempData objectForKey:@"produnit"]];
+    UILabel *lbProductName = [[UILabel alloc] initWithFrame:CGRectMake(gapX*2 + imgWith, (CELL_HEIGHT - 2*lbHeith)/2, lbWith, lbHeith)];
+    lbProductName.font = [UIFont systemFontOfSize:18.0];
+    lbProductName.textColor = [UIColor grayColor];
+    lbProductName.text = [dictTempData objectForKey:@"prodname"];
+    [cell addSubview:lbProductName];
     
-    cell.detailTextLabel.textColor = [UIColor redColor];
+    UILabel *lbPrice = [[UILabel alloc] initWithFrame:CGRectMake(gapX*2 + imgWith, (CELL_HEIGHT - 2*lbHeith)/2 + lbHeith, lbWith, lbHeith)];
+    lbPrice.font = [UIFont systemFontOfSize:13.0];
+    lbPrice.textColor = [UIColor redColor];
+    lbPrice.text = [NSString stringWithFormat:@"%@ / %@", [dictTempData objectForKey:@"prodmoney"], [dictTempData objectForKey:@"produnit"]];
+    [cell addSubview:lbPrice];
     
     // 设置cell中的商品个数加减
     UILabel *lbshowProductTitle;
     if (lbshowProductTitle == nil) {
         lbshowProductTitle = [[UILabel alloc] initWithFrame:CGRectMake(_mainScreenWidth*2/3 - 20, cell.center.y, 75, 30)];
     }
-    lbshowProductTitle.text = @"已选取(件):";
+    lbshowProductTitle.text = @"数量:";
     lbshowProductTitle.font = [UIFont systemFontOfSize:14.0];
-    lbshowProductTitle.textColor = [UIColor grayColor];
+    lbshowProductTitle.textAlignment = NSTextAlignmentCenter;
+    lbshowProductTitle.textColor = [UIColor lightGrayColor];
     UITextField *tfShowProductCount;
     if (tfShowProductCount == nil) {
         tfShowProductCount = [[UITextField alloc] initWithFrame:CGRectMake(lbshowProductTitle.frame.origin.x + lbshowProductTitle.frame.size.width, cell.center.y, 40, 29)];
     }
-    tfShowProductCount.text = @"0";
+    tfShowProductCount.text = [_MuarrayType[indexPath.row] objectForKey:@"SelectedCount"];
     tfShowProductCount.delegate = self;
     tfShowProductCount.keyboardType = UIKeyboardTypeNumberPad;
     tfShowProductCount.borderStyle = UITextBorderStyleNone;
@@ -399,7 +410,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"网络不佳，请重试" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -478,7 +489,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 获取数据失败
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"手机号或会员卡号不存在" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
@@ -701,11 +712,18 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 数据异常
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"网络不佳，请稍后重试" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据
-                _MuarrayType = [listData objectForKey:MESSAGE];
+                _MuarrayType = [NSMutableArray arrayWithArray:[listData objectForKey:MESSAGE]];
+                
+                // 添加新的关键字
+                for(int i = 0; i < _MuarrayType.count; i++) {
+                    NSMutableDictionary *mudictData = [NSMutableDictionary dictionaryWithDictionary:[_MuarrayType objectAtIndex:i]];
+                    [mudictData setValue:@"0" forKey:@"SelectedCount"];
+                    [_MuarrayType replaceObjectAtIndex:i withObject:mudictData];
+                }
                 
                 [self.pullTableView reloadData];  // 刷新整个表
             } else { // 数据有问题
@@ -726,14 +744,11 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:integerRow inSection:0];
     UITableViewCell *cellDeal =  [self.pullTableView cellForRowAtIndexPath:indexPath];
     
-    NSMutableDictionary *muDictTemp = [NSMutableDictionary dictionaryWithDictionary:_MuarrayType[integerRow]];
-    //[muDictTemp setObject:[NSString stringWithFormat:@"%.0f", sender.value] forKey:@"SelectedCount"];
+    // 修改数量
+    NSMutableDictionary *muDictTemp = [_MuarrayType objectAtIndex:integerRow];
     [muDictTemp setValue:[NSString stringWithFormat:@"%.0f", sender.value] forKey:@"SelectedCount"];
+    [_MuarrayType replaceObjectAtIndex:integerRow withObject:muDictTemp];
     
-    NSMutableArray *muArrayTemp = [NSMutableArray arrayWithArray:_MuarrayType];
-    
-    [muArrayTemp setObject:muDictTemp atIndexedSubscript:integerRow];
-    _MuarrayType = muArrayTemp;
     // 获取当前cell的子view
     NSArray *arraySubviews =  [cellDeal subviews];
     for (int i = 0; i < arraySubviews.count ; i++) {
@@ -748,25 +763,13 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         }
     }
     
-    // 设置已选商品和消费次数
-        // 1. 获取所有的cell
-    NSMutableArray *muArrayCells = [NSMutableArray array];
-    for (NSInteger i = 0; i < [self.pullTableView numberOfRowsInSection:0]; i++) {
-        NSIndexPath *indexTemp = [NSIndexPath indexPathForRow:i inSection:0];
-        [muArrayCells addObject:[self.pullTableView cellForRowAtIndexPath:indexTemp]];
-    };
-        // 2. 获取所有cell中已选的商品个数总和
+    // 设置已选商品和消费次数 -- 总钱数
     NSInteger AllSelectCount = 0;
     double AllSelectMoney = 0;
-    for (UITableViewCell *cellTemp in muArrayCells) {
-        NSArray *arraySubviews =  [cellTemp subviews];
-        for (UITextField *tfSlectedCount in arraySubviews) {
-            if (tfSlectedCount.tag == sender.tag) {
-                AllSelectCount += [tfSlectedCount.text integerValue];
-                AllSelectMoney += [cellTemp.detailTextLabel.text floatValue] * [tfSlectedCount.text integerValue];
-                break;
-            }
-        }
+    for (NSDictionary *dictData in _MuarrayType) {
+        int selectCount = [(NSString *)[dictData objectForKey:@"SelectedCount"] intValue];
+        AllSelectCount += selectCount;
+        AllSelectMoney += selectCount * [(NSString *)[dictData objectForKey:@"prodmoney"] floatValue];
     }
     
     self.lbSelectedCount.text = [NSString stringWithFormat:@"%li件", (long)AllSelectCount];

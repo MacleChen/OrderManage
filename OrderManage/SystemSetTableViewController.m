@@ -18,7 +18,7 @@
 #define CHECK_BOX_POS_PRINT 12
 
 
-@interface SystemSetTableViewController () <QCheckBoxDelegate> {
+@interface SystemSetTableViewController () <QCheckBoxDelegate, UIAlertViewDelegate> {
     NSArray *_arrayMenus;  // 菜单条目
     NSArray *_arrayHeaderTitle; // 菜单头部标题
     
@@ -160,6 +160,12 @@
         }
     }
     
+    // 软件版本更新
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            [self SetSoftWareUpdate];
+        }
+    }
 }
 
 #pragma mark 设置Header的高度
@@ -221,6 +227,44 @@
     else [self.ckWebPrint setChecked:NO];
     if ([userDef boolForKey:@"PosPrint"]) [self.ckPosPrint setChecked:YES];
     else [self.ckPosPrint setChecked:NO];
+}
+
+/**
+ *  检测软件版本，并且更新版本
+ */
+- (void)SetSoftWareUpdate {
+    MyPrint(@"软件更新");
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *nowVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    
+    NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/lookup?id=xagzdz@126.com"];
+    NSString * file = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    
+    //"version":"1.0"
+    NSRange substr = [file rangeOfString:@"\"version\":\""];
+    NSRange range1 = NSMakeRange(substr.location+substr.length,10);
+    NSRange substr2 =[file rangeOfString:@"\"" options:NULL range:range1];
+    NSRange range2 = NSMakeRange(substr.location+substr.length, substr2.location-substr.location-substr.length);
+    NSString *newVersion =[file substringWithRange:range2];
+    if([nowVersion isEqualToString:newVersion]==NO)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"版本有更新"delegate:self cancelButtonTitle:@"取消"otherButtonTitles:@"更新",nil];
+        [alert show];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"已是最新版本"delegate:self cancelButtonTitle:@"确定"otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+#pragma mark - AlertViewDelegate 的方法的实现
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        MyPrint(@"打开对应的网络连接");
+        NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/***-***-***/id*******?ls=1&mt=8"];
+        
+        //[[UIApplication sharedApplication] openURL:url];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

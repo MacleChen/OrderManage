@@ -543,9 +543,11 @@ extern NSDictionary *dictSendLogin;
 }
 #pragma mark 补缴款
 -(void)btnSecondPayClick:(UIButton *)sender {
+    NSDictionary *dictTemp = [self.dictSaveOrderInfo objectForKey:@"record"];
+    
     // 判断订单是否有欠款
-    if ([self.lbDebtMoney.text intValue] < 0) {
-        [MBProgressHUD show:@"该订单为没有欠款" icon:nil view:nil];
+    if ([(NSString *)[dictTemp objectForKey:@"stname"] isEqual:@"已支付"]) {
+        [MBProgressHUD show:@"该订单已支付" icon:nil view:nil];
         return;
     }
     

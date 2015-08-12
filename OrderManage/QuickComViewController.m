@@ -103,7 +103,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
             NSString *strStatus = [listData objectForKey:statusCdoe];
             // 获取数据失败
             if(strStatus == nil){
-                [MBProgressHUD show:ConnectDataError icon:nil view:nil];
+                [MBProgressHUD show:@"手机号或会员卡号不存在" icon:nil view:nil];
                 return;
             }
             if ([strStatus intValue] == 200) { // 获取正确的数据

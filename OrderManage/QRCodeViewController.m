@@ -109,7 +109,7 @@
 //    _boxView.layer.borderColor = [UIColor greenColor].CGColor;
 //    _boxView.layer.borderWidth = 1.5f;
 
-    [self.view addSubview:_boxView];
+    //[self.view addSubview:_boxView];
     
     // 设置蒙版图片
     UIImageView *imgBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"QRCodeBgImg.png"]];

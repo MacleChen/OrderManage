@@ -152,7 +152,12 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 
 - (IBAction)btnSureClick:(UIButton *)sender {
-
+    // 选择导购员
+    if ([self.tfGuide1.text isEqual:@"无"] && [self.tfGuide2.text isEqual:@"无"]) {
+        [MBProgressHUD show:@"请选择导购员" icon:nil view:nil];
+        return;
+    }
+    
     // 付款
     if([self.tfCashpay.text floatValue] > 0.0 || ([self.tfCashpay.text floatValue] == 0.0 && [self.tfUnionpay.text floatValue] == 0.0 && [self.tfCoupons.text floatValue] == 0.0)) { // 现金付款
         if([self funcCashPay] != GetMoneyViewPayStateSuccess) {
@@ -177,7 +182,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
         };
     }
     
-    if([self.tfCoupons.text floatValue] != 0.0) { // 优惠券支付
+    if([self.tfCoupons.text floatValue] > 0.0) { // 优惠券支付
         if([self funcCouponsPay] != GetMoneyViewPayStateSuccess) {
             [MBProgressHUD show:@"优惠券支付失败" icon:nil view:nil];
             return;
@@ -550,6 +555,24 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     // 获取网络数据
     NSString *strURL = [NSString stringWithFormat:@"%@%@", WEBBASEURL, WEBPayMentAction];
 
+    switch (payStyle) {
+        case payMentStyleCash: {  // 现金支付
+        
+        }
+            break;
+        case payMentStyleUnion: {  // 银联支付
+            
+        }
+            break;
+        case payMentStyleCoupons: {  // 优惠券支付
+        
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
     NSString *strHttpBody = [NSString stringWithFormat:@"empid=%@&rcid=%@&cash=%@&cardsale=%@&freemoney=%@&banksale=%@&marketsale=%@&empids1=%@&empmoneys1=%@&empids2=%@&empmoneys2=%@", [dictLogin objectForKey:@"empid"], [dictTemp objectForKey:@"rcid"], self.tfCashpay.text, @"", self.tfCoupons.text, self.tfUnionpay.text, @"", strGuide1Empid, strGuide1Money, strGuide2Empid, strGuide2Money];
     
     [HttpRequest HttpAFNetworkingRequestBlockWithURL:strURL strHttpBody:strHttpBody Retype:HttpPOST willDone:^(NSURLResponse *response, NSData *data, NSError *error) {

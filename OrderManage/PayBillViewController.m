@@ -21,7 +21,7 @@
 
 #define VIEW_PrintAlertView_TAG  307   // 打印单据提示小窗口
 
-#define CELL_HEIGHT 40
+#define CELL_HEIGHT 50
 
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
@@ -470,7 +470,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     }
     
     [self.alertShow close];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

@@ -9,7 +9,7 @@
 #ifndef OrderManage_Global_h
 #define OrderManage_Global_h
 
-#define MyPrint(...) NSLog(__VA_ARGS__)   // 自定义打印
+#define MyPrint(...) //NSLog(__VA_ARGS__)   // 自定义打印
 
 #define INPUTVIEW_HEIGHT 220      // 自定义输入view的高度
 
