@@ -13,6 +13,7 @@
 #import "Global.h"
 #import "PrintDeviceSet.h"
 
+
 extern NSDictionary *dictLogin;   // 引用全局登录数据
 
 @interface HandOverViewController () <GCDAsyncSocketDelegate> {

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>application-identifier</key>
+	<string>JCAV5CDF83.com.ganzhi.OrderManage</string>
+	<key>com.apple.developer.team-identifier</key>
+	<string>JCAV5CDF83</string>
+	<key>get-task-allow</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>JCAV5CDF83.com.ganzhi.OrderManage</string>
+	</array>
+</dict>
+</plist>

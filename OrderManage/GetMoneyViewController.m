@@ -150,7 +150,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
     self.tfCoupons.text = self.lbPaidMoney.text;
 }
 
-
+#pragma mark 确认
 - (IBAction)btnSureClick:(UIButton *)sender {
     // 选择导购员
     if ([self.tfGuide1.text isEqual:@"无"] && [self.tfGuide2.text isEqual:@"无"]) {
@@ -309,7 +309,7 @@ extern NSDictionary *dictLogin;   // 引用全局登录数据
    // 1. 下单
     MyPrint(@"userID:%@, TerminalID:%@", _userID, _userTerminalID);
     NSString *strPrice = [NSString stringWithFormat:@"%li", (long)[self.tfUnionpay.text integerValue]];
-    [UMSCashierPlugin bookOrder:strPrice MerorderId:[dictTemp objectForKey:@"rccode"] MerOrderDesc:@"新增卡" BillsMID:_userID BillsTID:_userTerminalID operator:[dictLogin objectForKey:@"empid"] Delegate:self ProductModel:_ckProduct];
+    [UMSCashierPlugin bookOrder:strPrice MerorderId:[dictTemp objectForKey:@"rccode"] MerOrderDesc:@"" BillsMID:_userID BillsTID:_userTerminalID operator:[dictLogin objectForKey:@"empid"] Delegate:self ProductModel:_ckProduct];
     
     // 2. 下单结果回调 --onUMSBookOrderResult 代理方法
     

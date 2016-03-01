@@ -1,0 +1,244 @@
+//Localizable.strings
+//  IOSTempleteProject
+//
+//  Created by Sasha on 14-1-2.
+//  Copyright (c) 2014年 UMS. All rights reserved.
+//
+
+//basic------------------------------------------------------------------------------------begin
+"NetWork_info"="网络通讯中";
+"system-info"="系统信息";
+"system-error"="系统提示";
+"Cancel"="取消";
+"Ok"="确定";
+"Confirm"="确认";
+"Loading..."="加载中...";
+"Get More..."="加载更多...";
+"Back"="返回";
+"NotReachable"="您的网络状态好像不佳";
+"Error_Unknown"="未知错误";
+//basic-------------------------------------------------------------------------------------end
+
+//ASI错误------------------------------------------------------------------------------------begin
+"ASI_CONNECTION_FAILURE_ERROR"="您的网络状态不佳";
+"ASI_TIME_OUT_ERROR"="请求超时，请稍后再试";
+"ASI_AUTH_NEED_ERROR"="请求需要登录验证";
+"ASI_CANCELED_ERROR"="请求被取消";
+"ASI_BAD_URL_ERROR"="无法创建请求，请检查url是否正确";
+"ASI_PROXY_NEED_ERROR"="无法获取信息的要求，需要代理服务器";
+"ASI_RESPONSE_HEADER_ERROR"="无法得到响应头的认证对象";
+"ASI_MOVE_FILE_FAIL_ERROR"="移动文件失败";
+"ASI_REDIRECT_OUT_LIMIT_ERROR"="请求失败，因为它被重定向过太多次";
+"ASI_COMPRESS_FAIL_ERROR"="压缩数据失败";
+"ASI_UNKNOWN_EXCEPTION_ERROR"="未知异常";
+//ASI错误------------------------------------------------------------------------------------end
+
+//下拉刷新------------------------------------------------------------------------------------begin
+"Release to refresh..."="释放开始刷新数据";
+"Pull down to refresh..."="下拉刷新数据";
+"Pull up to refresh..."="上拉加载下一页";
+"loading..."="加载中...";
+"Last Updated"="上次更新时间";
+"Get More..."="加载更多...";
+//下拉刷新------------------------------------------------------------------------------------end
+
+//分享---------------------------------------------------------------------------------------begin
+"Auth" = "授权";
+"Share_To_TC_WeiBo"= "分享到腾讯微博";
+"Please_Choose_Share_Way"="请选择分享方式";
+"Share_To_Sina_WeiBo"="分享到新浪微博";
+"Share_To_WeiXin"= "微信分享给好友";
+"Share_With_SMS"="短信分享给好友";
+"Device_Unsupport_Send_SMS"="您的设备不支持短信功能";
+"SMS_Share_Success"="短信分享成功";
+"Sina_SNS_Share_Success"="分享新浪微博成功";
+"TCWeiBo_share_Success" = "分享腾讯微博成功";
+"TCWeiBo_share_Fail" = "分享腾讯微博失败";
+"WeiXin_share_Success" = "微信分享成功";
+"WeiXin_share_Fail" = "微信分享失败";
+"Install_weixin_for_free" = "立即安装";
+"friend_tips" = "友情提示";
+"Install_WeiXin_Tip"="安装微信后，即可与您的好友就行分享，现在安装？";
+
+"SNS_Content_Send_Repeat_Error"="提交了重复的内容";
+"SNS_Image_Size_Too_Large_Error"="您发送的图片太大";
+"SNS_Server_Unaviliable"="服务暂时无法访问";
+"SNS_Server_Resource_Unaviliable"="服务端资源不可用";
+"SNS_Request_Beyond_Limit"="用户请求超过上限";
+"SNS_Share_Too_Much"="发微博太多啦，休息一会儿吧";
+"SNS_Unaudited_Error"="未审核的应用使用人数超过限制";
+"SNS_Release"="发布";
+"Using_WeiBo_Account:"="您正在使用帐号:";
+"Input_Share_Content"="请输入分享内容";
+"Share_Content_Should_Low_Than_140"="微博分享内容不能多余140字";
+"SNS_Share_Fail"="对不起，微博发送失败";
+"TCWB_Parse_Error" = "很抱歉，数据解析错误";
+"TCWB_Request_error" = "很抱歉，请求失败";
+"TCWB_Auth_error" = "很抱歉，腾讯微博授权失败";
+"TCWB_Access_Error"="很抱歉，腾讯微博授权失败";
+
+"Share_To_WeiXin_Friend"="分享给微信好友";
+"Share_To_WeiXin_Community"="分享到朋友圈";
+"WeiBo_Sending"="发布中";
+//分享---------------------------------------------------------------------------------------end
+
+
+//信用卡还款页---------------------------------------------------------------------------begin
+
+"ERROR_CardNum_Null"="请输入有效的银行卡号";
+"ERROR_PayMent_Null" = "请输入还款金额";
+"ERROR_PayMent_Value" = "还款金额最少为10元";
+
+//信用卡还款页---------------------------------------------------------------------------end
+
+//登录页----------------------------------------------------------------------------begin
+"ERROR_UserName_Null" = "请输入您的用户名";
+"ERROR_UserName_ErrorFormat" = "用户名长度有误";
+"ERROR_Password_ErrorFormat" = "请输入有效的密码";
+
+//登录页---------------------------------------------------------------------------end
+
+//修改密码--------------------------------------------------------------------begin
+
+"ERROR_OldPassword_Error_Format" = "请输入有效的原密码";
+"ERROR_NewPassword_Error_Format" = "请输入有效的新密码";
+"PROMPT_ChangePwdSuccess" = "密码修改成功";
+"ERROR_OlaPassword_newPassword_Error_Different" = "原密码与新密码不能相同";
+
+//修改密码-------------------------------------------------------------------end
+
+//忘记密码-------------------------------------------------------------------end
+
+"PROMPT_ResetPwdSuccess" = "密码修改成功";
+
+//忘记密码-------------------------------------------------------------------end
+
+//注册页---------------------------------------------------------------------------------------begin
+
+"ERROR_MsgCode_ErrorFormat"="请输入6位短信验证码";
+"ERROR_PhoneNum_ErrorFormat"="请输入有效的手机号码";
+"ERROR_PhoneNO_Null" = "请输入您的手机号码";
+"ERROR_ConfirmPassword_Null" = "请输入有效的密码";
+"ERROR_ConfirmPassword_Error" = "两次输入密码不一致";
+"PROMPT_PleaseAcceptContract" = "请勾选《用户协议》后再提交注册";
+"ERROR_ChooseQuestion_Null" = "请选择密码提示问题";
+"ERROR_Answer_Null" = "请输入问题答案";
+"PROMPT_RegisterSuccess" = "用户注册成功";
+"PROMPT_MsgSendSuccess" = "短信验证码已发送";
+
+//注册页-------------------------------------------------------------------------------------end
+
+//电子签名页面-------------------------------------------------------------------------------------begin
+
+"PROMPT_PleaseSignName" = "请签名";
+"PROMPT_PrintSalesSlip"="打印签购单";
+"PROMPT_ElectronicSignName"="电子签名";
+
+//电子签名页面-------------------------------------------------------------------------------------end
+
+//Home 主页-----------------------------------------------------------------------------------begin
+
+"ERROR_ReceiveMoneyBussiness_Null" = "您尚未开通收款业务，请联系95534提供上门开通服务";
+
+//Home主页-------------------------------------------------------------------------------------end
+
+//商户收款页面-------------------------------------------------------------------------------------begin
+
+"PROMPT_PleaseEnterAmount" = "请输入收款金额";
+
+//商户收款页面-------------------------------------------------------------------------------------end
+
+//手机钱包收款页面-------------------------------------------------------------------------------------begin
+
+"PROMPT_PleaseEnterAuthCode" = "请输入授权码";
+
+//手机钱包收款页面-------------------------------------------------------------------------------------end
+
+//刷卡页面------------------------------------------------------------------------------begin
+
+"Error_Swipe_Disconnected"="易POS蓝牙连接失败";
+"Error_Swipe_Device_NoBinded"="您尚未绑定此易POS";
+"Error_Swipe_serviceCode_Invalidate"="不允许降级使用IC卡，请插卡交易";
+"Error_SwipCard_Failed"="刷卡失败";
+"Error_Business_Failed"="交易失败";
+"Error_Swipe_Pin_Invalidate"="PIN获取失败";
+"Error_Swipe_CardReader_Timeout"="刷卡超时";
+"Error_Swipe_Transaction_Terminate"="交易终止";
+"Error_Swipe_Query_Unable"="无法查询";
+"Error_Swipe_Save_Unable"="无法保存";
+"Error_Swipe_Process_UnKnow"="未知流程";
+"Error_ICCard_NoSurpport"="该交易不支持IC卡";
+"Error_Swipe_CardReader_OpenFaield"="刷卡失败";
+"Error_Swipe_EPOS"="请先连接易POS";
+"Error_Swipe_BOX_TYPE"="无法识别此易POS";
+"Error_Swipe_Cancel_Transaction"="用户取消交易";
+"Error_Swipe_ICUpload_Failed"="交易失败扣款已冲正";
+"Error_Swipe_Reveasal_Success"="交易失败扣款已冲正";
+"Error_Swipe_Reveasal_Success_No_TransactionCancel"="该笔订单已冲正，不能再进行撤销操作";
+"Error_swipe_Has_Payed"="该订单已经支付成功，请勿重复支付";
+
+"Info_Swipe_Transaction_Abandon"="操作尚未完成，确认放弃？";
+"Info_Loading"="加载中";
+"Info_Swipe_Transaction_Cancel"="交易撤销";
+"Info_Swipe_Transaction_Canceled"="交易已撤销";
+"Info_Swipe_Transaction_Canceling"="交易撤销中";
+"Info_Swipe_Transaction_CancelFailed"="交易撤销失败";
+"Info_Business_Unfinished"="上笔IC卡交易未完成，系统将继续该交易";
+"Info_Order_Paying"="交易处理中";
+"Info_Swipe_EPOS"="易POS连接中";
+"Info_Swipe_Pay_Success"="交易成功";
+"PROMPT_Swipe_Transaction_VoidSuccess"="交易撤销成功";
+
+"PROMPT_Swipe_Transaction_VoidTimeout"="交易撤销超时，请以当日收款交易为准";
+
+"Error_Transaction_Timeout"="交易超时，请以实际交易状态为准";
+
+"PROMPT_Transaction_Processing" = "易POS交互中";
+"PROMPT_LowBattery" = "易POS电量低，请充电";
+//刷卡页面----------------------------------------------------------------------------------end
+
+//信用卡页面------------------------------------------------------------------------------begin
+
+"Error_CreditCard_NotCreditCard"="请输入有效的信用卡号";
+
+//信用卡页面----------------------------------------------------------------------------------end
+
+//Session过期------------------------------------------------------------------------------begin
+
+"Error_Session_Timeout"="登录超时";
+
+//Session过期----------------------------------------------------------------------------------end
+
+//易POS管理------------------------------------------------------------------------------begin
+
+"Info_Box_Manage_Connecting"="易POS连接中";
+"Info_Box_Disconnected"="易POS蓝牙连接失败";
+"Info_Box_Authcation"="易POS激活中";
+"Info_Box_Binding_Success"="易POS绑定成功";
+
+"Info_Box_User_Cancel"="用户取消设备绑定";
+//易POS管理----------------------------------------------------------------------------------end
+
+//历史记录最后一页------------------------------------------------------------------------------begin
+
+"Info_Last_Page"="已经是最后一页";
+
+//历史记录最后一页----------------------------------------------------------------------------------end
+
+//pos通收款页------------------------------------------------------------------------------begin
+
+"Info_Audio_Denied"="使用全民付收银台需要您开启麦克风权限，请至“设置-隐私-麦克风”开启";
+
+//pos通收款页----------------------------------------------------------------------------------end
+
+//打印签购单(发送签购单)-------------------------------------------------------------------------------begin
+"Info_SalesSlip_Signed"="您已签过签购单!";
+"Info_SwipeCardForCashier_Signed"="该签购单已经签名";
+"Info_PrintSalesFail"="打印签购单失败，请重新发起打印";
+"Info_PrintSalesSuccess"="打印签购单成功";
+"Info_CommercialPrintSalesSuccess"="打印完毕";
+"Info_PrintSalesNoPaper"="易POS无纸或盖子未盖紧";
+"Info_PrintSalesNotSupported"="该易POS不支持打印";
+"PROMPT_PrintSalesNotSupported" = "该易POS不支持打印签购单，将采用发送电子签购单的方式";
+"Info_SalesSlip_Printing"="打印中...";
+//打印签购单(发送签购单)----------------------------------------------------------------------------------end
